@@ -10,6 +10,23 @@ wget https://github.com/suhrig/arriba/releases/download/v2.3.0/arriba_v2.3.0.tar
 tar -xzf arriba_v2.3.0.tar.gz
 cd arriba_v2.3.0 && make # or use precompiled binaries
 ```
+Arriba requires an assembly in FastA format, gene annotation in GTF format, and a STAR index built from the two. You can use your preferred assembly and annotation, as long as their coordinates are compatible with hg19/hs37d5/GRCh37 or hg38/GRCh38 or mm10/GRCm38 or mm39/GRCm39. If you use another assembly, then the coordinates in the blacklist will not match and the predictions will contain many false positives.  
+
+ENCODE annotation is recommended over RefSeq due to more comprehensive annotation of immunoglobulin/T-cell receptor loci and splice sites.
+
+If you do not already have the files and a STAR index, you can use the script download_references.sh. It downloads the files to the current working directory and builds a STAR index. Run the script without arguments to see a list of available files. Note that this step requires ~45 GB of RAM and 8 cores (can be adjusted by setting the environment variable THREADS).
+```
+./download_references.sh hs37d5viral+GENCODE19
+```
+
+The download file contains a script run_arriba.sh, which demonstrates the usage of Arriba (see also section Workflow). We recommend that you use this as a guide to integrate Arriba into your existing STAR-based RNA-Seq pipeline. 
+
+Run the demo script with 8 threads.
+```
+./run_arriba.sh STAR_index_hs37d5viral_GENCODE19/ GENCODE19.gtf hs37d5viral.fa database/blacklist_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz database/known_fusions_hg19_hs37d5_GRCh37_v2.3.0.tsv.gz database/protein_domains_hg19_hs37d5_GRCh37_v2.3.0.gff3 8 test/read1.fastq.gz test/read2.fastq.gz
+```
+
+
 # 3. Usage
 
 # 4. Citation

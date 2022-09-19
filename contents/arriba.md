@@ -4,12 +4,12 @@ Arriba is a command-line tool for the detection of gene fusions from RNA-Seq dat
 Apart from gene fusions, Arriba can detect other structural rearrangements with potential clinical relevance, including viral integration sites, internal tandem duplications, whole exon duplications, intragenic inversions, enhancer hijacking events involving immunoglobulin/T-cell receptor loci, translocations affecting genes with many paralogs such as DUX4, and truncations of genes (i.e., breakpoints in introns or intergenic regions).  
 
 # 2. Installation and quick start
-Arriba has only a single prerequisite: STAR (version >=2.7.10a recommended). Download and install the tool according to the developers' instructions and make it available in your $PATH.
-'''
+Arriba has only a single prerequisite: STAR (version >=2.7.10a recommended). Download and install the tool according to the developers' instructions and make it available in your $PATH.  
+```
 wget https://github.com/suhrig/arriba/releases/download/v2.3.0/arriba_v2.3.0.tar.gz
 tar -xzf arriba_v2.3.0.tar.gz
 cd arriba_v2.3.0 && make # or use precompiled binaries
-'''
+```
 # 3. Usage
 
 # 4. Citation

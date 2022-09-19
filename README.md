@@ -12,4 +12,4 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 # Content
 ## Gene fusion analysis
-### Arriba
+### [Arriba](/content/arriba.md)

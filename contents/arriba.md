@@ -126,7 +126,7 @@ Example:
 ### 3.4.1 fusions.tsv
 It should be highly enriched for true predictions. Details are below:
 
-<b>gene1 and gene2</b>: 
+#### gene1 and gene2: 
 
 Gene1 contains the gene which makes up the 5' end of the transcript and gene2 the gene which makes up the 3' end. If a breakpoint is in an intergenic region, Arriba lists the closest genes upstream and downstream from the breakpoint, separated by a comma. The numbers in parentheses after the closest genes state the distance to the genes. 
 
@@ -154,9 +154,13 @@ So what will happen when a breaking point is in an intergenic region?
 
 Fusions to intergenic regions, often spanning multiple cryptic exons that potentially encode neo-antigens. Namely, sometimes they can produce RNA transcript and proteins！
 
-<b>breakpoint1 and breakpoint2</b> :  The columns contain the coordinates of the breakpoints in gene1 and gene2, respectively. 
+<b>breakpoint1 and breakpoint2</b>:  
 
-<b>site1 and site2</b> :  These columns add information about the location of the breakpoints. Possible values are: 5' UTR, 3' UTR, UTR (overlapping with a 5' UTR as well as a 3' UTR), CDS (coding sequence), exon, intron, and intergenic. 
+The columns contain the coordinates of the breakpoints in gene1 and gene2, respectively. 
+
+<b>site1 and site2</b>: 
+
+These columns add information about the location of the breakpoints. Possible values are: 5' UTR, 3' UTR, UTR (overlapping with a 5' UTR as well as a 3' UTR), CDS (coding sequence), exon, intron, and intergenic. 
 
 
 

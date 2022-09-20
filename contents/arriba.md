@@ -55,6 +55,31 @@ The following parameters related to chimeric alignment are recommended for impro
 
 Arriba does not care if the BAM files are sorted/indexed or not. For maximum speed, STAR's output should be piped directly to Arriba, such that chimeric reads are extracted while STAR is still running. 
 
+A complete call of STAR in conjunction with Arriba may look like this:
+
+```
+STAR \
+    --runThreadN 8 \
+    --genomeDir /path/to/STAR_index --genomeLoad NoSharedMemory \
+    --readFilesIn read1.fastq.gz read2.fastq.gz --readFilesCommand zcat \
+    --outStd BAM_Unsorted --outSAMtype BAM Unsorted --outSAMunmapped Within --outBAMcompression 0 \
+    --outFilterMultimapNmax 50 --peOverlapNbasesMin 10 --alignSplicedMateMapLminOverLmate 0.5 --alignSJstitchMismatchNmax 5 -1 5 5 \
+    --chimSegmentMin 10 --chimOutType WithinBAM HardClip --chimJunctionOverhangMin 10 --chimScoreDropMax 30 \
+    --chimScoreJunctionNonGTAG 0 --chimScoreSeparation 1 --chimSegmentReadGapMax 3 --chimMultimapNmax 50 |
+arriba \
+    -x Aligned.out.bam \
+    -o fusions.tsv -O fusions.discarded.tsv \
+    -a /path/to/assembly.fa -g /path/to/annotation.gtf \
+    -b /path/to/blacklist.tsv.gz -k /path/to/known_fusions.tsv.gz -t /path/to/known_fusions.tsv.gz -p /path/to/protein_domains.gff3
+```
+
+Note: In this example, the same file is passed to the parameters -k and -t, because it is used for two purposes: applying sensitive filtering parameters to known fusions (-k) and tagging known fusions in the tags column (-t). However, it is possible to use different files for these two parameters if a user wants to separate the two tasks.
+
+## 3.3 Inputfiles
+Arriba takes the main output file of STAR (Aligned.out.bam) as input (parameter -x). If STAR was run with the parameter --chimOutType WithinBAM, then this file contains all the information needed by Arriba to find fusions. When STAR was run with the parameter --chimOutType SeparateSAMold, the main output file lacks chimeric alignments. Instead, STAR writes them to a separate output file named Chimeric.out.sam. In this case, the file needs to be passed to Arriba via the parameter -c in addition to the main output file Aligned.out.bam.
+
+
+
 
 
 # 4. Citation

@@ -126,7 +126,7 @@ Example:
 ### 3.4.1 fusions.tsv
 It should be highly enriched for true predictions. Details are below:
 
-#### gene1 and gene2: 
+### gene1 and gene2: 
 
 Gene1 contains the gene which makes up the 5' end of the transcript and gene2 the gene which makes up the 3' end. If a breakpoint is in an intergenic region, Arriba lists the closest genes upstream and downstream from the breakpoint, separated by a comma. The numbers in parentheses after the closest genes state the distance to the genes. 
 
@@ -138,7 +138,7 @@ If no genes are annotated for a contig (e.g., for viral genomes), the column con
 
 You can see the breaking point in above gene.
 
-<b>strand1(gene/fusion) and strand2(gene/fusion)</b>:  
+### strand1(gene/fusion) and strand2(gene/fusion):  
 
 Each of these columns contains two values seperated by a slash. The strand before the slash reflects the strand of the gene according to the gene annotation supplied to Arriba via the parameter -g. 
 
@@ -154,14 +154,25 @@ So what will happen when a breaking point is in an intergenic region?
 
 Fusions to intergenic regions, often spanning multiple cryptic exons that potentially encode neo-antigens. Namely, sometimes they can produce RNA transcript and proteins！
 
-<b>breakpoint1 and breakpoint2</b>:  
+### breakpoint1 and breakpoint2:  
 
 The columns contain the coordinates of the breakpoints in gene1 and gene2, respectively. 
 
-<b>site1 and site2</b>: 
+### site1 and site2: 
 
 These columns add information about the location of the breakpoints. Possible values are: 5' UTR, 3' UTR, UTR (overlapping with a 5' UTR as well as a 3' UTR), CDS (coding sequence), exon, intron, and intergenic. 
 
+### type：
+
+Based on the orientation of the supporting reads and the coordinates of breakpoints, the type of event can be inferred. Possible values are: translocation (between different chromosomes), duplication, inversion, and deletion.
+
+If genes are fused head-to-head or tail-to-tail, this is indicated as 5'-5' or 3'-3' respectively. Genes fused in such an orientation cannot yield a chimeric protein, since one of the genes is transcribed from the wrong strand. 
+
+Deletions with a size in the range of introns (<400kb) are flagged as read-through, because there is a high chance that the fusion arises from read-through transcription rather than an underlying genomic deletion. 
+
+Intragenic duplications with both breakpoints at splice-sites are flagged as non-canonical-splicing, because the supporting reads might originate from circular RNAs, which are very abundant even in normal tissue, but manifest as duplications in RNA-Seq data.
+
+Internal tandem duplications are flagged as ITD. It is not always clear whether the ITDs observable in RNA-Seq data are somatic or germline variants, because ITDs are abundant in the germline and germline variants cannot be filtered effectively due to lack of a normal control.
 
 
 

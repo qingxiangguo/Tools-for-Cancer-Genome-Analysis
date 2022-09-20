@@ -126,17 +126,39 @@ Example:
 ### 3.4.1 fusions.tsv
 It should be highly enriched for true predictions. Details are below:
 
-* gene1 and gene2 : Gene1 contains the gene which makes up the 5' end of the transcript and gene2 the gene which makes up the 3' end. If a breakpoint is in an intergenic region, Arriba lists the closest genes upstream and downstream from the breakpoint, separated by a comma. The numbers in parentheses after the closest genes state the distance to the genes. If no genes are annotated for a contig (e.g., for viral genomes), the column contains a dot (.).
+<b>gene1 and gene2</b>: 
 
-* strand1(gene/fusion) and strand2(gene/fusion) :  Each of these columns contains two values seperated by a slash. The strand before the slash reflects the strand of the gene according to the gene annotation supplied to Arriba via the parameter -g. 
+Gene1 contains the gene which makes up the 5' end of the transcript and gene2 the gene which makes up the 3' end. If a breakpoint is in an intergenic region, Arriba lists the closest genes upstream and downstream from the breakpoint, separated by a comma. The numbers in parentheses after the closest genes state the distance to the genes. 
 
-If the breakpoint is in an intergenic region, the value is .. (because it contains no gene)
+If no genes are annotated for a contig (e.g., for viral genomes), the column contains a dot (.).
 
-The value after the slash reflects the strand that is transcribed. This does not necessarily match the strand of the gene, namely when the sense strand of a gene serves as the template for transcription （<b>sometines the non-template (sense) strand can also be transcribed, so it is not guranteed that the strand of a transcript must be the same with the gene </b>）. Occassionally, the strand that is transcribed cannot be predicted reliably. In this case, Arriba indicates the lack of information as a dot (.). 
+<div align=center>
+<img src="https://github.com/qingxiangguo/Tools-for-Cancer-Genome-Analysis/blob/3a21df91df829f6f84516e802f51012e8686143e/img/fusion2.png">
+</div>
 
-* breakpoint1 and breakpoint2 :  The columns contain the coordinates of the breakpoints in gene1 and gene2, respectively. 
+You can see the breaking point in above gene.
 
-* site1 and site2 :  These columns add information about the location of the breakpoints. Possible values are: 5' UTR, 3' UTR, UTR (overlapping with a 5' UTR as well as a 3' UTR), CDS (coding sequence), exon, intron, and intergenic. 
+<b>strand1(gene/fusion) and strand2(gene/fusion)</b>:  
+
+Each of these columns contains two values seperated by a slash. The strand before the slash reflects the strand of the gene according to the gene annotation supplied to Arriba via the parameter -g. 
+
+If the breakpoint is in an <b>intergenic region</b>, the value is ..
+
+The value after the slash reflects the strand that is transcribed. This does not necessarily match the strand of the gene, namely when the sense strand of a gene serves as the template for transcription （<b>sometines the non-template (sense) strand can also be transcribed, so it is not guranteed that the strand of a transcript must be the same with the gene </b>. Occassionally, the strand that is transcribed cannot be predicted reliably. In this case, Arriba indicates the lack of information as a dot (.).
+
+So what will happen when a breaking point is in an intergenic region?
+
+<div align=center>
+<img src="https://github.com/qingxiangguo/Tools-for-Cancer-Genome-Analysis/blob/6796192f2d32c41ce28bb629746b5f4068266480/img/inter2.png">
+</div>
+
+Fusions to intergenic regions, often spanning multiple cryptic exons that potentially encode neo-antigens. Namely, sometimes they can produce RNA transcript and proteins！
+
+<b>breakpoint1 and breakpoint2</b> :  The columns contain the coordinates of the breakpoints in gene1 and gene2, respectively. 
+
+<b>site1 and site2</b> :  These columns add information about the location of the breakpoints. Possible values are: 5' UTR, 3' UTR, UTR (overlapping with a 5' UTR as well as a 3' UTR), CDS (coding sequence), exon, intron, and intergenic. 
+
+
 
 
 

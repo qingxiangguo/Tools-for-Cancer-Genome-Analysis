@@ -104,6 +104,45 @@ Arriba can be supplied with a list of user-defined tags using the parameter -t. 
 Protein domain annotation can be passed to Arriba via the parameter -p. The column retained_protein_domains of Arriba's output file is then populated accordingly.The file must be in GFF3 format.
 
 ### 3.3.8 Structural variant calls from WGS
+If whole-genome sequencing (WGS) data is available, the sensitivity and specificity of Arriba can be improved by passing a list of structural variants detected from WGS to Arriba via the parameter -d. If the structural variant calls were obtained from whole-exome sequencing (WES) data rather than WGS data, the filter no_genomic_support should be disabled, since WES has poor coverage in most regions of the genome, such that many structural variants are missed.Two file formats are accepted: a simple four-column format and the standard Variant Call Format (VCF). The format is detected automatically.
+
+In case of the simple format, the file must contain four columns separated by tabs. The first two columns contain the breakpoints of the structural variants in the format CONTIG:POSITION. The last two columns contain the orientation of the breakpoints. The accepted values are:
+
+* downstream or +: the fusion partner is fused downstream of the breakpoint, i.e., at a coordinate higher than the breakpoint
+(This means the fusion gene is from the breakpoint to the right side)
+
+* upstream or -: the fusion partner is fused at a coordinate lower than the breakpoint
+(This means the fusion gene is from the left side to the breakpoint)
+
+Example:
+```
+1:54420491  6:9248349   +   -
+20:46703288 20:46734546 -   +
+17:61499820 20:45133874 +   +
+3:190967119 7:77868317  -   -
+```
+
+## 3.4 Outputfiles
+### 3.4.1 fusions.tsv
+It should be highly enriched for true predictions. Details are below:
+
+* gene1 and gene2 :  
+Gene1 contains the gene which makes up the 5' end of the transcript and gene2 the gene which makes up the 3' end. If a breakpoint is in an intergenic region, Arriba lists the closest genes upstream and downstream from the breakpoint, separated by a comma. The numbers in parentheses after the closest genes state the distance to the genes. If no genes are annotated for a contig (e.g., for viral genomes), the column contains a dot (.).
+
+* strand1(gene/fusion) and strand2(gene/fusion) :   
+Each of these columns contains two values seperated by a slash. The strand before the slash reflects the strand of the gene according to the gene annotation supplied to Arriba via the parameter -g. 
+
+If the breakpoint is in an intergenic region, the value is .. (because it contains no gene)
+
+The value after the slash reflects the strand that is transcribed. This does not necessarily match the strand of the gene, namely when the sense strand of a gene serves as the template for transcription （<b>sometines the non-template (sense) strand can also be transcribed, so it is not guranteed that the strand of a transcript must be the same with the gene </b>）. Occassionally, the strand that is transcribed cannot be predicted reliably. In this case, Arriba indicates the lack of information as a dot (.). 
+
+* breakpoint1 and breakpoint2 :  
+The columns contain the coordinates of the breakpoints in gene1 and gene2, respectively. 
+
+* site1 and site2 :  
+These columns add information about the location of the breakpoints. Possible values are: 5' UTR, 3' UTR, UTR (overlapping with a 5' UTR as well as a 3' UTR), CDS (coding sequence), exon, intron, and intergenic. 
+
+
 
 
 

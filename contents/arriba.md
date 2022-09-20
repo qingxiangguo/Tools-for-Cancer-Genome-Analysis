@@ -76,7 +76,7 @@ arriba \
 Note: In this example, the same file is passed to the parameters -k and -t, because it is used for two purposes: applying sensitive filtering parameters to known fusions (-k) and tagging known fusions in the tags column (-t). However, it is possible to use different files for these two parameters if a user wants to separate the two tasks.
 
 ## 3.3 Inputfiles
-* Alignments
+### 3.3.1 Alignments  
 Arriba takes the main output file of STAR (Aligned.out.bam) as input (parameter -x). If STAR was run with the parameter --chimOutType WithinBAM, then this file contains all the information needed by Arriba to find fusions. When STAR was run with the parameter --chimOutType SeparateSAMold, the main output file lacks chimeric alignments. Instead, STAR writes them to a separate output file named Chimeric.out.sam. In this case, the file needs to be passed to Arriba via the parameter -c in addition to the main output file Aligned.out.bam.
 
 <b>Deletion or Splicing?</b> Arriba extracts alignments which cross the boundaries of annotated genes, because these alignments might arise from focal deletions. In RNA-Seq data deletions of up to several hundred kb are hard to distinguish from splicing. They are represented identically as gapped alignments, because the sizes of many introns are in fact of this order of magnitude.
@@ -85,16 +85,16 @@ STAR applies a rather arbitrary measure to decide whether a gapped alignment ari
 
 As a workaround, these tools recommend reducing the value of the parameter --alignIntronMax <b>(to make it more sensible to a deletion)</b>. But this impairs the quality of alignment, because it reduces the scope that STAR searches to find a spliced alignment <b>(but too small intron size will sacrifice the splicing detection)</b>. To avoid compromising the quality of alignment for the sake of fusion detection, the only solution would be to run STAR twice - once with settings optimized for regular alignment and once for fusion detection. This would double the runtime. In contrast, Arriba does not require to reduce the maximum intron size. It employs a more sensible criterion to distinguish splicing from deletions: Arriba considers all those reads as potential evidence for deletions that span the boundary of annotated genes.
 
-* Assembly
+### 3.3.2 Assembly  
 Arriba takes the assembly as input (parameter -a).  Any assembly can be used as long as its coordinates are compatible with one of the supported assemblies (hg19/hs37d5/GRCh37, hg38/GRCh38, mm10/GRCm38, mm39/GRCm39).
 
-* Annotation
+### 3.3.3 Annotation  
 GENCODE annotation is recommended over RefSeq annotation, because the former has a more comprehensive annotation of transcripts and splice-sites, which boosts the sensitivity. The file must be provided in GTF format.
 
-* Blacklist
+### 3.3.4 Blacklist  
 It is strongly advised to run Arriba with a blacklist (parameter -b). The blacklist removes recurrent alignment artifacts and transcripts which are present in healthy tissue. 
 
-* Known fusions
+### 3.3.5 Known fusions  
 Arriba can be instructed to be particularly sensitive towards events between certain gene pairs by supplying a list of gene pairs (parameter -k). 
 
 

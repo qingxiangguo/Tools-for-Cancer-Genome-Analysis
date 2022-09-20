@@ -32,12 +32,13 @@ Run the demo script with 8 threads.
 
 # 3. Usage
 ## 3.1 The logic of Arriba
-* Detection of chimeric reads must be enabled in STAR by specifying the parameter --chimSegmentMin. In addition, the parameter --chimOutType WithinBAM must be specified to cause STAR to report chimeric reads as supplementary alignments in the main output file Aligned.out.sam. Old versions of STAR (or when STAR is run with --chimOutType SeparateSAMold) wrote supplementary alignments to a separate file named Chimeric.out.sam. Arriba is compatible with this mode of use (see parameter -c), but it is deprecated, because STAR might not support it anymore in the future.
-* Arriba extracts the supplementary alignments from the given input file(s). The supplementary alignments represent evidence about translocations, inversions, duplications, and deletions larger than the usual intron size (as defined by the parameter --alignIntronMax). In order to find fusions arising from deletions smaller than the maximum intron size, Arriba also extracts alignments which cross the boundaries of annotated genes. Once all alignments have been extracted, it applies a set of filters to remove artifacts and transcripts observed in healthy tissue. The final output is a list of fusion predictions which pass all of Arriba's filters.
+*Detection of chimeric reads must be enabled in STAR by specifying the parameter --chimSegmentMin. In addition, the parameter --chimOutType WithinBAM must be specified to cause STAR to report chimeric reads as supplementary alignments in the main output file Aligned.out.sam. Old versions of STAR (or when STAR is run with --chimOutType SeparateSAMold) wrote supplementary alignments to a separate file named Chimeric.out.sam. Arriba is compatible with this mode of use (see parameter -c), but it is deprecated, because STAR might not support it anymore in the future.
+*Arriba extracts the supplementary alignments from the given input file(s). The supplementary alignments represent evidence about translocations, inversions, duplications, and deletions larger than the usual intron size (as defined by the parameter --alignIntronMax). In order to find fusions arising from deletions smaller than the maximum intron size, Arriba also extracts alignments which cross the boundaries of annotated genes. Once all alignments have been extracted, it applies a set of filters to remove artifacts and transcripts observed in healthy tissue. The final output is a list of fusion predictions which pass all of Arriba's filters.
   
-## 3.2 Demo script
+## 3.2 Demo script  
 The following parameters related to chimeric alignment are recommended for improved sensitivity (requires STAR version 2.7.6a or higher):
-```
+
+  ```
 --outFilterMultimapNmax 50 \
 --peOverlapNbasesMin 10 \
 --alignSplicedMateMapLminOverLmate 0.5 \
@@ -51,6 +52,7 @@ The following parameters related to chimeric alignment are recommended for impro
 --chimSegmentReadGapMax 3 \
 --chimMultimapNmax 50
 ```  
+
 Arriba does not care if the BAM files are sorted/indexed or not. For maximum speed, STAR's output should be piped directly to Arriba, such that chimeric reads are extracted while STAR is still running. 
 
 

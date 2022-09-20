@@ -97,6 +97,13 @@ It is strongly advised to run Arriba with a blacklist (parameter -b). The blackl
 ### 3.3.5 Known fusions  
 Arriba can be instructed to be particularly sensitive towards events between certain gene pairs by supplying a list of gene pairs (parameter -k). 
 
+### 3.3.6 Tags
+Arriba can be supplied with a list of user-defined tags using the parameter -t. This feature is useful to annotate known oncogenic fusions, for example. It is constructed in a way that it can be passed as arguments to the parameters -k and -t alike.
+
+### 3.3.7 Protein domains
+Protein domain annotation can be passed to Arriba via the parameter -p. The column retained_protein_domains of Arriba's output file is then populated accordingly.The file must be in GFF3 format.
+
+### 3.3.8 Structural variant calls from WGS
 
 
 

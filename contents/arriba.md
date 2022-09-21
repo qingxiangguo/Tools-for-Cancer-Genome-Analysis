@@ -238,8 +238,24 @@ This column contains the names of the supporting reads separated by commas.
 
 The file fusions.discarded.tsv (as specified by the parameter -O) contains all events that Arriba classified as an artifact or that are also observed in healthy tissue. It has the same format as the file fusions.tsv. This file may be useful if one suspects that an event should be present, but was erroneously discarded by Arriba.
 
+## 3.5 Utility scripts
+### 3.5.1 Extract fusion-supporting alignments
 
+```extract_fusion-supporting_alignments.sh fusions.tsv Aligned.sortedByCoord.out.bam output_prefix```
 
+Description:
+
+This script takes fusion predictions from Arriba (fusions.tsv) and extracts the fusion-supporting alignments listed in the column read_identifiers from the given input BAM file (Aligned.sortedByCoord.out.bam). The input BAM file must be sorted and indexed. For each fusion, a separate mini-BAM file is created containing only the fusion-supporting alignments. The created BAM files are named after the given output prefix and the rank of the fusion in Arriba's output file.
+
+### 3.5.2 Convert fusions.tsv to VCF
+
+```convert_fusions_to_vcf.sh assembly.fa input_fusions.tsv output_fusions.vcf```
+
+Description:
+
+This script converts fusion predictions from Arriba's custom tab-separated format to the standards-compliant Variant Call Format version 4.3.
+
+If a FastA index (.fai) does not exist for the given assembly file, it will be created on-the-fly.
 
 # 4. Citation
 Sebastian Uhrig, Julia Ellermann, Tatjana Walther, Pauline Burkhardt, Martina Fröhlich, Barbara Hutter, Umut H. Toprak, Olaf Neumann, Albrecht Stenzinger, Claudia Scholl, Stefan Fröhling and Benedikt Brors: Accurate and efficient detection of gene fusions from RNA sequencing data. Genome Research. March 2021 31: 448-460; Published in Advance January 13, 2021. doi: 10.1101/gr.257246.119

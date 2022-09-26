@@ -11,5 +11,8 @@ qingxiang.guo@northwestern.edu
 In this section, I provide the installation and usage for a wide range of bioinformatics tools, especially for cancer genomics. This repo will be kept updating. Feedback or experience is warmly welcomed.
 
 # Content
+## RNA-seq aligner
+### [STAR](/contents/STAR.md)
+
 ## Gene fusion analysis
 ### [Arriba](/contents/arriba.md)

@@ -53,15 +53,25 @@ STAR --runThreadN 20 --genomeDir ~/reference/index/STAR/mm10/ --readFilesIn SRR3
 
 ## 2.3 Output files
 
-SRR3589959Aligned.sortedByCoord.out.bam   output sorted by coordinate Aligned.sortedByCoord.out.bam file, similar to samtools sort command.
+SRR3589959Aligned.sortedByCoord.out.bam   
 
-SRR3589959Log.final.out   summary mapping statistics after mapping job is complete, very useful for quality control. The statistics are calculated for each read (single- or paired-end) and then summed or averaged over all reads.
+output sorted by coordinate Aligned.sortedByCoord.out.bam file, similar to samtools sort command.
 
-SRR3589959Log.out   main log file with a lot of detailed information about the run. This file is most useful for troubleshooting and debugging.
+SRR3589959Log.final.out   
 
-SRR3589959Log.progress.out    reports job progress statistics, such as the number of processed reads, % of mapped reads etc. It is updated in 1 minute intervals.
+summary mapping statistics after mapping job is complete, very useful for quality control. The statistics are calculated for each read (single- or paired-end) and then summed or averaged over all reads.
 
-SRR3589959SJ.out.tab   SJ.out.tab contains high confidence collapsed splice junctions in tab-delimited format. 
+SRR3589959Log.out   
+
+main log file with a lot of detailed information about the run. This file is most useful for troubleshooting and debugging.
+
+SRR3589959Log.progress.out   
+
+reports job progress statistics, such as the number of processed reads, % of mapped reads etc. It is updated in 1 minute intervals.
+
+SRR3589959SJ.out.tab   
+
+SJ.out.tab contains high confidence collapsed splice junctions in tab-delimited format. 
 
 <b> Splice junctions </b> Note that STAR defines the junction start/end as intronic bases, while many other software define them as exonic bases. The columns have the following meaning:
 

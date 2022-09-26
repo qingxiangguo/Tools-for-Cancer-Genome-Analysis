@@ -65,18 +65,15 @@ SRR3589959SJ.out.tab   SJ.out.tab contains high confidence collapsed splice junc
 
 <b> Splice junctions </b> Note that STAR defines the junction start/end as intronic bases, while many other software define them as exonic bases. The columns have the following meaning:
 
-column 1: chromosome
-column 2: first base of the intron (1-based)
-column 3: last base of the intron (1-based)
-column 4: strand (0: undefined, 1: +, 2: -)
-column 5: intron motif: 0: non-canonical; 1: GT/AG, 2: CT/AC, 3: GC/AG, 4: CT/GC, 5:
-AT/AC, 6: GT/AT
-column 6: 0: unannotated, 1: annotated in the splice junctions database. Note that in 2-pass
-mode, junctions detected in the 1st pass are reported as annotated, in addition to
-annotated junctions from GTF.
-column 7: number of uniquely mapping reads crossing the junction
-column 8: number of multi-mapping reads crossing the junction
-column 9: maximum spliced alignment overhang
+column 1: chromosome  
+column 2: first base of the intron (1-based)  
+column 3: last base of the intron (1-based)  
+column 4: strand (0: undefined, 1: +, 2: -)  
+column 5: intron motif: 0: non-canonical; 1: GT/AG, 2: CT/AC, 3: GC/AG, 4: CT/GC, 5: AT/AC, 6: GT/AT  
+column 6: 0: unannotated, 1: annotated in the splice junctions database. Note that in 2-pass mode, junctions detected in the 1st pass are reported as annotated, in addition to annotated junctions from GTF.  
+column 7: number of uniquely mapping reads crossing the junction  
+column 8: number of multi-mapping reads crossing the junction  
+column 9: maximum spliced alignment overhang  
 
 # 3. Citation
 Spliced Transcripts Alignment to a Reference © Alexander Dobin, 2009-2022 https://www.ncbi.nlm.nih.gov/pubmed/23104886

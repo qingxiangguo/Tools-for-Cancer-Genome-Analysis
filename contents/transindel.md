@@ -45,7 +45,7 @@ python transIndel_build_RNA.py -i input_bam_file -r reference_genome_fasta -g gt
 -v, --version         show program's version number and exit
 ```
 
-<b>Output files</b>
+<b>Output files</b>  
 your_output_bam_file			:BAM file for CIGAR string redefinement.
 
 transIndel generates the following optional fields in output BAMs
@@ -79,6 +79,6 @@ python transIndel_call.py -i input_bam_from_transIndel_build -o output_vcf_filen
 -v, --version         show program's version number and exit
 ```
 
-<b>Output files</b>
+<b>Output files</b>  
 output_vcf_file   			:Reported Indels with VCF format
 

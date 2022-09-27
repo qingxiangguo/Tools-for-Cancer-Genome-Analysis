@@ -48,10 +48,10 @@ python transIndel_build_RNA.py -i input_bam_file -r reference_genome_fasta -g gt
 <b>Output files</b>  
 your_output_bam_file			:BAM file for CIGAR string redefinement.
 
-transIndel generates the following optional fields in output BAMs
+transIndel generates the following optional fields in output BAMs  
 
-OA  original representative alignment; format: (pos,CIGAR)
-JM  splicing junction reads; infered from GTF or splicing motif (used in RNA-seq BAM)
+OA  original representative alignment; format: (pos,CIGAR)  
+JM  splicing junction reads; infered from GTF or splicing motif (used in RNA-seq BAM)  
 
 ## 2.2 Call indel
 ```

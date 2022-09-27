@@ -1,4 +1,4 @@
-# The installation and usage of BWA
+# The installation and usage of BWA-MEM
 # 1. About
 Splice-unware. BWA is a software package for mapping low-divergent sequences against a large reference genome, such as the human genome. t consists of three algorithms: BWA-backtrack, BWA-SW and BWA-MEM. BWA-MEM, which is the latest, is generally recommended for high-quality queries as it is faster and more accurate.
 # 2. Installation and Usage

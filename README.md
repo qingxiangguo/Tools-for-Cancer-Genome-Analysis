@@ -11,7 +11,10 @@ qingxiang.guo@northwestern.edu
 In this section, I provide the installation and usage for a wide range of bioinformatics tools, especially for cancer genomics. This repo will be kept updating. Feedback or experience is warmly welcomed.
 
 # Content
-## RNA-seq aligner
+## Splice unware aligner
+### [BWA](/contents/bwa.md)
+
+## RNA-seq aligner (splice aware)
 ### [STAR](/contents/STAR.md)
 
 ## Gene fusion analysis

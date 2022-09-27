@@ -13,6 +13,7 @@ In this section, I provide the installation and usage for a wide range of bioinf
 # Content
 ## Splice unware aligner
 ### [BWA-MEM](/contents/bwa.md)
+### [BWA-MEM2](/contents/bwa2.md)
 
 ## RNA-seq aligner (splice aware)
 ### [STAR](/contents/STAR.md)

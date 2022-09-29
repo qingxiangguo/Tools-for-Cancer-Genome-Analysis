@@ -1,4 +1,4 @@
-# Tools-for-Cancer-Genome-Analysis
+# Tools-and-tricks-for-Cancer-Genome-Analysis
 Installation and usage for various tools for cancer genomics
 
 # Contributors

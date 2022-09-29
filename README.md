@@ -10,7 +10,7 @@ qingxiang.guo@northwestern.edu
 # Introduction
 In this section, I provide the installation and usage for a wide range of bioinformatics tools, especially for cancer genomics. This repo will be kept updating. Feedback or experience is warmly welcomed.
 
-# Content
+# Tools
 ## Splice unware aligner
 ### [BWA-MEM](/contents/bwa.md)
 ### [BWA-MEM2](/contents/bwa2.md)
@@ -23,3 +23,5 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ## Gene fusion analysis
 ### [Arriba](/contents/arriba.md)
+
+# Tricks

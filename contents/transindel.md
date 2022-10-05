@@ -46,9 +46,9 @@ python transIndel_build_RNA.py -i input_bam_file -r reference_genome_fasta -g gt
 ```
 
 <b>Input files</b>  
-input_bam_file   			:input BAM file is produced by BWA-MEM and is sorted and indexed.
-reference_genome_fasta (for RNA-seq)    :reference genome in FastA format
-gtf_file (for RNA-seq)    		:gene annotation file in GTF format
+input_bam_file   			:input BAM file is produced by BWA-MEM and is sorted and indexed.  
+reference_genome_fasta (for RNA-seq)    :reference genome in FastA format  
+gtf_file (for RNA-seq)    		:gene annotation file in GTF format  
 
 <b>Output files</b>  
 your_output_bam_file			:BAM file for CIGAR string redefinement.

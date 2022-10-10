@@ -1,4 +1,5 @@
-# Filtering by the MAPQ (60) and output BAM file
+# Samtools
+## Filtering by the MAPQ (60) and output BAM file
 
 ```
 samtools view -@ 8 -bh -q 60 test.bam -o test_q60.bam

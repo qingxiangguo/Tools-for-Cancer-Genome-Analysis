@@ -22,8 +22,8 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ### [STAR](/contents/STAR.md)
 
 ##  Manipulating alignments
-### Samtools(/contents/samtools.md)
-### Picard(/contents/picard.md)
+### [Samtools](/contents/samtools.md)
+### [Picard](/contents/picard.md)
 
 ## Indel calling
 ### [transindel](/contents/transindel.md)

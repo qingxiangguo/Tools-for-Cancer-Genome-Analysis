@@ -18,6 +18,10 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ## RNA-seq aligner (splice aware)
 ### [STAR](/contents/STAR.md)
 
+##  Manipulating alignments
+### Samtools
+### Picard
+
 ## Indel calling
 ### [transindel](/contents/transindel.md)
 

@@ -12,7 +12,7 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 # Tools
 ## Data transfer
-### [fasterq-dump] (/contents/fasterq.md)
+### [fasterq-dump](/contents/fasterq.md)
 
 ## Splice unware aligner
 ### [BWA-MEM](/contents/bwa.md)

@@ -261,7 +261,26 @@ If a FastA index (.fai) does not exist for the given assembly file, it will be c
 Note: the BAM file has to be indexed by samtools:
 
 ```
-Rscript /home/qgn1237/2_software/arriba_v2.3.0/draw_fusions.R     --fusions=/projects/b1171/qgn1237/3_scanneo2_pipeline/2_arriba/fusions.tsv     --alignments=/projects/b1171/qgn1237/3_scanneo2_pipeline/1_STAR_align/SRR9736820_STAR_q30_sorted_noduplicate.bam     --output=SRR9736820_fusions.pdf     --annotation=/projects/b1171/qgn1237/1_my_database/GRCh38_p13/gencode.v41.chr_patch_hapl_scaff.annotation.gtf     --cytobands=/home/qgn1237/2_software/arriba_v2.3.0/database/cytobands_hg38_GRCh38_v2.3.0.tsv     --proteinDomains=/home/qgn1237/2_software/arriba_v2.3.0/database/protein_domains_hg38_GRCh38_v2.3.0.gff3
+#!/bin/bash
+#SBATCH --account=b1042
+#SBATCH --partition=genomics ## Required: (buyin, short, normal, long, gengpu, genhimem, etc)
+#SBATCH --time=03:00:00 ## Required: How long will the job need to run (remember different partitions have restrictions on this parameter)
+#SBATCH --nodes=1 ## how many computers/nodes do you need (no default)
+#SBATCH --ntasks-per-node=1 ## how many cpus or processors do you need on per computer/node (default value 1)
+#SBATCH --mem=20G ## how much RAM do you need per computer/node (this affects your FairShare score so be careful to not ask for more than you need))
+#SBATCH --job-name=AllenGuo ## When you run squeue -u  this is how you can identify the job
+#SBATCH --output=output.log ## standard out and standard error goes to this file
+
+# A regular comment in Bash
+module load R/4.2.0
+
+Rscript /home/qgn1237/2_software/arriba_v2.3.0/draw_fusions.R \
+    --fusions=/projects/b1171/qgn1237/3_scanneo2_pipeline/2_arriba/fusions.tsv \
+    --alignments=/projects/b1171/qgn1237/3_scanneo2_pipeline/1_STAR_align/SRR9736820_STAR_q30_sorted_noduplicate.bam \
+    --output=SRR9736820_fusions.pdf \
+    --annotation=/projects/b1171/qgn1237/1_my_database/GRCh38_p13/gencode.v41.chr_patch_hapl_scaff.annotation.gtf \
+    --cytobands=/home/qgn1237/2_software/arriba_v2.3.0/database/cytobands_hg38_GRCh38_v2.3.0.tsv \
+    --proteinDomains=/home/qgn1237/2_software/arriba_v2.3.0/database/protein_domains_hg38_GRCh38_v2.3.0.gff3
 ```
 
 # 4. Citation

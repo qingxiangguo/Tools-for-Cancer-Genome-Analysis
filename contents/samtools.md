@@ -29,4 +29,9 @@ Output:
 276594 + 0 with mate mapped to a different chr
 276594 + 0 with mate mapped to a different chr (mapQ>=5)
 
+## Index the BAM file
+```
+samtools index SRR9736820_STAR_q30_sorted_noduplicate.bam SRR9736820_STAR_q30_sorted_noduplicate.bam.bai
+```
+
 

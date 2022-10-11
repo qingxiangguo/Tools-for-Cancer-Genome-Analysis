@@ -31,7 +31,7 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ## Gene fusion analysis
 ### [Arriba](/contents/arriba.md)
 
-# Tricks
+# Other tips
 ## Find and load R in Northwestern quest  
 You can see which versions of R are available on Quest, and which version is the default, with the command  
 ```

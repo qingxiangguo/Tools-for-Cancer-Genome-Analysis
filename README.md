@@ -32,3 +32,13 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ### [Arriba](/contents/arriba.md)
 
 # Tricks
+Find and load R in Northwestern quest  
+You can see which versions of R are available on Quest, and which version is the default, with the command  
+```
+module spider R
+```
+
+You can make a particular version of R available to use by typing the full module name with the version included as listed in the output  
+```
+module load R/4.2.0
+```

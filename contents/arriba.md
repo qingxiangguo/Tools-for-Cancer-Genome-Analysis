@@ -257,5 +257,12 @@ This script converts fusion predictions from Arriba's custom tab-separated forma
 
 If a FastA index (.fai) does not exist for the given assembly file, it will be created on-the-fly.
 
+### 3.5.3 Visualization
+Note: the BAM file has to be indexed by samtools:
+
+```
+Rscript /home/qgn1237/2_software/arriba_v2.3.0/draw_fusions.R     --fusions=/projects/b1171/qgn1237/3_scanneo2_pipeline/2_arriba/fusions.tsv     --alignments=/projects/b1171/qgn1237/3_scanneo2_pipeline/1_STAR_align/SRR9736820_STAR_q30_sorted_noduplicate.bam     --output=SRR9736820_fusions.pdf     --annotation=/projects/b1171/qgn1237/1_my_database/GRCh38_p13/gencode.v41.chr_patch_hapl_scaff.annotation.gtf     --cytobands=/home/qgn1237/2_software/arriba_v2.3.0/database/cytobands_hg38_GRCh38_v2.3.0.tsv     --proteinDomains=/home/qgn1237/2_software/arriba_v2.3.0/database/protein_domains_hg38_GRCh38_v2.3.0.gff3
+```
+
 # 4. Citation
 Sebastian Uhrig, Julia Ellermann, Tatjana Walther, Pauline Burkhardt, Martina Fröhlich, Barbara Hutter, Umut H. Toprak, Olaf Neumann, Albrecht Stenzinger, Claudia Scholl, Stefan Fröhling and Benedikt Brors: Accurate and efficient detection of gene fusions from RNA sequencing data. Genome Research. March 2021 31: 448-460; Published in Advance January 13, 2021. doi: 10.1101/gr.257246.119

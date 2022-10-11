@@ -9,7 +9,7 @@ samtools view -@ 8 -bh -q 60 test.bam -o test_q60.bam
 \# -b       output BAM
 \# -q INT   only include reads with mapping quality >= INT [0]
 
-## Summarize the bam file
+## Summarize the BAM file
 ```
 samtools flagstat SRR9736820_STAR_q30_sorted.bam
 ```

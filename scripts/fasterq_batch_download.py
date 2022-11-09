@@ -17,7 +17,7 @@ sra_accession_number = ["SRR11951439", "SRR11951443", "SRR11951444", "SRR1195144
                         "SRR11951527", "SRR11951528", "SRR11951530", "SRR11951531", "SRR11951532", "SRR11951533", "SRR11951534",
                         "SRR11951535", "SRR11951536", "SRR11951537", "SRR11951542"]
 
-# This will download the .sra files to your custom file (will create directory if not present)
+# This will download the .sra files to ~/ncbi/public/sra/ (will create directory if not present)
 for sra_id in sra_accession_number:
     print("Current downloading" + sra_id)
     prefetch_cmd = "prefetch " + sra_id + " -O /home/qgn1237/qgn1237/2_raw_data/smooth_seq_95_sc_K562_SMRT" # Note the space between commands
@@ -27,6 +27,6 @@ for sra_id in sra_accession_number:
 # This will create the fastq file from the downloaded sra file
 for sra_id in sra_accession_number:
     print("Creating fastq file for" + sra_id)
-    fasterq_dump_cmd = "fasterq-dump /home/qgn1237/qgn1237/2_raw_data/smooth_seq_95_sc_K562_SMRT/" + {sra_id} + " -O /home/qgn1237/qgn1237/2_raw_data/smooth_seq_95_sc_K562_SMRT" # Use the fstring here
+    fasterq_dump_cmd = "fasterq-dump /home/qgn1237/qgn1237/2_raw_data/smooth_seq_95_sc_K562_SMRT/" + sra_id + " -O /home/qgn1237/qgn1237/2_raw_data/smooth_seq_95_sc_K562_SMRT/" + sra_id # Use the fstring here
     print("The running command is " + fasterq_dump_cmd)
     subprocess.call(fasterq_dump_cmd, shell=True)

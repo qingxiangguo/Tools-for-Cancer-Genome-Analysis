@@ -88,3 +88,8 @@ for sra_id in sra_accession_number:
     print("The running command is " + fasterq_dump_cmd)
     subprocess.call(fasterq_dump_cmd, shell=True)
 ```
+
+## Batch remove a certain type of files from a directory
+```
+python batch_delete_all_sra_files.py
+```

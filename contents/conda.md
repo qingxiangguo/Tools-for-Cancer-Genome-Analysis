@@ -17,14 +17,12 @@ bash Anaconda3-2022.10-Linux-x86_64.sh
 
 # Do you wish the installer to initialize Anaconda3 by running conda init?
 
-# Type No, press Enter
-
-
-
-
+# Type No, press Enter, in this way, you will not automatically go to conda base environment
 ```
 
-## 2.2 Running mapping job with BWA-MEM
+## 2.2 Create an Environment, for example, you want to add a series of softwares for structural variation analysis
+
+
 
 ## 2.3 Output files
 

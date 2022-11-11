@@ -111,17 +111,3 @@ Check the packages and softwares you install
 ```
 conda list
 ```
-
-
-
-
-
-
-
-
-
-
-
-## 2.3 Output files
-
-# 3. Citation

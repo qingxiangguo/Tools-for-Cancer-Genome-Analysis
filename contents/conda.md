@@ -81,7 +81,7 @@ Remove the former environment
 conda remove -n biosoft --all
 ```
 
-Go to the bin directory of mambaforge
+Go to the bin directory of mambaforge， because you don't use auto init, you have to do this every time when you want to use mamba
 ```
 ./mamba init
 

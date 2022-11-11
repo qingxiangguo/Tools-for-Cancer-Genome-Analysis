@@ -1,4 +1,4 @@
-# The installation and usage of Conda (Anaconda)
+# The installation and usage of Conda (Anaconda) and Mamba
 # 1. About
 Package management system and environment management system
 # 2. Installation and Usage

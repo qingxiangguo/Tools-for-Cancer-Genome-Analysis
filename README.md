@@ -122,3 +122,8 @@ mamba activate mamba666
 
 minimap2 -d /home/qgn1237/qgn1237/1_my_database/GRCh38_p13/minimap2_index/GRCh38.p13.genome.mmi /projects/b1171/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa -t 6
 ```
+
+## Batch create directories from list
+```
+python ./batch_create_directory_from_list.py
+```

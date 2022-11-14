@@ -14,6 +14,12 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ## Data transfer
 ### [fasterq-dump](/contents/fasterq.md)
 
+## Management
+### [Conda and Mamba](/contents/conda.md)
+
+## DNA and RNA-seq aligner (splice aware)
+### [Minimap2](/contents/minimap2.md)
+
 ## Splice unware aligner
 ### [BWA-MEM](/contents/bwa.md)
 ### [BWA-MEM2](/contents/bwa2.md)

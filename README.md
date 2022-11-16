@@ -34,7 +34,9 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ## Indel calling
 ### [transindel](/contents/transindel.md)
 
-## Gene fusion analysis
+## Genome structural variation analysis
+
+## Gene fusion analysis - RNA-seq level
 ### [Arriba](/contents/arriba.md)
 
 # Other tips

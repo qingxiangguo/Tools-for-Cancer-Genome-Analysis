@@ -111,3 +111,8 @@ Check the packages and softwares you install
 ```
 conda list
 ```
+
+Uninstall software
+```
+mamba uninstall samtools
+```

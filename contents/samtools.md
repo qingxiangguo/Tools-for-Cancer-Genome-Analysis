@@ -43,7 +43,7 @@ samtools sort SRR11951439.sam -o SRR11951439_sort.bam -@ 8
 ## Get the overall genome coverage from a sorted bam
 ```
 # $6 means the sixth column, NR means row number > 1, n++ means the index add 1 everytime
-samtools coverage SRR11951439_sort.bam | awk 'NR>1 {sum+=$6; n++} END { print "Average = ",sum/n}'
+samtools coverage SRR11951439_sort.bam | awk 'NR>1 {sum+=$6; n++} END { print "GenomeAverageCoverage= ",sum/n}'
 ```
 
 

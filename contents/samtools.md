@@ -34,4 +34,12 @@ Output:
 samtools index SRR9736820_STAR_q30_sorted_noduplicate.bam SRR9736820_STAR_q30_sorted_noduplicate.bam.bai
 ```
 
+## Sort the SAM file into a sorted BAM file
+```
+# -@ is the number of precessors
+samtools sort SRR11951439.sam -o SRR11951439_sort.bam -@ 8
+```
+
+
+
 

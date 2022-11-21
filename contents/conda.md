@@ -116,3 +116,8 @@ Uninstall software
 ```
 mamba uninstall samtools
 ```
+
+Install the specific version of software
+```
+mamba install -c bioconda samtools=1.16
+```

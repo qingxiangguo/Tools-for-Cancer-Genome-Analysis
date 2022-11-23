@@ -16,8 +16,9 @@ mamba install -c bioconda PBSV=2.8.0
 
 ## 2.1 Discover signatures
 It is highly recommended to provide one tandem repeat annotation .bed file of your reference to pbsv discover via --tandem-repeats. This increases sensitivity and recall. 
-```
 
+```
+pbsv discover --tandem-repeats ~/qgn1237/1_my_database/GRCh38_p13/tandem_repeats/human_GRCh38_no_alt_analysis_set.trf.bed ./SRR11951439_sort.bam ./SRR11951439_sort.svsig.gz
 ```
 
 ## 2.2 Call structural variants and assign genotypes

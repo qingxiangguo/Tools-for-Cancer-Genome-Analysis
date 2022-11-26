@@ -28,7 +28,7 @@ pbsv call --ccs -j 6 ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa /ho
 -j means tthreads
 
 ## 2.3 Output files
-
+SRR11951439_sort.var.vcf
 
 
 

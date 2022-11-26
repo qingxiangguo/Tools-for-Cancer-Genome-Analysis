@@ -129,3 +129,6 @@ minimap2 -d /home/qgn1237/qgn1237/1_my_database/GRCh38_p13/minimap2_index/GRCh38
 ```
 python ./batch_create_directory_from_list.py
 ```
+
+## Cancel a job in NU Quest
+```scancel -u NETID ```

@@ -23,11 +23,12 @@ pbsv discover --tandem-repeats ~/qgn1237/1_my_database/GRCh38_p13/tandem_repeats
 
 ## 2.2 Call structural variants and assign genotypes
 ```
-
+pbsv call --ccs -j 6 ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa /home/qgn1237/qgn1237/4_single_cell_SV_chimera/1_smooth_seq_95_sc_K562_SMRT/SRR11951439/SRR11951439_sort.svsig.gz /home/qgn1237/qgn1237/4_single_cell_SV_chimera/1_smooth_seq_95_sc_K562_SMRT/SRR11951439/SRR11951439_sort.var.vcf
 ```
--a means outputing in SAM format; -x means a preset depends on your task aim.
+-j means tthreads
 
 ## 2.3 Output files
+
 
 
 

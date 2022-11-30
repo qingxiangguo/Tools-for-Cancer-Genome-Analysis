@@ -14,7 +14,7 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ## Data transfer
 ### [fasterq-dump](/contents/fasterq.md)
 
-## Management
+## Configuration and management
 ### [Conda and Mamba](/contents/conda.md)
 
 ## DNA and RNA-seq aligner (splice aware)

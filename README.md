@@ -35,6 +35,7 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ### [transindel](/contents/transindel.md)
 
 ## Genome structural variation analysis
+### [PBSV](/contents/pbsv.md)
 
 ## Gene fusion analysis - RNA-seq level
 ### [Arriba](/contents/arriba.md)

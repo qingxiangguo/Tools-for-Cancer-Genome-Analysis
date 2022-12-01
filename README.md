@@ -40,7 +40,7 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ## Gene fusion analysis - RNA-seq level
 ### [Arriba](/contents/arriba.md)
 
-# Other tips
+# Other small tricks and tips
 ## Find and load R in Northwestern quest  
 You can see which versions of R are available on Quest, and which version is the default, with the command  
 ```
@@ -133,3 +133,10 @@ python ./batch_create_directory_from_list.py
 
 ## Cancel a job in NU Quest
 ```scancel -u NETID ```
+
+## Solve the error when connecting quest using SSH client: client_global_hostkeys_private_confirm: server gave bad signature for RSA key 0
+This might because the cliend delete your key file, and the server can't recognize you.
+Run the cmd to regenerate the keys:
+```
+/usr/bin/ssh-keygen -A
+```

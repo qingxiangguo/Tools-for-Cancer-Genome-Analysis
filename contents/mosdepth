@@ -15,6 +15,9 @@ mosdepth -n --fast-mode SRR11951439 SRR11951439_sort.bam
 # -n means dont output per-base depth. skipping this output will speed execution
 ```
 
+## 2.2 Output
+The useful output is SRR11951439.mosdepth.summary.txt
+
 
 
 

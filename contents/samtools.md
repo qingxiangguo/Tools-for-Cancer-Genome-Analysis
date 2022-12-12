@@ -47,6 +47,14 @@ samtools sort SRR11951439.sam -o SRR11951439_sort.bam -@ 8
 samtools coverage SRR11951439_sort.bam | awk 'NR>1 {suma+=$5; sumb+=$3 } END { print "GenomeCoverageAverage = ",suma/sumb}'
 ```
 
+## Estimate the overall genome depth (X) from a bam
+```samtools depth -a  *bamfile*  |  awk '{sum+=$3} END { print "Average = ",sum/{$genome_total_base_size}}' ```
+
+The total size can be calculated like this:
+
+```samtools view -H *bamfile* | grep -P '^@SQ' | cut -f 3 -d ':' | awk '{sum+=$1} END {print sum}' 
+# This command get the @SQ line from sam/bam, get the third line and sum them, then you get all the total genome size
+```
 
 
 

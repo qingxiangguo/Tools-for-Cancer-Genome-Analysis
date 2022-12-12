@@ -140,3 +140,11 @@ Run the cmd to regenerate the keys:
 ```
 /usr/bin/ssh-keygen -A
 ```
+
+## Estimate genome coverage from sorted BAM file to exclude files with too low genome coverage
+
+```estimate_bam_genome_coverage.py```
+
+It will produce a coverage_list, exclude single cells that less than 10% coverage, and get a bad list
+
+```second_coloumn_smaller_than.py```

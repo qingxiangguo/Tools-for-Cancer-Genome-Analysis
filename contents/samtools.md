@@ -52,9 +52,9 @@ samtools coverage SRR11951439_sort.bam | awk 'NR>1 {suma+=$5; sumb+=$3 } END { p
 
 The total size can be calculated like this:
 
-```samtools view -H *bamfile* | grep -P '^@SQ' | cut -f 3 -d ':' | awk '{sum+=$1} END {print sum}' 
-# This command get the @SQ line from sam/bam, get the third line and sum them, then you get all the total genome size
-```
+```samtools view -H *bamfile* | grep -P '^@SQ' | cut -f 3 -d ':' | awk '{sum+=$1} END {print sum}' ```
+This command get the @SQ line from sam/bam, get the third line and sum them, then you get all the total genome size
+
 
 
 

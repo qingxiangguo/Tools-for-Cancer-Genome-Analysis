@@ -1,27 +1,35 @@
 # Tools-and-tricks-for-Cancer-Genome-Analysis
 Installation and usage for various tools for cancer genomics
 
-# Contributors
+## Contributors
+
 Qingxiang (Allen) Guo  
 Postdoctoral Fellow  
 Northwestern University, Feinberg School of Medicine
 qingxiang.guo@northwestern.edu
 
-# Introduction
+## Introduction
+
 In this section, I provide the installation and usage for a wide range of bioinformatics tools, especially for cancer genomics. This repo will be kept updating. Feedback or experience is warmly welcomed.
 
-# Tools
+## Tools
+
 ## Data transfer
+
 ### [fasterq-dump](/contents/fasterq.md)
 
 ## Configuration and management
+
 ### [Conda and Mamba](/contents/conda.md)
 
 ## DNA and RNA-seq aligner (splice aware)
+
 ### [Minimap2](/contents/minimap2.md)
 
 ## Splice unware aligner
+
 ### [BWA-MEM](/contents/bwa.md)
+
 ### [BWA-MEM2](/contents/bwa2.md)
 
 ## RNA-seq aligner (splice aware)
@@ -40,8 +48,8 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ## Gene fusion analysis - RNA-seq level
 ### [Arriba](/contents/arriba.md)
 
-# Other small tricks and tips
-## Find and load R in Northwestern quest  
+## Other small tricks and tips
+### Find and load R in Northwestern quest  
 You can see which versions of R are available on Quest, and which version is the default, with the command  
 ```
 module spider R
@@ -52,7 +60,7 @@ You can make a particular version of R available to use by typing the full modul
 module load R/4.2.0
 ```
 
-## Batch download SRA files from NCBI
+### Batch download SRA files from NCBI
 Go to the NCBI SRA site, select the SRA file you need and go to "Run selector" to got batch list in this way.
 
 Use perl one-liner to process the header
@@ -98,12 +106,12 @@ for sra_id in sra_accession_number:
     subprocess.call(fasterq_dump_cmd, shell=True)
 ```
 
-## Batch remove a certain type of files from a directory
+### Batch remove a certain type of files from a directory
 ```
 python batch_delete_all_sra_files.py
 ```
 
-## Use Mamba or Conda environment in Slurm Batch sbumit in NU Quest
+### Use Mamba or Conda environment in Slurm Batch sbumit in NU Quest
 You have to resource the mamba by yourself
 ```
 #!/bin/bash
@@ -126,25 +134,64 @@ mamba activate mamba666
 minimap2 -d /home/qgn1237/qgn1237/1_my_database/GRCh38_p13/minimap2_index/GRCh38.p13.genome.mmi /projects/b1171/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa -t 6
 ```
 
-## Batch create directories from list
+### Batch create directories from list
 ```
 python ./batch_create_directory_from_list.py
 ```
 
-## Cancel a job in NU Quest
+### Cancel a job in NU Quest
+
 ```scancel -u NETID ```
 
-## Solve the error when connecting quest using SSH client: client_global_hostkeys_private_confirm: server gave bad signature for RSA key 0
+### Solve the error when connecting quest using SSH client: client_global_hostkeys_private_confirm: server gave bad signature for RSA key 0
 This might because the cliend delete your key file, and the server can't recognize you.
 Run the cmd to regenerate the keys:
 ```
 /usr/bin/ssh-keygen -A
 ```
 
-## Estimate genome coverage from sorted BAM file to exclude files with too low genome coverage
+### Estimate genome coverage from sorted BAM file to exclude files with too low genome coverage
 
 ```estimate_bam_genome_coverage.py```
 
 It will produce a coverage_list, exclude single cells that less than 10% coverage, and get a bad list
 
 ```second_coloumn_smaller_than.py```
+
+### Calculate the genome depth (total mapped length/total genome base)
+```
+calculate_genome_depth_fast.py <your BAM file>
+```
+
+
+### How to remain connect with SSH on MAC
+
+```bash
+sudo vim /etc/ssh/sshd_config
+```
+
+Then edit the content: #ClientAliveInterval 900 #ClientAliveCountMax 10
+
+```bash
+sudo launchctl start com.openssh.sshd
+```
+
+### Make a alias for your command
+
+```bash
+alias sq='squeue | grep "netid"'
+```
+
+```bash
+alias ma='mamba activate mamba666'
+```
+
+Add these lines to ~/.bash.rc then source
+
+### Upload seq data directly from Nanopore to NU Quest server
+
+### Use bash to loop make new directory in current directory
+
+```bash
+for dir in */; do cd "$dir"; mkdir 10X_depth ; cd ..; done
+```

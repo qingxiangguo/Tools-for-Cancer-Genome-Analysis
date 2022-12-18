@@ -186,6 +186,10 @@ alias sq='squeue | grep "netid"'
 alias ma='mamba activate mamba666'
 ```
 
+```bash
+alias rl='readlink -f'
+```
+
 Add these lines to ~/.bash.rc then source
 
 ### Upload seq data directly from Nanopore to NU Quest server

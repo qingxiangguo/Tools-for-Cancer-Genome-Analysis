@@ -1,4 +1,4 @@
-#!/home/user/2_software/mambaforge/envs/mamba666/bin/python
+#!/home/qgn1237/2_software/mambaforge/envs/mamba666/bin/python
 # -*- coding: utf-8 -*-
 
 import sys
@@ -22,7 +22,7 @@ suffix = sys.argv[2]
 cmd = f"pbsv discover {input_file_abs_path} {input_file_base_name}.{suffix}"
 
 # Write the command to the cmd_list file in append mode
-with open("cmd_list", "a") as f:
+with open("cmd_list", "w") as f:
     f.write("#!/bin/bash\n"
             "#SBATCH --account=b1042\n"
             "#SBATCH --partition=genomics ## Required: (buyin, short, normal, long, gengpu, genhimem, etc)\n"

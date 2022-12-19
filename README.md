@@ -33,22 +33,29 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ### [BWA-MEM2](/contents/bwa2.md)
 
 ## RNA-seq aligner (splice aware)
+
 ### [STAR](/contents/STAR.md)
 
 ##  Manipulating alignments
+
 ### [Samtools](/contents/samtools.md)
+
 ### [Picard](/contents/picard.md)
 
 ## Indel calling
+
 ### [transindel](/contents/transindel.md)
 
 ## Genome structural variation analysis
+
 ### [PBSV](/contents/pbsv.md)
 
 ## Gene fusion analysis - RNA-seq level
+
 ### [Arriba](/contents/arriba.md)
 
 ## Other small tricks and tips
+
 ### Find and load R in Northwestern quest  
 You can see which versions of R are available on Quest, and which version is the default, with the command  
 ```
@@ -180,22 +187,51 @@ sudo launchctl start com.openssh.sshd
 
 ```bash
 alias sq='squeue | grep "netid"'
-```
 
-```bash
+alias cdd='cd ../../'
+
 alias ma='mamba activate mamba666'
-```
 
-```bash
 alias rl='readlink -f'
+
+alias sb='sbatch'
 ```
 
 Add these lines to ~/.bash.rc then source
 
 ### Upload seq data directly from Nanopore to NU Quest server
 
+
+
 ### Use bash to loop make new directory in current directory
 
 ```bash
 for dir in */; do cd "$dir"; mkdir 10X_depth ; cd ..; done
+```
+
+### Generate sbatch cmd list by specifying the input file and the suffix you want, this can sava time and avoid mistake
+
+```bash
+# Edite the cmd = f"samtools view -s 0.384 -b {input_file_abs_path} -@ 8 > {input_file_base_name}.{suffix}" in generate_cmd.py to your desired command
+./generate_cmd.py ../VCaP.bam 10X.bam 
+
+# Then excute in the directory where you want to store the ouput file
+sbatch cmd_list
+
+# You can customize the command as you like
+
+./pbsv2_cmd.py 22Rv1_10X_sort.svsig.gz var.vcf
+```
+
+### Add the PATH environment variable 
+
+```bash
+echo 'PATH=$PATH:/home/qgn1237/1_script' >> ~/.bashrc
+source ~/.bashrc
+```
+
+### Find the files end with certain suffix in current direcotry
+
+```bash
+find_suffix_in_current_directory.py <suffix>
 ```

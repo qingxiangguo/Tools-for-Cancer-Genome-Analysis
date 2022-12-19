@@ -1,4 +1,5 @@
 # Tools-and-tricks-for-Cancer-Genome-Analysis
+
 Installation and usage for various tools for cancer genomics
 
 ## Contributors
@@ -36,11 +37,13 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [STAR](/contents/STAR.md)
 
-##  Manipulating alignments
+## Manipulating and analyzing alignments
 
 ### [Samtools](/contents/samtools.md)
 
 ### [Picard](/contents/picard.md)
+
+### [mosdepth](/contents/.md)
 
 ## Indel calling
 
@@ -50,6 +53,8 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [PBSV](/contents/pbsv.md)
 
+### [SVIM](/contents/SVIM.md)
+
 ## Gene fusion analysis - RNA-seq level
 
 ### [Arriba](/contents/arriba.md)
@@ -57,28 +62,32 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ## Other small tricks and tips
 
 ### Find and load R in Northwestern quest  
+
 You can see which versions of R are available on Quest, and which version is the default, with the command  
-```
+
+```bash
 module spider R
 ```
 
 You can make a particular version of R available to use by typing the full module name with the version included as listed in the output  
-```
+
+```bash
 module load R/4.2.0
 ```
 
 ### Batch download SRA files from NCBI
+
 Go to the NCBI SRA site, select the SRA file you need and go to "Run selector" to got batch list in this way.
 
 Use perl one-liner to process the header
 
-```
+```bash
 perl -p -i -e 's/(\S+)\n/"$1", /g' list
 ```
 
 Revise the script and batch download with the python script:
 
-```
+```bash
 # _*_ coding=utf-8 _*_
 import subprocess
 
@@ -114,13 +123,16 @@ for sra_id in sra_accession_number:
 ```
 
 ### Batch remove a certain type of files from a directory
-```
+
+```bash
 python batch_delete_all_sra_files.py
 ```
 
 ### Use Mamba or Conda environment in Slurm Batch sbumit in NU Quest
+
 You have to resource the mamba by yourself
-```
+
+```bash
 #!/bin/bash
 #SBATCH --account=b1042
 #SBATCH --partition=genomics ## Required: (buyin, short, normal, long, gengpu, genhimem, etc)
@@ -142,18 +154,23 @@ minimap2 -d /home/qgn1237/qgn1237/1_my_database/GRCh38_p13/minimap2_index/GRCh38
 ```
 
 ### Batch create directories from list
-```
+
+```bash
 python ./batch_create_directory_from_list.py
 ```
 
 ### Cancel a job in NU Quest
 
-```scancel -u NETID ```
+```bash
+scancel -u NETID
+```
 
 ### Solve the error when connecting quest using SSH client: client_global_hostkeys_private_confirm: server gave bad signature for RSA key 0
+
 This might because the cliend delete your key file, and the server can't recognize you.
 Run the cmd to regenerate the keys:
-```
+
+```bash
 /usr/bin/ssh-keygen -A
 ```
 
@@ -166,6 +183,7 @@ It will produce a coverage_list, exclude single cells that less than 10% coverag
 ```second_coloumn_smaller_than.py```
 
 ### Calculate the genome depth (total mapped length/total genome base)
+
 ```
 calculate_genome_depth_fast.py <your BAM file>
 ```

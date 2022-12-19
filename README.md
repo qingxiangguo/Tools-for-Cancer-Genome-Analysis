@@ -43,7 +43,7 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [Picard](/contents/picard.md)
 
-### [mosdepth](/contents/.md)
+### [mosdepth](/contents/mosdepth.md)
 
 ## Indel calling
 

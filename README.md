@@ -213,6 +213,8 @@ alias ma='mamba activate mamba666'
 alias rl='readlink -f'
 
 alias sb='sbatch'
+
+alias lsn='less -SN'
 ```
 
 Add these lines to ~/.bash.rc then source
@@ -252,4 +254,10 @@ source ~/.bashrc
 
 ```bash
 find_suffix_in_current_directory.py <suffix>
+```
+
+### Filter vcf based on quality
+
+```bash
+filter_vcf_based_on_quality.py input.vcf 20 > output.vcf
 ```

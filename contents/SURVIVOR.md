@@ -28,6 +28,12 @@ Take the type into account (1==yes, else no): 1
 Take the strands of SVs into account (1==yes, else no): 0
 Estimate distance based on the size of SV (1==yes, else no): 0
 
-### 2.3 Output files
+Output files: merged_filtered.vcf
 
-merged_filtered.vcf
+### 2.2 Get SV statistics
+
+```bash
+SURVIVOR stats merged_filtered.vcf -1 -1 -1 vcf_summary > merged_filtered.vcf.stat
+```
+
+This will output: merged_filtered.vcf.stat  vcf_summary_CHR vcf_summary vcf_summarysupport

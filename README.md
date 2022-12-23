@@ -23,6 +23,8 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [Conda and Mamba](/contents/conda.md)
 
+### [Git](/contents/git.md)
+
 ## DNA and RNA-seq aligner (splice aware)
 
 ### [Minimap2](/contents/minimap2.md)
@@ -54,6 +56,8 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ### [PBSV](/contents/pbsv.md)
 
 ### [SVIM](/contents/SVIM.md)
+
+### [SURVIVOR](/contents/SURVIVOR.md) 
 
 ## Gene fusion analysis - RNA-seq level
 
@@ -288,3 +292,5 @@ For Vimium,go into the Vimium addon's preferences, right-click the Vimium icon n
 
 For Chrome, install in <https://chrome.google.com/webstore/detail/dracula-chrome-theme/gfapcejdoghpoidkfodoiiffaaibpaem>
 
+### Copy all the file including hidden files
+cp -r ~/OneDrive\ -\ Northwestern\ University/deep_learning_math_theory/. ./

@@ -233,7 +233,6 @@ rsync -avz /path/to/minion/files qgn1237@quest.northwestern.edu:/home/qgn1237
 # Then it will ask you for the password of northwestern Quest
 ```
 
-
 ### Use bash to loop make new directory in current directory
 
 ```bash

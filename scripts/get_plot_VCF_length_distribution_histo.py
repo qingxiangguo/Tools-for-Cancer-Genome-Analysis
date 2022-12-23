@@ -3,7 +3,6 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import sys
 import argparse
 
 # Set arguments
@@ -46,5 +45,11 @@ elif variant_type == 'TRA':
     sns.histplot(data=df, x='SV_length', color='#9467bd') 
 elif variant_type == 'DUP':
     sns.histplot(data=df, x='SV_length', color='#ff7f0f')     
+else:
+    print("The variant type must be one of the INS, DEL, INV, TRA, DUP")
 
-    
+# Save the plot as a PNG file with the desired size
+plt.gcf().set_size_inches(14, 8)
+
+# Save the plot as a PNG file
+plt.savefig('plot.png', dpi=900)

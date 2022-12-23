@@ -36,6 +36,9 @@ plt.legend(fontsize=18)
 # Save the plot as a PNG file with the desired size
 # plt.gcf use the plt from matplotlib.pyplot to get the picture self and then resize  
 plt.gcf().set_size_inches(12, 8)
+plt.gcf().set_size_inches(12, 8)
+plt.gcf().set_size_inches(12, 8)
 
 # Save the plot as a PNG file
 plt.savefig('22Rv1_SV_type_across_depth.png', dpi=900)
+

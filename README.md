@@ -221,6 +221,17 @@ Add these lines to ~/.bash.rc then source
 
 ### Upload seq data directly from Nanopore to NU Quest server
 
+You can treat Nanopore MinION as a server itself. First, login into MinION with wifi, and get the IP address of MinION. Then, at your on PC terminal, type： ssh -x minit@<IP>. The it will ask you for the password. The password is: minit. Then you will login into MinION system.
+
+Navigate the system, cd .. to the higher level of directory and find your data.
+
+Then use the following command to transfer
+
+```bash
+rsync -avz /path/to/minion/files qgn1237@quest.northwestern.edu:/home/qgn1237
+
+# Then it will ask you for the password of northwestern Quest
+```
 
 
 ### Use bash to loop make new directory in current directory
@@ -261,3 +272,20 @@ find_suffix_in_current_directory.py <suffix>
 ```bash
 filter_vcf_based_on_quality.py input.vcf 20 > output.vcf
 ```
+
+### Install and import Dracula theme (my favorite theme) into Iterm2, Chrome Vimium, Chrome
+
+For Iterm2 go to any folder and run command: 
+
+```bash
+git clone https://github.com/dracula/iterm.git
+
+cd iterm/  # The go to the profiles, colors, and import the  Dracula.itermcolors, 
+
+# Then select Dracula in color presets done!
+```
+
+For Vimium,go into the Vimium addon's preferences, right-click the Vimium icon next to the address bar and select “Manage Extension.” On the Extensions page, paste <https://raw.githubusercontent.com/dracula/vimium/master/vimium-dracula.css> to CSS for Vimium UI
+
+For Chrome, install in <https://chrome.google.com/webstore/detail/dracula-chrome-theme/gfapcejdoghpoidkfodoiiffaaibpaem>
+

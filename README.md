@@ -293,4 +293,59 @@ For Vimium,go into the Vimium addon's preferences, right-click the Vimium icon n
 For Chrome, install in <https://chrome.google.com/webstore/detail/dracula-chrome-theme/gfapcejdoghpoidkfodoiiffaaibpaem>
 
 ### Copy all the file including hidden files
+
 cp -r ~/OneDrive\ -\ Northwestern\ University/deep_learning_math_theory/. ./
+
+### Use Python script to fulfill the function of Bash "for $dir in ./; do ..."
+
+```bash
+bash_cmd_to_python.py
+```
+
+### How to configure the local SSH and key to enable rapid login
+
+first edit the file: ~/.ssh/config
+Add content:
+
+```bash
+Host quest
+    HostName quest.northwestern.edu
+    User XXX
+    Port 22
+```
+
+create a SSH key and copy to server
+
+```bash
+ssh-keygen
+# you will be prompted to enter a passphrase for the key, enter for no password. This is a password for password. Don't use it.
+
+ssh-copy-id quest
+# copy your public key to an existing server, it will prompt you for the password of the remote user’s account
+# Type in the password (your typing will not be displayed for security purposes) and press ENTER. 
+# The utility will connect to the account on the remote host using the password you provided. It will then copy the contents of your 
+# ~/.ssh/id_rsa.pub key into a file in the remote account’s home ~/.ssh directory called authorized_keys.
+
+# You should be able to log into the remote host without the remote account’s password
+ssh quest
+```
+
+### Download from quest to local and upload from local to quest
+
+```bash
+rsync -azvhP quest:~/R/ ./local
+
+rsync -azvhP ./local quest:~/R/
+```
+
+### Install NeoVim from source code
+
+You need to install new gcc, cmake, and make
+
+```bash
+git clone https://github.com/neovim/neovim
+
+make CMAKE_INSTALL_PREFIX=/home/qgn1237/2_software/mambaforge/envs/mamba666/
+
+make install
+```

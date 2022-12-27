@@ -118,6 +118,13 @@ mamba uninstall samtools
 ```
 
 Install the specific version of software
-```
+
+```bash
 mamba install -c bioconda samtools=1.16
+```
+
+Shift to base environment
+
+```bash
+mamba activate base
 ```

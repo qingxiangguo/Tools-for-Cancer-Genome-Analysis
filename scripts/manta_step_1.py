@@ -13,7 +13,7 @@ if len(sys.argv) != 2:
 # Get the absolute path and dirname of the input file
 input_file = sys.argv[1]
 input_file_abs_path = os.path.abspath(input_file)
-input_file_dir_name = os.path.dirname(input_file)
+input_file_dir_name = os.path.dirname(input_file_abs_path)
 
 # Generate the command using the template and the arguments
 cmd = "configManta.py --tumorBam={} --referenceFasta=/projects/b1171/twp7981/database/genome/hg38.fa --runDir={}/manta".format(input_file_abs_path, input_file_dir_name)

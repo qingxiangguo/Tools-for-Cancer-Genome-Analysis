@@ -58,10 +58,10 @@ elif variant_type == 'INS':
     plt.title(f'Length distribution of insertion for {cell_name} {depth_name}', fontsize=22)
 elif variant_type == 'INV':
     sns.histplot(data=df, x='SV_length', color='#d62728')             
-    plt.title('Length distribution of inversion for {cell_name} {depth_name}', fontsize=22)
+    plt.title(f'Length distribution of inversion for {cell_name} {depth_name}', fontsize=22)
 elif variant_type == 'DUP':
     sns.histplot(data=df, x='SV_length', color='#ff7f0f')     
-    plt.title('Length distribution of duplication for {cell_name} {depth_name}', fontsize=22)
+    plt.title(f'Length distribution of duplication for {cell_name} {depth_name}', fontsize=22)
 else:
     print("The variant type must be one of the INS, DEL, INV, DUP")
 

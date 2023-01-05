@@ -1,4 +1,4 @@
-#!/home/qgn1237/2_software/mambaforge/envs/mamba666/bin/python
+#!/home/qgn1237/2_software/mambaforge/envs/mamba_py_39/bin/python
 # _*_ coding=utf-8 _*_
 import pandas as pd
 import seaborn as sns

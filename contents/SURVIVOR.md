@@ -37,3 +37,23 @@ SURVIVOR stats merged_filtered.vcf -1 -1 -1 vcf_summary > merged_filtered.vcf.st
 ```
 
 This will output: merged_filtered.vcf.stat  vcf_summary_CHR vcf_summary vcf_summarysupport
+
+### 2.3 Get overlap between software or samples
+
+```bash
+perl -ne 'print "$1\n" if /SUPP_VEC=([^,;]+)/' merged_filtered.vcf | sed -e 's/\(.\)/\1 /g' > merged_filtered_overlapp.txt
+```
+
+```R
+#here is the R code
+library(VennDiagram)
+
+t = read.table("merged_filtered_overlapp.txt", header = FALSE)
+
+dst = data.matrix(t(t))
+
+venn.diagram(list(PBSV = which(t[,1]==1), SVIM = which(t[,2]==1)) , fill = c("orange" ,"blue"), alpha = c(0.5, 0.5), cex = 2, lty = 2, filename = "my_software_overlapp.png");
+
+#exit R 
+quit()
+```

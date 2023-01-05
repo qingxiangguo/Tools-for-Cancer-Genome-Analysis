@@ -5,7 +5,6 @@ Surprisingly, seaborn was not a good choice for plotting stacked barplot, so we 
 """
 import pandas as pd
 import matplotlib.pyplot as plt
-import sys
 
 # Create the list for the number for each SV type at each depth
 del_list = [10735, 12642, 13638, 14246, 14815, 15411]
@@ -35,8 +34,6 @@ plt.yticks(size = 16)
 plt.legend(fontsize=18)
 # Save the plot as a PNG file with the desired size
 # plt.gcf use the plt from matplotlib.pyplot to get the picture self and then resize  
-plt.gcf().set_size_inches(12, 8)
-plt.gcf().set_size_inches(12, 8)
 plt.gcf().set_size_inches(12, 8)
 
 # Save the plot as a PNG file

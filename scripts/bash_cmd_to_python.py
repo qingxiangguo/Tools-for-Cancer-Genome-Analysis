@@ -3,7 +3,7 @@
 import glob
 import subprocess
 
-for path in glob.glob("/home/qgn1237/working/*/*/SURVIVOR"):
+for path in glob.glob("/home/qgn1237/working/NGS_data/*/*/SURVIVOR"):
     cmd_1 = "cd " + path + "; " \
         + "get_plot_VCF_length_distribution_histo.py -i merged_filtered.vcf -v DEL;" \
         + "get_plot_VCF_length_distribution_histo.py -i merged_filtered.vcf -v INS;" \

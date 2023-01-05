@@ -30,3 +30,5 @@ for sra_id in sra_accession_number:
     fasterq_dump_cmd = "fasterq-dump /home/qgn1237/qgn1237/2_raw_data/smooth_seq_95_sc_K562_SMRT/" + sra_id + " -O /home/qgn1237/qgn1237/2_raw_data/smooth_seq_95_sc_K562_SMRT/" + sra_id # Use the fstring here
     print("The running command is " + fasterq_dump_cmd)
     subprocess.call(fasterq_dump_cmd, shell=True)
+
+    

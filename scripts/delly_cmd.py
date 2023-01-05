@@ -18,7 +18,7 @@ input_file_base_name = os.path.basename(input_file_abs_path).split(".")[0]
 print(input_file_dir_name , "dirname")
 # Generate the command using the template and the arguments
 cmd1 = f"delly call -g /projects/b1171/twp7981/database/genome/hg38.fa {input_file_abs_path} > {input_file_dir_name}/delly/{input_file_base_name}_delly.vcf"
-cmd2 = f"bcftools filter -i 'FILTER=\"PASS\" && INFO/PE>=1' {input_file_dir_name}/delly/*_delly.vcf > {input_file_dir_name}/delly/{input_file_base_name}_filtered.vcf"
+cmd2 = f"bcftools filter -i 'FILTER=\"PASS\"' {input_file_dir_name}/delly/*_delly.vcf > {input_file_dir_name}/delly/{input_file_base_name}_filtered.vcf"
 
 # Write the command to the cmd_list file in append mode
 with open("cmd_list", "w") as f:

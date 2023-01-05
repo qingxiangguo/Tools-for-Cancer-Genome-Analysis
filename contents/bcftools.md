@@ -12,12 +12,9 @@
 mamba install -c bioconda bcftools=1.15
 ```
 
-### 2.1 Assume that you've already index and sort the BAM file first
+### 2.1 filter INFO field, like, filter the results of SVs detected by delly 
 
 ```bash
-
+bcftools filter -i 'FILTER="PASS" && INFO/PE>=1' 22Rv1.5X.vcf > test.vcf
+# This will include the variants that meet the conditions at the same time
 ```
-
-### 2.3 Output files
-
-SRR11951439_sort.var.vcf

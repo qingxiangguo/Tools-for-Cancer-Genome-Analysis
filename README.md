@@ -168,6 +168,11 @@ python ./batch_create_directory_from_list.py
 ```bash
 scancel -u NETID
 ```
+### Kill a job
+
+```bash
+scancel 35087 
+```
 
 ### Solve the error when connecting quest using SSH client: client_global_hostkeys_private_confirm: server gave bad signature for RSA key 0
 
@@ -219,6 +224,8 @@ alias rl='readlink -f'
 alias sb='sbatch'
 
 alias lsn='less -SN'
+
+alias vim='nvim'
 ```
 
 Add these lines to ~/.bash.rc then source
@@ -246,7 +253,7 @@ for dir in */; do cd "$dir"; mkdir 10X_depth ; cd ..; done
 ### Generate sbatch cmd list by specifying the input file and the suffix you want, this can sava time and avoid mistake
 
 ```bash
-# Edite the cmd = f"samtools view -s 0.384 -b {input_file_abs_path} -@ 8 > {input_file_base_name}.{suffix}" in generate_cmd.py to your desired command
+# Edit the cmd = f"samtools view -s 0.384 -b {input_file_abs_path} -@ 8 > {input_file_base_name}.{suffix}" in generate_cmd.py to your desired command
 ./generate_cmd.py ../VCaP.bam 10X.bam 
 
 # Then excute in the directory where you want to store the ouput file
@@ -335,7 +342,7 @@ ssh quest
 ```bash
 rsync -azvhP quest:~/R/ ./local
 
-rsync -azvhP ./local quest:~/R/
+rsync -azvhP ./Tools-for-Cancer-Genome-Analysis/scripts/plot_VCF_chrom_freq_count.py quest:~/1_script/
 ```
 
 ### Install NeoVim from source code
@@ -348,4 +355,19 @@ git clone https://github.com/neovim/neovim
 make CMAKE_INSTALL_PREFIX=/home/qgn1237/2_software/mambaforge/envs/mamba666/
 
 make install
+
+# add alias
+alias vim='nvim'
+```
+
+### Find a file by name 
+
+```bash
+find ./ -name "my_software_overlapp*"
+```
+
+### Double loop in bash, this can make you more efficient
+
+```bash
+for i in 22Rv1 DU145 LNCaP PC3 VCaP; do cd $i; for j in ./*depth; do rl $j/delly/*_filtered.vcf > $j/SURVIVOR/list_vcf; rl $j/manta/results/variants/tumorSV.vcf >> $j/SURVIVOR/list_vcf; done; cd ..; done
 ```

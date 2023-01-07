@@ -371,3 +371,45 @@ find ./ -name "my_software_overlapp*"
 ```bash
 for i in 22Rv1 DU145 LNCaP PC3 VCaP; do cd $i; for j in ./*depth; do rl $j/delly/*_filtered.vcf > $j/SURVIVOR/list_vcf; rl $j/manta/results/variants/tumorSV.vcf >> $j/SURVIVOR/list_vcf; done; cd ..; done
 ```
+
+### Usage of Rust Cargo to install rm-improved, which will give you a trash can for deletion
+
+```bash
+cargo install rm-improved
+# Then you will have 'rip' command
+mkdir trash_can
+# Remove file
+rip t.p 
+# Undo the last deletion
+rip -u
+# Change the graveyard 
+export GRAVEYARD=/home/qgn1237/qgn1237/trash_can
+# You can also udo specific files
+rip -u 
+```
+
+### Error: AttributeError: module 'matplotlib' has no attribute 'use'"
+
+```bash
+# Uninstall and install matplotlib again
+pip uninstall matplotlib
+pip install matplotlib
+```
+
+### lsd command, dust command in Rust
+
+The next gen ls command, a more intuitive version of du in rust
+
+```bash
+cargo install lsd
+cargo install du-dust
+# You can then alias the lsd to ls
+```
+
+### Allow automatic in VScode
+
+### Soft link your file to Onedrive in Windows
+
+mklink /D "OneDrive path/file_name" "/local/file_name"
+
+Then the file will be automatically updated.

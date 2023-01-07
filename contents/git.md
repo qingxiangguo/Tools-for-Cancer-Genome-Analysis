@@ -1,6 +1,12 @@
 # The usage of git command
 
 ```bash
+# If you want to build a new repo
+mkdir Allen_Guo_Rust_Learning_Note
+cd Allen_Guo_Rust_Learning_Note 
+git init
+vim README.md
+
 git clone https://github.com/qingxiangguo/qingxiangguo.git # clone a repo from git to local
 
 git status

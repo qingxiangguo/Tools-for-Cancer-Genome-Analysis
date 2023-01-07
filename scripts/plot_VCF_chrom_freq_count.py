@@ -40,7 +40,6 @@ def whether_in_correct(chr_str):
     else:
         return False
     
-
 with open(input_file, "r") as vcf_file:
     for line in vcf_file:
         if line[0] == "#":
@@ -53,7 +52,7 @@ with open(input_file, "r") as vcf_file:
             else:
                 continue
 
-# Prepare pandas dataframe from previous list
+# Prepare pandas dataframe from preious list
 data = {'chr_info' : chromo_distribution_list}
 df = pd.DataFrame.from_dict(data)
 

@@ -410,6 +410,76 @@ cargo install du-dust
 
 ### Soft link your file to Onedrive in Windows
 
+```dos
 mklink /D "OneDrive path/file_name" "/local/file_name"
+```
 
 Then the file will be automatically updated.
+
+### Install Starship prompt in your linux system or mac local system
+
+Starship is the minimal, blazing-fast, and infinitely customizable prompt for any shell! Let's install in quest first.
+
+```bash
+curl -O https://starship.rs/install.sh
+chmod 755 install.sh
+# Install to your own direcotry
+./install.sh -b ~/.local/bin
+#Add the following to the end of ~/.bashrc:
+# Before conda init block!
+eval "$(starship init bash)"
+source ~/.bashrc
+```
+
+### Make use of ~/.local/bin
+
+Try to make a bin file if there is not. The /home/qgn1237/.local/bin will by default in your $PATH. So try to link or move the binary file of your different mamba/conda ENV in this direcotry, so you don't need to shift between ENV now.
+
+For example
+
+```bash
+[qgn1237@quser23 ~]$ which vim
+alias vim='nvim'
+	~/.local/bin/nvim
+```
+
+### Install Fish on MAC and switch from Bash to Fish as default shell
+
+First make sure you have installed Homebrew.
+
+```bash
+brew install fish
+# Make sure that you've successfully installed Fish
+fish --version
+# Make Fish as your default shell
+# Add /usr/local/bin/fish to your list of shells
+
+# It should be noted that, for the M2 chip mac, homebrew will not install stuff
+# in /usr/local/bin/fish , but /opt/homebrew/bin/fish
+
+# Besides, the following command will not work 
+sudo echo /usr/local/bin/fish >> /etc/shells
+Changing shell for qgn1237.
+Password for qgn1237:
+chsh: /usr/local/bin/fish: non-standard shell
+# This is because, the latter doesn't work because the output redirection >> is (tried to be) applied by the shell before the sudo … is executed, and of course the user shell has no permission to do that.
+```
+
+Instead, you should do:
+
+```bash
+echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/fish
+```
+
+Exit and restart your shell, you'are done.
+
+### Switch from Bash to Fish
+
+I've rarely explore the other possibility besides bash, and I don't think comfort zone is a good sign for me. So I decide to switch to Fish, which seems to be more powerful.
+
+```bash
+# You can refer to https://yangyangli.top/posts/012-make-a-powerful-ternimal/
+# Know your current shell
+echo $SHELL
+```

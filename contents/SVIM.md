@@ -18,6 +18,23 @@ mamba install -c bioconda svim
 svim alignment /home/qgn1237/qgn1237/4_single_cell_SV_chimera/1_smooth_seq_95_sc_K562_SMRT/SRR11951439/svim /projects/b1171/qgn1237/4_single_cell_SV_chimera/1_smooth_seq_95_sc_K562_SMRT/SRR11951439/SRR11951439_sort.bam ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa
 ```
 
-### 2.3 Output files
+### 2.2 Output files
 
 SRR11951439_sort.var.vcf
+
+### 2.3 Filtering
+
+Since the output SVIM is unfiltered, we have to filter them manually
+This is very very important since SVIM ouput almost everything.
+
+```bash
+for dir in *depth/; do cd "$dir"; cd svim; filter_vcf_based_on_quality.py variants.vcf 2 > filtered_variant.vcf; cd ../..; done
+```
+
+Or you can do it with BCFtools
+
+```bash
+bcftools view -i 'QUAL >= 10' variants.vcf'.
+```
+
+For high-coverage datasets (>40x), we would recommend a threshold of 10-15. For low-coverage datasets, the threshold should be lower (>3-5).

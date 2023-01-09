@@ -226,6 +226,8 @@ alias sb='sbatch'
 alias lsn='less -SN'
 
 alias vim='nvim'
+
+alias ls='lsd'
 ```
 
 Add these lines to ~/.bash.rc then source
@@ -423,17 +425,23 @@ Starship is the minimal, blazing-fast, and infinitely customizable prompt for an
 ```bash
 curl -O https://starship.rs/install.sh
 chmod 755 install.sh
-# Install to your own direcotry
+# Install to your own directory
 ./install.sh -b ~/.local/bin
-#Add the following to the end of ~/.bashrc:
+
+# If you use bash shell, add the following to the end of ~/.bashrc:
 # Before conda init block!
 eval "$(starship init bash)"
 source ~/.bashrc
+
+# If you use mac Fish, add the following in the center  ~/.config/fish/config.fish:
+starship init fish | source 
+
+# Exit and you're done!
 ```
 
 ### Make use of ~/.local/bin
 
-Try to make a bin file if there is not. The /home/qgn1237/.local/bin will by default in your $PATH. So try to link or move the binary file of your different mamba/conda ENV in this direcotry, so you don't need to shift between ENV now.
+Try to make a bin file if there is not. The /home/qgn1237/.local/bin will by default in your $PATH. So try to link or move the binary file of your different mamba/conda ENV in this directory, so you don't need to shift between ENV now.
 
 For example
 
@@ -462,7 +470,11 @@ sudo echo /usr/local/bin/fish >> /etc/shells
 Changing shell for qgn1237.
 Password for qgn1237:
 chsh: /usr/local/bin/fish: non-standard shell
-# This is because, the latter doesn't work because the output redirection >> is (tried to be) applied by the shell before the sudo … is executed, and of course the user shell has no permission to do that.
+
+# This is because, the latter doesn't work because the 
+# output redirection >> is (tried to be) applied by the shell 
+# before the sudo … is executed, and of course the user shell 
+# has no permission to do that.
 ```
 
 Instead, you should do:
@@ -474,7 +486,14 @@ chsh -s /opt/homebrew/bin/fish
 
 Exit and restart your shell, you'are done.
 
-### Switch from Bash to Fish
+```bash
+# Fish can do many little tricks
+# Calculation
+math 2/5
+0.4
+```
+
+### Install Fish shell on a remote cluster that you can not sudo
 
 I've rarely explore the other possibility besides bash, and I don't think comfort zone is a good sign for me. So I decide to switch to Fish, which seems to be more powerful.
 
@@ -482,4 +501,192 @@ I've rarely explore the other possibility besides bash, and I don't think comfor
 # You can refer to https://yangyangli.top/posts/012-make-a-powerful-ternimal/
 # Know your current shell
 echo $SHELL
+# Go to mamba environment
+ma
+# Build from source code
+wget https://github.com/fish-shell/fish-shell/archive/refs/tags/3.6.0.tar.gz
+tar zxf 3.6.0.tar.gz
+cd fish-shell-3.6.0/
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local ..
+# This would install fish and its associated files under $HOME/.local. The fish executable would be located in $HOME/.ocal/bin (which you may want to add to your $PATH).
+make
+make install
 ```
+
+When you type: fish, it shows:
+fish: error while loading shared libraries: libpcre2-32.so.0: cannot open shared object file: No such file or director
+
+This because fish can not find the lib file, and you also don't have the permission
+to /usr/local/lib. The solution is to find the path of libpcre2-32.so.0 
+
+```bash
+❯ find_suffix_in_current_directory.py libpcre2-32.so.0
+./2_software/mambaforge/pkgs/pcre2-10.40-hc3806b6_0/lib/libpcre2-32.so.0
+./2_software/mambaforge/envs/mamba_py_39/lib/libpcre2-32.so.0
+./2_software/mambaforge/envs/mamba666/lib/libpcre2-32.so.0
+
+echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/2_software/mambaforge/pkgs/pcre2-10.40-hc3806b6_0/lib/' >> ~/.bashrc
+source ~/.bashrc
+
+# Type fish and you're good!
+# Now make it as your default shell
+vim ~/.config/fish/config.fish
+# add 
+starship init fish | source
+# When you go to fish, the starship will prompt automatically.
+```
+
+Next step, let's make you to change to Fish automatically while connect to server.
+chsh won't do it without the shell being listed in /etc/shells, and other ways of editing that configuration also require root permissions. 
+
+```bash
+# Add this to .bashrc
+if [[ $- = *i* ]]; then
+   exec fish
+fi
+```
+
+Now you're all good, everytime you login into bash, bashrc will lead you to fish
+Then fish will start starship automatically.
+
+### The fish version can not be shown, the git version may be too old
+
+```bash
+# Upgrade your git command first
+mamba install -c anaconda git
+# Uninstall fish
+rip /home/qgn1237/.local/etc/fish/
+rip /home/qgn1237/.local/share/fish
+rip /home/qgn1237/.config/fish
+cd /home/qgn1237/.local/bin
+rip fish fish_indent fish_key_reader
+
+# Reinstall fish
+git clone https://github.com/fish-shell/fish-shell.git
+cd fish-shell/
+cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local .
+make
+make install
+
+fish --version
+# fish, version 3.6.0-24-g16369a3ab
+
+# You're good now. The problem is because that the git is too old.
+# Fish generates the version at build time with the build_tools/git_version_gen.sh script
+```
+
+### Permantly add alias (functions) to fish
+
+```bash
+alias sq='squeue | grep "netid"'
+funcsave sq
+
+alias cdd='cd ../../'
+funcsave cdd
+
+alias ma='mamba activate mamba666'
+funcsave ma
+
+alias rl='readlink -f'
+funcsave rl
+
+alias sb='sbatch'
+funcsave sb
+
+alias lsn='less -SN'
+funcsave lsn
+
+alias vim='nvim'
+funcsave vim
+
+alias ls='lsd'
+funcsave ls
+
+# That creates ~/.config/fish/functions/ls.fish which will then be available in any fish session.
+```
+
+Or you can edit the fish rc file
+
+```bash
+vim ~/.config/fish/config.fish
+# Add all the alis to thr fishrc file
+```
+
+### Add mamba to Fish shell
+
+Fish will automatically load your .bashrc file.
+But you have to add mamba to fish manually.
+
+```fish
+# add the following to ~/.config/fish/config.fish
+# Adapted from `function conda` printed by `conda shell.fish hook`, following
+# `mamba.sh`.
+function mamba --inherit-variable CONDA_EXE
+  if [ (count $argv) -lt 1 ]
+    $CONDA_EXE
+  else
+    set -l mamba_exe (dirname $CONDA_EXE)/mamba
+    set -l cmd $argv[1]
+    set -e argv[1]
+    switch $cmd
+      case activate deactivate
+        eval ($CONDA_EXE shell.fish $cmd $argv)
+      case install update upgrade remove uninstall
+        $mamba_exe $cmd $argv
+        and eval ($CONDA_EXE shell.fish reactivate)
+      case '*'
+        $mamba_exe $cmd $argv
+    end
+  end
+end 
+```
+
+```fish
+mamba init fish
+# This will add lines to your fish rc file
+```
+
+Now you can do:
+
+```fish
+mamba activate mamba666
+# Backup your rc file
+cp ~/.config/fish/config.fish ~/.config/fish/config.fish.bk
+```
+
+The idea is to give mamba the power to do mamba activate like conda activate.
+
+
+### Install Oh-my-fish shell on a remote cluster that you can not sudo
+
+Oh My Fish provides core infrastructure to allow you to install packages which extend or modify the look of your shell. It's fast, extensible and easy to use.
+
+```fish
+curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install > install
+fish install --path=~/.local/share/omf --config=~/.config/omf
+# Install aborted: Git version 1.9.5 or greater required; you have 1.8.3.1
+mamba activate mamba666 # We habe the new git here.
+
+fish install --path=~/.local/share/omf --config=~/.config/omf
+# It will succeed this time.
+```
+
+### Install fish LOGO function by oh-my-fish
+
+```fish
+omf install fish_logo
+
+# Add this to your fish greeting with this function:
+function fish_greeting
+    fish_logo
+end
+
+# Just write it to ~/.config/fish/functions/fish_greeting.fish
+# You will see it every time you start a new session.
+```
+
+<div align=center>
+<img src="img/fish_logo.png">
+</div

@@ -579,30 +579,22 @@ fish --version
 
 ### Permantly add alias (functions) to fish
 
-```bash
-alias sq='squeue | grep "netid"'
-funcsave sq
+```fish
+alias -s sq='squeue | grep "netid"'
 
-alias cdd='cd ../../'
-funcsave cdd
+alias -s cdd='cd ../../'
 
-alias ma='mamba activate mamba666'
-funcsave ma
+alias -s ma='mamba activate mamba666'
 
-alias rl='readlink -f'
-funcsave rl
+alias -s rl='readlink -f'
 
-alias sb='sbatch'
-funcsave sb
+alias -s sb='sbatch'
 
-alias lsn='less -SN'
-funcsave lsn
+alias -s lsn='less -SN'
 
-alias vim='nvim'
-funcsave vim
+alias -s vim='nvim'
 
-alias ls='lsd'
-funcsave ls
+alias -s ls='lsd'
 
 # That creates ~/.config/fish/functions/ls.fish which will then be available in any fish session.
 ```
@@ -690,3 +682,17 @@ end
 <div align=center>
 <img src="img/fish_logo.png">
 </div
+
+### Install Oh-My-Fish theme
+
+```fish
+# All your available theme
+omf theme
+omf install bobthefish
+```
+
+### Install Starship presets
+
+```fish
+starship preset pastel-powerline > ~/.config/starship.toml
+```

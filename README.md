@@ -47,17 +47,29 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [mosdepth](/contents/mosdepth.md)
 
+### [BCFtools](/contents/bcftools.md)
+
 ## Indel calling
 
 ### [transindel](/contents/transindel.md)
 
-## Genome structural variation analysis
+## Genome structural variation detection (NGS)
 
-### [PBSV](/contents/pbsv.md)
+### [Delly](/contents/delly.md)
+
+### [Manta](/contents/manta.md)
+
+## Genome structural variation detection (long read)
 
 ### [SVIM](/contents/SVIM.md)
 
+### [PBSV](/contents/pbsv.md)
+
+## Genome structural variation downstream analysis
+
 ### [SURVIVOR](/contents/SURVIVOR.md) 
+
+### [surpyvor](/contents/surpyvor.md) 
 
 ## Gene fusion analysis - RNA-seq level
 
@@ -724,5 +736,4 @@ for dir in (ls -d SRR11563614 SRR11563615 SRR11563616)
     mv "$source_dir"/*.sra "$target_dir"
     rip "$source_dir"
 end
-
 ```

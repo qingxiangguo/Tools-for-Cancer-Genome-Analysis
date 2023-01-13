@@ -36,13 +36,15 @@ Or you can do it with BCFtools
 ```bash
 bcftools view -i 'QUAL >= 10' variants.vcf'.
 # or you can do
-filter_vcf_based_on_quality.py variants.vcf 8 > filtered_variant.vcf
+filter_vcf_based_on_quality.py variants.vcf 2 > filtered_variant.vcf
 ```
 
 For high-coverage datasets (>40x), we would recommend a threshold of 10-15. For low-coverage datasets, the threshold should be lower (>3-5). For 30 I choose 8.
 
+Or you can do not do this
+
 ```bash
-for dir in *depth/; do cd "$dir"; cd svim; filter_vcf_based_on_quality.py variants.vcf 8 > filtered_variant.vcf; cd ../..; done
+for dir in *depth/; do cd "$dir"; cd svim; filter_vcf_based_on_quality.py variants.vcf 2 > filtered_variant.vcf; cd ../..; done
 # For 30x, the value is 7
 # For 25x, the value is 6
 # for 20x, the value is 5

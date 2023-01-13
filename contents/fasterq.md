@@ -4,7 +4,7 @@ The fasterq-dump tool extracts data in FASTQ- or FASTA-format from SRA-accession
 Download raw data using prefetch + fasterq-dump
 
 ```
-prefetch SRR9736820 -O /home/qgn1237/qgn1237/2_raw_data
+prefetch SRR9736820 -O /home/qgn1237/qgn1237/2_raw_data/
 ```
 
 ```
@@ -19,5 +19,5 @@ prefetch SRR9736820 -O /home/qgn1237/qgn1237/2_raw_data
 #SBATCH --output=output.log ## standard out and standard error goes to this file
 
 # A regular comment in Bash
-fasterq-dump --split-files ./SRR9736820
+fasterq-dump --split-files /home/qgn1237/qgn1237/2_raw_data/SRR9736820 -O /home/qgn1237/qgn1237/2_raw_data/SRR9736820 
 ```

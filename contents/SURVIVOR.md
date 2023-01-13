@@ -18,7 +18,7 @@ mamba install -c bioconda survivor=1.0.7
 # Get the absolute path of VCF files to merge
 readline -f SV*.vcf > list_vcf
 
-SURVIVOR merge list_vcf 500 1 1 0 0 50 merged_filtered.vcf 
+SURVIVOR merge list_vcf 200 1 0 0 0 50 merged_filtered.vcf 
 ```
 
 Here the filtering parameters of SURVIVOR are the following:

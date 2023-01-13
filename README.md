@@ -580,7 +580,7 @@ fish --version
 ### Permantly add alias (functions) to fish
 
 ```fish
-alias -s sq='squeue | grep "netid"'
+alias -s sq='squeue | grep "qgn1237"'
 
 alias -s cdd='cd ../../'
 
@@ -695,4 +695,34 @@ omf install bobthefish
 
 ```fish
 starship preset pastel-powerline > ~/.config/starship.toml
+```
+
+### Set environmental variable in Fish 
+
+```fish
+set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
+```
+
+### A more efficient way to produce commandline and submit jobs in quest (fish shell)
+
+This is a useful script from Tingyou Wang.
+
+```fish
+# n means the number of command you want to divide
+divide -i cmd_list_332 -n 4 
+sub # Write by myself
+```
+
+### Use Fish shell to do loop
+
+The fish shell language is more clean and comfortable.
+
+```fish
+for dir in (ls -d SRR11563614 SRR11563615 SRR11563616)
+    set source_dir "$dir/$dir"
+    set target_dir "$dir"
+    mv "$source_dir"/*.sra "$target_dir"
+    rip "$source_dir"
+end
+
 ```

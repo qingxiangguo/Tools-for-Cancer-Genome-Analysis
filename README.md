@@ -410,7 +410,7 @@ pip uninstall matplotlib
 pip install matplotlib
 ```
 
-### lsd command, dust command in Rust
+### Useful Rust command collection, lsd command, dust command in Rust
 
 The next gen ls command, a more intuitive version of du in rust
 
@@ -671,7 +671,7 @@ Oh My Fish provides core infrastructure to allow you to install packages which e
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install > install
 fish install --path=~/.local/share/omf --config=~/.config/omf
 # Install aborted: Git version 1.9.5 or greater required; you have 1.8.3.1
-mamba activate mamba666 # We habe the new git here.
+mamba activate mamba666 # We have the new git here.
 
 fish install --path=~/.local/share/omf --config=~/.config/omf
 # It will succeed this time.
@@ -701,6 +701,13 @@ end
 # All your available theme
 omf theme
 omf install bobthefish
+```
+
+### Uninstall Oh-My-Fish  
+
+```fish
+ma # Go to mamba666 env with higher git version
+omf destroy
 ```
 
 ### Install Starship presets
@@ -737,3 +744,105 @@ for dir in (ls -d SRR11563614 SRR11563615 SRR11563616)
     rip "$source_dir"
 end
 ```
+
+### Install Fisher and install functions 
+
+A plugin manager for Fish—the friendly interactive shell.
+
+```fish
+curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+
+# Install functions
+fisher install laughedelic/fish_logo
+```
+
+### Setting vscode as the default editor for text files in Mac Finder
+
+```fish
+brew install duti
+
+# To set all text files and code files to vscode instead of xcode use this set of shell commands.
+
+duti -s com.microsoft.VSCode public.json all
+duti -s com.microsoft.VSCode public.plain-text all
+duti -s com.microsoft.VSCode public.python-script all
+duti -s com.microsoft.VSCode public.shell-script all
+duti -s com.microsoft.VSCode public.source-code all
+duti -s com.microsoft.VSCode public.text all
+duti -s com.microsoft.VSCode public.unix-executable all
+# this works for files without a filename extension
+duti -s com.microsoft.VSCode public.data all
+
+duti -s com.microsoft.VSCode .c all
+duti -s com.microsoft.VSCode .cpp all
+duti -s com.microsoft.VSCode .cs all
+duti -s com.microsoft.VSCode .css all
+duti -s com.microsoft.VSCode .go all
+duti -s com.microsoft.VSCode .java all
+duti -s com.microsoft.VSCode .js all
+duti -s com.microsoft.VSCode .sass all
+duti -s com.microsoft.VSCode .scss all
+duti -s com.microsoft.VSCode .less all
+duti -s com.microsoft.VSCode .vue all
+duti -s com.microsoft.VSCode .cfg all
+duti -s com.microsoft.VSCode .json all
+duti -s com.microsoft.VSCode .jsx all
+duti -s com.microsoft.VSCode .log all
+duti -s com.microsoft.VSCode .lua all
+duti -s com.microsoft.VSCode .md all
+duti -s com.microsoft.VSCode .php all
+duti -s com.microsoft.VSCode .pl all
+duti -s com.microsoft.VSCode .py all
+duti -s com.microsoft.VSCode .rb all
+duti -s com.microsoft.VSCode .ts all
+duti -s com.microsoft.VSCode .tsx all
+duti -s com.microsoft.VSCode .txt all
+duti -s com.microsoft.VSCode .conf all
+duti -s com.microsoft.VSCode .yaml all
+duti -s com.microsoft.VSCode .yml all
+duti -s com.microsoft.VSCode .toml all
+```
+
+### Save the ~/.config file to save your shell configuration
+
+```bash
+# You can save this whole directory, make your transfer and installation easier
+/home/qgn1237/.config
+```
+
+### Useful fish command collection - autopair.fish 
+
+```fish
+# autopair.fish, auto-complete matching pairs in the Fish command line. Type pair () for you.
+fisher install jorgebucaran/autopair.fish
+```
+
+### Useful fish command collection - z.fish
+
+```fish
+z tracks the directories you visit. With a combination of frequency and recency,
+it enables you to jump to the directory in mind.
+
+# Install
+fisher install jethrokuan/z
+z foo: Goes to directory best matching foo.
+zo foo: Opens file manager of directory best matching foo.
+z -t foo: Goes to most recent directory matching foo.
+z -x: Removes the current directory from $Z_DATA.
+```
+
+### Calculate the allele frequency from the AD and SAC info field in a structural variants vcf file
+
+chr1    10837   svim.INS.4      N       <INS>   8       PASS    SVTYPE=INS;END=10837;SVLEN=79;SUPPORT=7;STD_SPAN=5.8;STD_POS=40.06      GT:DP:AD        0/1:30:23,7
+
+ It is possible to calculate the allele frequency from the AD info in this specific structural variants VCF file. The AD field lists the depth of coverage for each allele at a particular variant site, in this case, the AD field has two values separated by a comma (23, 7). To calculate the frequency, you can divide the number of reads supporting the alternate allele (7) by the total number of reads (23 + 7 = 30). So the allele frequency would be 7/30 = 0.23 or 23%.
+
+DP4 is another form of SVC
+
+DP4=0,0,14,12;
+
+DP4 reports the number of reads covering the position with the reference allele mapped to forward and reverse strands, followed by alternate allele mapped to forward and reverse strands.
+
+Allele frequency here would be 0 (0/26) for reference allele, and 1.0 (26/26) for alternate allele.
+
+

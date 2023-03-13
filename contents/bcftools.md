@@ -37,5 +37,5 @@ bcftools index 10X_long.sort.vcf.gz > 10X_long.sort.vcf.gz.csi
 bcftools isec isec.a.vcf.gz isec.b.vcf.gz -p dir
 ```
 
-I don't like bcftools isec, it doesn't work well. It needs the two vcf files to be exactly the same.
+I don't like bcftools isec for intersection of SVs, it doesn't work well. It needs the two vcf files to be exactly the same.
 I recommend surpyvor, a SURVIVOR wrapper.

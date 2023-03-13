@@ -845,4 +845,23 @@ DP4 reports the number of reads covering the position with the reference allele 
 
 Allele frequency here would be 0 (0/26) for reference allele, and 1.0 (26/26) for alternate allele.
 
+### xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun, you can't use your git after upgrading macOS
 
+```bash
+xcode-select --install
+```
+
+This will pop a dialogue box, Select "Install", and it will download and install the Command Line Tools package and fix the problem. 
+
+### Update Yang lab Library
+
+Edit the library.yaml file first
+
+Then
+
+```
+make cover
+git add ..
+git commit -n "n"
+git push origin main
+```

@@ -25,6 +25,8 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [Git](/contents/git.md)
 
+### [Homebrew](/contents/homebrew.md)
+
 ## DNA and RNA-seq aligner (splice aware)
 
 ### [Minimap2](/contents/minimap2.md)
@@ -64,6 +66,10 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ### [SVIM](/contents/SVIM.md)
 
 ### [PBSV](/contents/pbsv.md)
+
+### [Sniffles2](contents/sniffles2.md)
+
+### [cuteSV](/contents/cuteSV.md)
 
 ## Genome structural variation downstream analysis
 

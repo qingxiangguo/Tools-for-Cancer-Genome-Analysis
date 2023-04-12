@@ -1,28 +1,35 @@
 # The installation and usage of BWA-MEM2
+
 # 1. About
+
 Splice-unware. Bwa-mem2 is the next version of the bwa-mem algorithm in bwa. It produces alignment identical to bwa and is ~1.3-3.1x faster depending on the use-case, dataset and the running machine.
+
 # 2. Installation and Usage
+
 ## Precompiled binaries
+
 ```
 curl -L https://github.com/bwa-mem2/bwa-mem2/releases/download/v2.0pre2/bwa-mem2-2.0pre2_x64-linux.tar.bz2 | tar jxf -
 ```
 
-## 2.1 Build genome index
+## Install from conda
+
+```bash
+conda install -c bioconda bwa-mem2
 ```
-bwa-mem2-2.0pre2_x64-linux/bwa-mem2 index ref.fa
+
+## 2.1 Build genome index
+
+```bash
+bwa-mem2 index -p bwa_index /projects/b1171/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa
 ```
 
 ## 2.2 Running mapping job with BWA-MEM
-For single-end read:
+
+For paired-end reads, note that the input is not the genome, it's the index instead:
 
 ```
-bwa-mem2-2.0pre2_x64-linux/bwa-mem2 mem -t -M -R ref.fa read.fq> out.sam
-```
-
-For paired-end reads:
-
-```
-bwa-mem2-2.0pre2_x64-linux/bwa-mem2 mem -t -M -R ref.fa read1.fq read2.fq > out.sam
+bwa-mem2 mem -t 12 -M -Y -R '@RG\tID:SRR7346979\tPL:illumina\tLB:library\tSM:SAMN09428901' /projects/b1171/qgn1237/1_my_database/GRCh38_p13/bwa_index /projects/b1171/qgn1237/2_raw_data/SKBR3/illumina_250_SRR7346979/SRR7346979/SRR7346979_1.fastq /projects/b1171/qgn1237/2_raw_data/SKBR3/illumina_250_SRR7346979/SRR7346979/SRR7346979_2.fastq | samtools sort -@ 12 -m 2G -O BAM -o SKBR3_NGS.bam && samtools index SKBR3_NGS.bam SKBR3_NGS.bai
 ```
 
 -M	Mark shorter split hits as secondary (for Picard compatibility).

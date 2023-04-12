@@ -74,3 +74,9 @@ This command get the @SQ line from sam/bam, get the third line and sum them, the
 ```bash
 samtools view -s 0.156 -b ../22Rv1.bam -@ 8 > 22Rv1_5X.bam
 ```
+
+## Filter a BAM file according to MAPQ quality score
+
+```bash
+
+```

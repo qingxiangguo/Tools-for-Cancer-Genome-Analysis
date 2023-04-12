@@ -1,8 +1,13 @@
 # The installation and usage of BWA-MEM
+
 # 1. About
+
 Splice-unware. BWA is a software package for mapping low-divergent sequences against a large reference genome, such as the human genome. t consists of three algorithms: BWA-backtrack, BWA-SW and BWA-MEM. BWA-MEM, which is the latest, is generally recommended for high-quality queries as it is faster and more accurate.
+
 # 2. Installation and Usage
+
 ## Download the latest release from and uncompress it
+
 ```
 git clone https://github.com/lh3/bwa.git
 cd bwa; make
@@ -12,11 +17,13 @@ cd bwa; make
 ```
 
 ## 2.1 Build genome index
+
 ```
 bwa index ref.fa
 ```
 
 ## 2.2 Running mapping job with BWA-MEM
+
 For single-end read:
 
 ```
@@ -34,6 +41,7 @@ bwa mem -t -M -R ref.fa read1.fq read2.fq > mem-pe.sam
 -R STR	Complete read group header line. ’\t’ can be used in STR and will be converted to a TAB in the output SAM. The read group ID will be attached to every read in the output. An example is ’@RG\tID:foo\tSM:bar’.
 
 ## 2.3 Output files
+
 BWA outputs the final alignment in the SAM (Sequence Alignment/Map) format. Each line consists of:
 
 Col	Field	Description

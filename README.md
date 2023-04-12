@@ -861,7 +861,7 @@ This will pop a dialogue box, Select "Install", and it will download and install
 
 ### Update Yang lab Library
 
-Edit the library.yaml file first
+Edit the library.yaml file first, add the book name and STAR
 
 Then
 
@@ -870,4 +870,50 @@ make cover
 git add ..
 git commit -n "n"
 git push origin main
+```
+
+### Configure your NeoVim
+
+Neovim (and many other applications) doesn't touch your ~/.config/ directory per default. You just need to create the nvim directory 
+
+It's different from Vim, you need to:
+
+```bash
+mkdir -p ~/.config/nvim
+
+nvim ~/.config/nvim/init.vim # Edit it
+
+# For example, add: set mouse=v
+```
+
+### Can't Copy to Clipboard from neovim, what's wrong?
+
+Becasue nvim sets your vim into visual mode whenever you select something with the mouse. And for some mad reason one is not allowed to copy when in visual mode. You can get around it by holding down shift when selecting text not to go into visual mode allowing you to use the copy menu.
+
+Simply edit the ~/.config/nvim/init.vim and add:
+
+set mouse=v
+
+Done!
+
+### Github push error: fatal: Unable to create '/Users/qgn1237/Library/CloudStorage/OneDrive-NorthwesternUniversity/github_project/Computational-Medicine-and-Bioinformatics-Terminology-Database/.git/index.lock': File exists.
+
+The error message suggests that there is a lock file present, which typically means that another Git process is running or a previous Git process did not exit cleanly. To resolve the issue, follow these steps:
+
+Make sure there are no other active Git processes running. Close any relevant terminal windows or Git applications that might be accessing the repository.
+
+Remove the lock file manually. In your terminal, navigate to the repository's root directory and run the following command:
+
+```bash
+rm -f .git/index.lock
+```
+
+### Extract all the text from a powerpoint file.
+
+```bash
+pip install python-pptx
+
+./extract_text_ppt.py 【20230413】qingxiang_guo_basic_seminar.pptx
+
+# You can find it in the script directory
 ```

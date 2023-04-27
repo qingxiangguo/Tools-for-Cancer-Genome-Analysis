@@ -23,5 +23,5 @@ minimap2 -ax map-hifi --MD -t 16 -Y -R '@RG\tID:SRR11951494\tPL:pacbio\tLB:libra
 Specify tandem repeat annotations (for improved call accuracy), reference (for DEL sequences) and non-germline mode for detecting rare SVs
 
 ```bash
-sniffles --input sample1.bam --vcf sample1.vcf.gz --tandem-repeats tandem_repeats.bed --reference genome.fa --minsupport {support_red_number} --minsvlen 50
+sniffles --input /projects/b1171/qgn1237/5_impact_of_depth_sv_detection/2_cell_line_SV/SKBR3_CLR/5X_depth/SKBR3_CLR_5X.bam --vcf out.vcf --tandem-repeats /projects/b1171/qgn1237/1_my_database/GRCh38_p13/sniffles2_compatible_tandem_repeat/human_GRCh38_no_alt_analysis_set.trf.bed --reference /projects/b1171/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa --minsupport auto --minsvlen 50
 ```

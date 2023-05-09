@@ -917,3 +917,73 @@ pip install python-pptx
 
 # You can find it in the script directory
 ```
+
+### Filter the structural variants VCF results
+
+1. Filter the SVIM results
+
+```bash
+# A SVIM result looks like this:
+GL000008.2  1524  svim.DEL.7  AGAATGGGATGGAATGGAATTGAATGATGTGGAGTGGAGTCGGGTGGAGTGGA A 2 PASS  SVTYPE=DEL;END=1576;SVLEN=-52;SUPPORT=2;STD_SPAN=4.24;STD_POS=14.85 GT:DP:AD  ./.:.:.,.
+
+# Filtering the variant calls by QUAL, supporting reads, and PASS, we cannot make a general statement about suitable score cutoffs. # For high-coverage datasets (>40x), we would recommend a threshold of 10-15. For low-coverage datasets, the threshold should be lower.
+
+# A good approach could also be to select a cutoff that returns the expected or desired number of calls. A recent study by the Human Genome Structural Variation Consortium (HGSVC), for instance, estimated the average number of deletions and insertions per individual to be 9,488 and 15,337, respectively (Chaisson et al., 2019)
+
+bcftools filter -i 'QUAL >= 5 && FILTER == "PASS" && INFO/SUPPORT >= 2' input.vcf > output.vcf
+
+This is a strict criteria that can filter 400,000 SVs to 2,000
+
+So you should make trial & error
+```
+
+2. Filter the PBSV results
+
+```bash
+chr1    669597  pbsv.INS.DUP.0  A       <DUP>   .       PASS    SVTYPE=DUP;END=669679;SVLEN=82  GT:AD:DP:SAC    1/1:1,4:5:1,0,3,1
+# PBSV will not have the SUPPORT reads option
+
+bcftools filter -i 'FILTER == "PASS" && FORMAT/AD[0:1] >= 2' input.vcf > output.vcf
+# When filtering SVs, the variants with high support can be filtered based on the threshold value of AD [1].
+# The [0:1] means the 1 subfield of the 0 sample
+```
+
+3. Filter the Sniffles2 results
+  
+```bash
+# Sniffles has already an automatic filter in the output.
+# If you want to filter further, the easiest is to ignore the IMPRECISE marked calls 
+# Another thing would be to filter for the number of read supports
+
+chr1    710590  Sniffles2.INS.14S0      N       AAGAACTGCCTGCCGGGCGCGTGTGGCTCACGCCTTGTAATTCCCAGCACTTTGGGAGGCCGCAGGCGGGCCGGATCACGAGCGTCAGGAGATCGAGACCATCCCGGCTAAAACGGCTTTGAAAAAACCCCGTCTCTACTAAAAATTACAAAAAATTAGCCCCGTAGTGGCGGGCGCGTTTAGTCCCAGCTACTTTGCGGAGGCTGAGGCAGGAAGAATGGGCGTGAACCCGCGGAGGTGGAGCTTTGCAGTGAGCCTAAGATCCCACTCACTCCAGCCTGCGGCGACAGAGCCAGACTCGTCTCAAAAAAAAAAAAAAAAAAAAAAAAAAAA   31      PASS    PRECISE;SVTYPE=INS;SVLEN=333;END=710590;SUPPORT=3;COVERAGE=2,3,3,3,3;STRAND=+-;AF=1.000;STDEV_LEN=18.502;STDEV_POS=6.083;SUPPORT_LONG=0 GT:GQ:DR:DV     1/1:8:0:3
+
+# DV：Depth of variant-supporting bases
+
+bcftools view -i 'INFO/SUPPORT >= 2 && INFO/IMPRECISE != 1' intput.vcf > output.vcf
+```
+
+4. Filter the CuteSV results
+
+```bash
+chrY	56833655	cuteSV.DEL.48873	TCCTATTCCATTCCTC	T	.	PASS	PRECISE;SVTYPE=DEL;SVLEN=-15;END=56833670;CIPOS=-1,1;CILEN=-0,0;RE=3;RNAMES=NULL;STRAND=+-	GT:DR:DV:PL:GQ	./.:.:3:.,.,.:.
+
+bcftools view -i 'FILTER == "PASS" && INFO/PRECISE == 1 && INFO/RE >= 2' input.vcf > output.vcf
+```
+
+5. Filter the DeBreak results
+
+```bash
+chrY	2464326	DB4000	TTCCCTAGCAATCCGGCCAAGGGCCGCTGATGTGCACACACTGAAGACGTTCCCTAAGTGTGTGGCTAAGGGACTGCTACCATATACACACTGAAGATGTTCCCTAAGAATGTGGGTAAGGGACCGCCGCCATGTTCGCACTGAAGACG	N	.	PASS	CHR2=chrY;SVLEN=149;SUPPREAD=4;MAPQ=0;SVMETHOD=DeBreak;PRECISE;SVTYPE=DEL	GT	0/1
+
+bcftools view -i 'FILTER == "PASS" && INFO/PRECISE == 1 && INFO/SUPPREAD >= 2' input.vcf > output.vcf
+```
+
+6. Filter the SVDSS results
+
+```bash
+chrX	147512934	DEL_chrX:147512934-147512961_28	TTGCAGTACAATACACATTGTATTACAC	T	.	PASS	VARTYPE=SV;SVTYPE=DEL;SVLEN=-28;END=147512961;WEIGHT=2;COV=4;AS=358;NV=1;CIGAR=33=28D46=	GT	0/1
+
+# You can filter the reported SVs by passing the --min-sv-length and --min-cluster-weight options. These options control the minimum length and minimum number of supporting superstrings for the reported SVs. Higher values for --min-cluster-weight will increase precision at the cost of reducing recall. For a diploid 30x coverage sample, --min-cluster-weight 2 produced the best results in our experiments. For a haploid 30x sample, instead, --min-cluster-weight 4 produced the best results.
+
+bcftools view -i 'FILTER == "PASS" && INFO/NV >= 2' input.vcf > output.vcf
+```

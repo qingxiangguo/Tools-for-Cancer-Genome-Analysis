@@ -987,3 +987,8 @@ chrX	147512934	DEL_chrX:147512934-147512961_28	TTGCAGTACAATACACATTGTATTACAC	T	.	
 
 bcftools view -i 'FILTER == "PASS" && INFO/NV >= 2' input.vcf > output.vcf
 ```
+
+### Convert BED to VCF coordinate
+
+If BED start and end = 0  8, VCF start =1, end = 8
+BED is 0-based coordinate system, VCF is 1-based

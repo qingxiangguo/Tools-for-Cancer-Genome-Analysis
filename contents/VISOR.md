@@ -39,9 +39,13 @@ I want to simulate SVs considering both haplotypes.
 ```bash
 module load R/4.3.0
 
-Add a line in randomregion.r, it will install in your local library
+Add a line in randomregion.r, it will install in your local library, to solve the sudo problem
 
 .libPaths("~/R/library")
+
+# Install the packages
+
+Rscript randomregion.r -h1
 
 #this script requires a R version >= 3.5.0. It will try to install the needed packages if not already in your package list
 
@@ -49,9 +53,25 @@ cut -f1,2 ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa.fai > chrom.di
 
 # Need bedtools to be installed and in path
 
-Rscript randomregion.r -d /projects/b1171/qgn1237/6_SV_VCF_merger/VISOR_simulation/chrom.dim.tsv -n 18000 -l 200000 -v 'deletion,insertion,tandem duplication,inverted tandem duplication,translocation copy-paste,translocation cut-paste,reciprocal translocation,inversion' -r '35:35:5:5:5:5:5:5' | sortBed > HACk.random.bed
+Rscript randomregion.r -d /projects/b1171/qgn1237/6_SV_VCF_merger/VISOR_simulation/chrom.dim.tsv -n 18000 -l 10000 -v 'deletion,insertion,tandem duplication,inverted tandem duplication,translocation copy-paste,translocation cut-paste,reciprocal translocation,inversion' -r '35:35:5:5:5:5:5:5' | sortBed > HACk.random.bed
 
 # Generate 18000 non-overlapping random variants, with mean length 200 Kb, with a fixed ratio.
+
+# Sometimes you need to convert VCF to VIOSR BED file, the tips is
+vcf to BED, insertion point-1, start-1, end point unchanged
+For example
+
+chr1    16725233        pbsv.BND.chr1:16725233-chr1:234776445   C       [chr1:234776445[C       .       PASS    SVTYPE=BND;CIPOS=-4,14;MATEID=pbsv.BND.chr1:234776445-chr1:16725233;MATEDIST=218051212  GT:AD:DP        0/1:2,4:6
+
+BED:
+
+chr1	234776444	248956422	translocation cut-paste	h1:chr1:16725232:reverse	5
+
+chr1    234776445       pbsv.BND.chr1:234776445-chr1:16725233   G       [chr1:16725233[G        .       PASS    SVTYPE=BND;CIPOS=-4,8;MATEID=pbsv.BND.chr1:16725233-chr1:234776445;MATEDIST=218051212   GT:AD:DP        1/1:1,4:5
+
+BED:
+
+chr1	16725232   	234776445	inversion	None	5
 
 ```
 

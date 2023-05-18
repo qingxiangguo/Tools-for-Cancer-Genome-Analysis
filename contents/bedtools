@@ -12,5 +12,5 @@ make
 
 ```bash
 sortBed -g ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa.fai -i HACk.random.bed  > test
-The chromosomes have been sorted alphabetically by default. You have to specify -g, honestly this is a stupid design.
+# The chromosomes have been sorted alphabetically by default. You have to specify -g, honestly this is a stupid design.
 ```

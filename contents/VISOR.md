@@ -9,6 +9,15 @@ VISOR (opens new window)is an efficient and versatile command-line application c
 bseq.c:1:10: fatal error: zlib.h: No such file or directory
 
 ```bash
+mamba create -y -n visorenv python=3.8
+mamba activate visorenv
+mamba install -c bioconda samtools=1.9 minimap2=2.17
+mamba install -c bioconda bedtools
+mamba install -c anaconda cython
+git clone https://github.com/davidebolo1993/VISOR.git
+cd VISOR
+pip install -r requirements.txt
+python setup.py install
 
 git clone https://github.com/davidebolo1993/VISOR.git
 cd VISOR
@@ -19,7 +28,7 @@ VISOR --help
 # You need to switch to python 3.9 and let the script install the right version of minimap2 and samtools for you
 ```
 
-### 2.1 Generate simulated genome with Hack mode (random SVs)
+### 2.1 Generate simulated genome with Hack mode (random SVs) in only one haplotype (so all SVs will be 1/0 or 0/1)
 
 The input SVs should be in BED FORMAT
 
@@ -57,7 +66,7 @@ Rscript randomregion.r -d /projects/b1171/qgn1237/6_SV_VCF_merger/VISOR_simulati
 
 # Generate 18000 non-overlapping random variants, with mean length 200 Kb, with a fixed ratio.
 
-# Sometimes you need to convert VCF to VIOSR BED file, the tips is
+# Sometimes you need to convert VCF to  BED file, the tips is
 vcf to BED, insertion point-1, start-1, end point unchanged
 For example
 
@@ -75,4 +84,96 @@ chr1	16725232   	234776445	inversion	None	5
 
 ```
 
+However, VISOR is not 0-based, the BED file is not a true BED file!
+So to convert VCF to  VISOR BED-like file, the tips is
+insertion point unchanged, start unchanged, end point unchanged
+This is really convenient, but you have to aware that VISOR BED is a fake BED.
 
+### 2.2 Generate simulated genome with Hack mode (random SVs) in two haplotype (so all SVs will be 1/0 or 0/1 or 1/1)
+
+The weird part that is #reciprocal translocations are placed by default on a haplotype different then the one specified with the -i parameter (default to 1 -that is, h1 in the final BED). Other translocations types are placed on the same haplotype.
+
+So if you want to simulate SVs on both haplotypes, you need to do run randomregion.r two times:
+
+```bash
+Rscript randomregion.r -d /projects/b1171/qgn1237/6_SV_VCF_merger/VISOR_simulation/chrom.dim.tsv -i 1 -n 18000 -l 10000 -v 'deletion,insertion,tandem duplication,inverted tandem duplication,translocation copy-paste,translocation cut-paste,reciprocal translocation,inversion' -r '35:35:5:5:5:5:5:5' | sortBed > HACk.random.bed
+
+Rscript randomregion.r -d /projects/b1171/qgn1237/6_SV_VCF_merger/VISOR_simulation/chrom.dim.tsv -i 2 -n 18000 -l 10000 -v 'deletion,insertion,tandem duplication,inverted tandem duplication,translocation copy-paste,translocation cut-paste,reciprocal translocation,inversion' -r '35:35:5:5:5:5:5:5' | sortBed > HACk.random.bed
+
+# However, in the h1 file, all the Svs will be on h1, only reciprocal translocations is on h2
+# But in h2 file, all the SVs will be on h2, only reciprocal translocations is on hc3806b6_0
+# h3 is a mistake ,there is no h3
+# GL000250.2      1927905 1937904 reciprocal translocation        h3:chr8:112551381:reverse:forward       9
+# We need to correct the h3 manually to h1
+
+sed 's/h3/h1/g' HACk.random.h2.bed > HACk.random.h2.corrected.bed
+
+# Then I want to add some decoy SVs only to haplotype 1
+
+cat special_decoy.bed >> HACk.random.h1.bed
+# Add some decoy
+
+sortBed -g ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa.fai -i HACk.random.h1.bed  > HACk.random.h1.sorted.bed
+
+```
+
+### 2.3 HACk generates a FASTA haplotype
+
+```bash
+# You need to switch to python 3.9, the environment you properly install VISOR
+VISOR HAck -b HACk.random.h1.sorted.bed HACk.random.h2.corrected.bed -g ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa -o simulated_genome
+
+# I got some error:
+bedtools: /lib64/libstdc++.so.6: version `GLIBCXX_3.4.20' not found (required by bedtools)
+bedtools: /lib64/libstdc++.so.6: version `CXXABI_1.3.8' not found (required by bedtools)
+bedtools: /lib64/libstdc++.so.6: version `GLIBCXX_3.4.21' not found (required by bedtools)
+bedtools: /lib64/libstdc++.so.6: version `GLIBCXX_3.4.20' not found (required by bedtools)
+bedtools: /lib64/libstdc++.so.6: version `CXXABI_1.3.8' not found (required by bedtools)
+
+# The gcc is not compatible with bedtools installed in main environment path
+# Install in current environment by mamba again
+
+mamaba install -c bioconda bedtools
+
+# Run again, I got another error
+[17/05/2023 11:02:08][Error] Line 943: column 2 (chromosome start) contains an invalid coordinate (lower than chromosome start or greater than chromosome end)
+
+# You should check the decoy coordinate typo, and aware that the VISOR BED is not a true BED format
+# Finally work.
+```
+
+Now I have a folder:
+
+h1.fa  h1.fa.fai  h2.fa  h2.fa.fai
+
+Next you need to create a BED file containing the max length of each chromo between h1, h2, and ref genome.
+
+If you want to simulate sequencing data generated from the entire reference genome (not just a particular chromosome), you need to first create a BED file describing the region you want to simulate. Since structural variants, such as insertions and deletions, may cause changes in the length of the chromosome, we need to consider all possible lengths. The maximum value is taken to ensure that the sequencing data we simulate will cover all possible regions and that a region of variation will not be missed due to improper length selection.
+
+```bash
+# To make this BED file, run:
+VISOR_LASeR_BED_generator.py simulated_genome/h1.fa.fai simulated_genome/h2.fa.fai ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa.fai
+
+# You will get maxdims.tsv, this tells which part of genome the virtual sequencing generated.
+# create a BED to simulate reads from whole genome, without coverage fluctuations (that is, capture bias value in 4th column is 100.0) and without normal contamination (that is, purity value in 5th column is 100.0)
+awk 'OFS=FS="\t"''{print $1, "1", $2, "100.0", "100.0"}' maxdims.tsv > shorts.laser.simple.bed
+```
+
+### Run simulation and mapping
+
+```bash
+# Let's simulated fastq reads, so you can control the mapping steps
+# You have to make sure that minimap2, samtools is installed in this environment
+
+Then you may get error of 
+
+import pysam
+  File "/home/qgn1237/2_software/mambaforge/envs/mamba_py_39/lib/python3.9/site-packages/pysam/__init__.py", line 4, in <module>
+    from pysam.libchtslib import *
+ImportError: libcrypto.so.3: cannot open shared object file: No such file or directory
+
+mamba install -c bioconda samtools openssl=3.0
+mamba config --set channel_priority flexible
+
+VISOR LASeR -g ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa -s simulated_genome -b shorts.laser.simple.bed -o output_folder --threads 12 --coverage 10 --fastq --read_type nanopore
+```

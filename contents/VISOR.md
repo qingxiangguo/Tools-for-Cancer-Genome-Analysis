@@ -11,9 +11,8 @@ bseq.c:1:10: fatal error: zlib.h: No such file or directory
 ```bash
 mamba create -y -n visorenv python=3.8
 mamba activate visorenv
-mamba install -c bioconda samtools=1.9 minimap2=2.17
-mamba install -c bioconda bedtools
-mamba install -c anaconda cython
+mamba install -c bioconda samtools=1.11 minimap2 htslib=1.11 bedtools
+pip install --upgrade cython
 git clone https://github.com/davidebolo1993/VISOR.git
 cd VISOR
 pip install -r requirements.txt
@@ -175,5 +174,25 @@ ImportError: libcrypto.so.3: cannot open shared object file: No such file or dir
 mamba install -c bioconda samtools openssl=3.0
 mamba config --set channel_priority flexible
 
-VISOR LASeR -g ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa -s simulated_genome -b shorts.laser.simple.bed -o output_folder --threads 12 --coverage 10 --fastq --read_type nanopore
+#!/bin/bash -l
+#SBATCH --account=b1042
+#SBATCH --partition=genomics
+# set the number of nodes
+#SBATCH --nodes=1
+#SBATCH --ntasks=12
+##SBATCH --exclusive
+#SBATCH --mem=20G
+#SBATCH --chdir=/home/qgn1237/qgn1237/6_SV_VCF_merger/VISOR_simulation
+# set max wallclock time
+#SBATCH --time=4:00:00
+# mail alert at start, end and abortion of execution
+#SBATCH --mail-type=ALL
+
+# run the application
+cd $SLURM_SUBMIT_DIR
+/home/qgn1237/2_software/mambaforge/bin/mamba init
+source ~/.bashrc
+mamba activate visorenv
+
+VISOR LASeR -g ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa -s simulated_genome -b shorts.laser.simple.bed -o ont_fastq --threads 12 --coverage 10 --fastq --read_type nanopore
 ```

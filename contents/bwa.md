@@ -19,7 +19,26 @@ cd bwa; make
 ## 2.1 Build genome index
 
 ```
-bwa index ref.fa
+#!/bin/bash -l
+#SBATCH --account=b1171
+#SBATCH --partition=b1171
+# set the number of nodes
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+##SBATCH --exclusive
+#SBATCH --mem=30G
+#SBATCH --chdir=/home/qgn1237/qgn1237/1_my_database/GRCh38_p13/bwa1_index
+# set max wallclock time
+#SBATCH --time=100:00:00
+# mail alert at start, end and abortion of execution
+#SBATCH --mail-type=ALL
+
+# run the application
+cd $SLURM_SUBMIT_DIR
+/home/qgn1237/2_software/mambaforge/bin/mamba init
+source ~/.bashrc
+mamba activate visorenv
+~/2_software/bwa/bwa index ../GRCh38.p13.genome.fa
 ```
 
 ## 2.2 Running mapping job with BWA-MEM
@@ -27,13 +46,13 @@ bwa index ref.fa
 For single-end read:
 
 ```
-bwa mem -t -M -R 4 ref.fa reads.fq > mem-se.sam
+bwa mem -t -Y -M -R 4 ref.fa reads.fq > mem-se.sam
 ```
 
 For paired-end reads:
 
 ```
-bwa mem -t -M -R ref.fa read1.fq read2.fq > mem-pe.sam
+bwa mem -t -Y -M -R '@RG\tID:SRR7346979\tPL:illumina\tLB:library\tSM:SAMN09428901' ref.fa read1.fq read2.fq > mem-pe.sam
 ```
 
 -M	Mark shorter split hits as secondary (for Picard compatibility).

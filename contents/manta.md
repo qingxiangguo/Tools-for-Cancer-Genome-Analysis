@@ -14,6 +14,17 @@ mamba create --name mamba_py2 python=2.7
 mamba activate mamba_py2
 mamba install -c bioconda manta
 # The exe file of manta is configManta.py
+
+# Or 
+
+wget https://github.com/Illumina/manta/releases/download/v${MANTA_VERSION}/manta-${MANTA_VERSION}.release_src.tar.bz2
+tar -xjf manta-${MANTA_VERSION}.release_src.tar.bz2
+mkdir build && cd build
+# Ensure that CC and CXX are updated to target compiler if needed, e.g.:
+#     export CC=/path/to/cc
+#     export CXX=/path/to/c++
+../manta-1.6.0.release_src/configure --jobs=4 --prefix=/home/qgn1237/2_software/manta/
+make -j4 install
 ```
 
 ### 2.1 run the manta config script

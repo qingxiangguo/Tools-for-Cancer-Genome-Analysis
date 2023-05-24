@@ -181,7 +181,7 @@ mamba config --set channel_priority flexible
 #SBATCH --nodes=1
 #SBATCH --ntasks=12
 ##SBATCH --exclusive
-#SBATCH --mem=20G
+#SBATCH --mem=70G
 #SBATCH --chdir=/home/qgn1237/qgn1237/6_SV_VCF_merger/VISOR_simulation
 # set max wallclock time
 #SBATCH --time=4:00:00
@@ -195,4 +195,7 @@ source ~/.bashrc
 mamba activate visorenv
 
 VISOR LASeR -g ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa -s simulated_genome -b shorts.laser.simple.bed -o ont_fastq --threads 12 --coverage 10 --fastq --read_type nanopore
+
+# The result is: r.fq  sim.srt.bam  sim.srt.bam.bai
 ```
+

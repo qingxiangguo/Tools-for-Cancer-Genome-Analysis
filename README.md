@@ -57,6 +57,8 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ## Genome structural variation detection (NGS)
 
+### [lumpy](/Tools-for-Cancer-Genome-Analysis/contents/lumpy.md)
+
 ### [Delly](/contents/delly.md)
 
 ### [Manta](/contents/manta.md)
@@ -71,11 +73,15 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [cuteSV](/contents/cuteSV.md)
 
-## Genome structural variation downstream analysis
+## Genome structural variation VCF manipulation
 
 ### [SURVIVOR](/contents/SURVIVOR.md) 
 
 ### [surpyvor](/contents/surpyvor.md) 
+
+## Genome structural variation simulation
+
+### [VISOR](/Tools-for-Cancer-Genome-Analysis/contents/VISOR.md) 
 
 ## Gene fusion analysis - RNA-seq level
 

@@ -1,4 +1,4 @@
-# The installation and usage of BCFtools
+# The installation and usage of bedops
 
 ## 1. About
 

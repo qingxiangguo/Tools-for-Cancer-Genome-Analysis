@@ -57,7 +57,7 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ## Genome structural variation detection (NGS)
 
-### [lumpy](/Tools-for-Cancer-Genome-Analysis/contents/lumpy.md)
+### [lumpy](/contents/lumpy.md)
 
 ### [Delly](/contents/delly.md)
 

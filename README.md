@@ -1002,5 +1002,5 @@ BED is 0-based coordinate system, VCF is 1-based
 ### Filter a VCF file based on the SVLEN field
 
 ```bash
-perl -ne 'print if /^#/ or /SVLEN=(-?\d+);/ and $1 > 49' SKBR3_CLR_5X.var.vcf > filtered.vcf
+filter_vcf_based_on_length.py -i input.vcf -o length.vcf -l 50
 ```

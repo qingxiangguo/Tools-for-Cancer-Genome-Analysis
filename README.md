@@ -1051,6 +1051,63 @@ sudo apt --fix-broken install
 sudo shutdown -r now
 ```
 
-## Note:
+<b>Note:</b>
 
 This guide is based on a specific issue and might not apply to all problems encountered with the MinION Mk1C device. For different issues, please contact the Nanopore official technical support or check the Nanopore community forums for assistance.
+
+#### How to Update the MinION Mk1C Software via SSH
+
+While the MinION Mk1C software can generally be updated via the user interface, some scenarios require manual software updates. If you prefer to update through the command line or need feedback during updates, this guide is for you. 
+
+Please always refer to the release notes for any version-specific commands that may be supplied.
+
+### Prerequisites:
+
+1. Ensure that the MinION Mk1C is connected to a stable internet connection.
+2. Have SSH access to the MinION Mk1C.
+
+<b>Steps to Update Only the MinKNOW Software:</b>
+
+1. Connect to the MinION Mk1C using SSH. 
+2. Open a terminal window. 
+3. Run the following commands one at a time to update the list of available software:
+
+```
+sudo apt clean 
+sudo apt update 
+sudo apt install ont-mk1c-release
+```
+These commands should complete successfully, without any errors or warnings. 
+
+4. If you encounter any error or warning message, ensure that your MinION Mk1C is connected to the Internet. You can diagnose network connection problems by running the following command: 
+
+```
+sudo /opt/ont/mooneye/bin/ont-mooneye-check-network --verbose --diagnose
+```
+5. Once the commands have completed successfully without errors, reboot the device using the command: 
+
+```
+sudo reboot
+```
+
+<b>Steps to Update the Operating System and MinKNOW Software Simultaneously:</b>
+
+If you want to update both the operating system and MinKNOW software at the same time, follow these steps:
+
+1. Connect to the MinION Mk1C using SSH. 
+2. Open a terminal window.
+3. Run the following commands one at a time:
+
+```
+export DEBIAN_FRONTEND=noninteractive 
+sudo apt upgrade
+```
+4. Reboot the device using the command:
+
+```
+sudo reboot
+```
+
+Note: This will update all packages to their latest versions, so it may take longer than the MinKNOW-only update.
+
+Remember to check the 'Current version' under software version number after the updates to ensure that your software has been updated successfully.

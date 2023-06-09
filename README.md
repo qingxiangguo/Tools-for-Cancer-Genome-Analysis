@@ -1061,7 +1061,7 @@ While the MinION Mk1C software can generally be updated via the user interface, 
 
 Please always refer to the release notes for any version-specific commands that may be supplied.
 
-### Prerequisites:
+<b>Prerequisites:</b>
 
 1. Ensure that the MinION Mk1C is connected to a stable internet connection.
 2. Have SSH access to the MinION Mk1C.

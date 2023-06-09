@@ -1009,7 +1009,7 @@ filter_vcf_based_on_length.py -i input.vcf -o length.vcf -l 50
 
 This guide aims to assist users facing a specific issue with the MinION Mk1C device. Users may experience problems after attempting to update the device's software version, causing the device to blackout, display a blue screen with various icons, or show an "Unknown" installed version.
 
-### Symptoms:
+<b>Symptoms:</b>
 
 1. After clicking on "Install Update" for a software version upgrade, the device blacks out for an extended period (e.g., over 16 hours).
 2. The device occasionally displays a blue screen with various icons, including menu icons, a mail icon, and the test flow cell icon. Despite prompts to swipe up to unlock, the device remains on the blue screen.
@@ -1018,7 +1018,7 @@ This guide aims to assist users facing a specific issue with the MinION Mk1C dev
 5. When attempting to run the “ssh minit@mc-XXXX” command, the system reports an error: “ssh: Could not resolve hostname mc-XXXX: nodename nor servname provided, or not known”.
 6. Attempting to restore using a previous SD card (with an earlier software version) does not resolve the issue.
 
-### Resolution:
+<b>Resolution:<\b>
 
 <b>Step 1: Preparing a USB drive</b>
 
@@ -1055,7 +1055,7 @@ sudo shutdown -r now
 
 This guide is based on a specific issue and might not apply to all problems encountered with the MinION Mk1C device. For different issues, please contact the Nanopore official technical support or check the Nanopore community forums for assistance.
 
-#### How to Update the MinION Mk1C Software via SSH
+### How to Update the MinION Mk1C Software via SSH
 
 While the MinION Mk1C software can generally be updated via the user interface, some scenarios require manual software updates. If you prefer to update through the command line or need feedback during updates, this guide is for you. 
 

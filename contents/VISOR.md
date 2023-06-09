@@ -83,9 +83,9 @@ chr1	16725232   	234776445	inversion	None	5
 
 ```
 
-However, VISOR is not 0-based, the BED file is not a true BED file!
-So to convert VCF to  VISOR BED-like file, the tips is
-insertion point unchanged, start unchanged, end point unchanged
+However, VISOR is not 0-based, the BED file is not a true BED file! VISOR BED is VCF style!
+So to convert VCF to VISOR BED-like file, the tips is
+insertion point unchanged, start unchanged, end point unchanged, nothing needs to be changed!
 This is really convenient, but you have to aware that VISOR BED is a fake BED.
 
 ### 2.2 Generate simulated genome with Hack mode (random SVs) in two haplotype (so all SVs will be 1/0 or 0/1 or 1/1)

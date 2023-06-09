@@ -1004,3 +1004,53 @@ BED is 0-based coordinate system, VCF is 1-based
 ```bash
 filter_vcf_based_on_length.py -i input.vcf -o length.vcf -l 50
 ```
+
+### How to Restore the MK1C Device from an Update Error
+
+This guide aims to assist users facing a specific issue with the MinION Mk1C device. Users may experience problems after attempting to update the device's software version, causing the device to blackout, display a blue screen with various icons, or show an "Unknown" installed version.
+
+### Symptoms:
+
+1. After clicking on "Install Update" for a software version upgrade, the device blacks out for an extended period (e.g., over 16 hours).
+2. The device occasionally displays a blue screen with various icons, including menu icons, a mail icon, and the test flow cell icon. Despite prompts to swipe up to unlock, the device remains on the blue screen.
+3. After rebooting, the interface changes and the "MinKNOW Installed version" now shows "Unknown".
+4. In the Host Settings, the Network Settings option is missing, preventing the user from confirming the network connection status or obtaining the device's IP address.
+5. When attempting to run the “ssh minit@mc-XXXX” command, the system reports an error: “ssh: Could not resolve hostname mc-XXXX: nodename nor servname provided, or not known”.
+6. Attempting to restore using a previous SD card (with an earlier software version) does not resolve the issue.
+
+### Resolution:
+
+<b>Step 1: Preparing a USB drive</b>
+
+1. Format a USB key as FAT or exFAT.
+2. Create a directory on the USB called `minit_config`.
+3. In the `minit_config` directory, create two plain files (without file extensions): `ssh` and `access-point`. These are command files that will enable SSH and put the device into hotspot mode.
+
+<b>Step 2: Enabling SSH and hotspot mode on the device</b>
+
+1. Plug the USB drive into the powered-on Mk1C device. The white LEDs on the screen should stop scrolling and all flash red twice, indicating the script's activation.
+2. The device will execute the commands in the `minit_config` folder and capture some system configuration information. Once complete, the lights will flash green, indicating the process is complete and the drive can be safely removed.
+
+<b>Step 3: Connecting to the device</b>
+
+1. Reboot the device. 
+2. Connect to the device's hotspot using another device (e.g., a computer). The hotspot should have the same name as the Mk1C device (e.g., MC-1XXXX). The password is: WarmButterflyWings98
+
+<b>Step 4: Accessing the device via SSH</b>
+
+1. SSH into the device using the following command: `ssh minit@10.42.0.1`
+2. Run the following command to get the device's IP address while connected to Ethernet: `ifconfig`. The IP address is listed for `eth0`.
+
+<b>Step 5: Updating the device</b>
+
+If the device has an internet connection, run the following commands to update it:
+
+```
+sudo apt clean
+sudo apt --fix-broken install
+sudo shutdown -r now
+```
+
+## Note:
+
+This guide is based on a specific issue and might not apply to all problems encountered with the MinION Mk1C device. For different issues, please contact the Nanopore official technical support or check the Nanopore community forums for assistance.

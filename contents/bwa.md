@@ -52,7 +52,26 @@ bwa mem -t -Y -M -R 4 ref.fa reads.fq > mem-se.sam
 For paired-end reads:
 
 ```
-bwa mem -t -Y -M -R '@RG\tID:SRR7346979\tPL:illumina\tLB:library\tSM:SAMN09428901' ref.fa read1.fq read2.fq > mem-pe.sam
+#!/bin/bash -l
+#SBATCH --account=b1042
+#SBATCH --partition=genomics
+# set the number of nodes
+#SBATCH --nodes=1
+#SBATCH --ntasks=4
+##SBATCH --exclusive
+#SBATCH --mem=100G
+#SBATCH --chdir=/home/qgn1237/working/1_reads_mapping/bwa-mem
+# set max wallclock time
+#SBATCH --time=36:00:00
+# mail alert at start, end and abortion of execution
+#SBATCH --mail-type=ALL
+
+# run the application
+cd $SLURM_SUBMIT_DIR
+/home/qgn1237/2_software/mambaforge/bin/mamba init
+source ~/.bashrc
+mamba activate visorenv
+/home/qgn1237/2_software/bwa/bwa mem -t 4 -Y -M -R '@RG\tID:SRR7346979\tPL:illumina\tLB:library\tSM:SAMN09428901' /projects/b1171/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa /projects/b1171/qgn1237/2_raw_data/SKBR3/illumina_250_SRR7346979/SRR7346979/SRR7346979_1.fastq /projects/b1171/qgn1237/2_raw_data/SKBR3/illumina_250_SRR7346979/SRR7346979/SRR7346979_2.fastq | samtools sort -@ 12 -O BAM -o SKBR3_NGS_bwa.bam && samtools index SKBR3_NGS_bwa.bam SKBR3_NGS_bwa.bai
 ```
 
 -M	Mark shorter split hits as secondary (for Picard compatibility).

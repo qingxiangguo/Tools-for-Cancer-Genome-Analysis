@@ -1018,7 +1018,7 @@ This guide aims to assist users facing a specific issue with the MinION Mk1C dev
 5. When attempting to run the “ssh minit@mc-XXXX” command, the system reports an error: “ssh: Could not resolve hostname mc-XXXX: nodename nor servname provided, or not known”.
 6. Attempting to restore using a previous SD card (with an earlier software version) does not resolve the issue.
 
-<b>Resolution:<\b>
+<b>Resolution:</b>
 
 <b>Step 1: Preparing a USB drive</b>
 

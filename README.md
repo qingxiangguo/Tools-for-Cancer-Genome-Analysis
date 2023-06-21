@@ -7,7 +7,7 @@ Installation and usage for various tools for cancer genomics
 Qingxiang (Allen) Guo  
 Postdoctoral Fellow  
 Northwestern University, Feinberg School of Medicine
-qingxiang.guo@northwestern.edu
+<qingxiang.guo@northwestern.edu>
 
 ## Introduction
 
@@ -75,21 +75,21 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ## Genome structural variation VCF manipulation
 
-### [SURVIVOR](/contents/SURVIVOR.md) 
+### [SURVIVOR](/contents/SURVIVOR.md)
 
-### [surpyvor](/contents/surpyvor.md) 
+### [surpyvor](/contents/surpyvor.md)
 
 ## Genome structural variation simulation
 
-### [VISOR](/Tools-for-Cancer-Genome-Analysis/contents/VISOR.md) 
+### [VISOR](/Tools-for-Cancer-Genome-Analysis/contents/VISOR.md)
 
 ## Gene fusion analysis - RNA-seq level
 
 ### [Arriba](/contents/arriba.md)
 
-## Other small tricks and tips
+# Other small tricks and tips
 
-### Find and load R in Northwestern quest  
+# Find and load R in Northwestern quest  
 
 You can see which versions of R are available on Quest, and which version is the default, with the command  
 
@@ -103,7 +103,7 @@ You can make a particular version of R available to use by typing the full modul
 module load R/4.2.0
 ```
 
-### Batch download SRA files from NCBI
+# Batch download SRA files from NCBI
 
 Go to the NCBI SRA site, select the SRA file you need and go to "Run selector" to got batch list in this way.
 
@@ -150,13 +150,13 @@ for sra_id in sra_accession_number:
     subprocess.call(fasterq_dump_cmd, shell=True)
 ```
 
-### Batch remove a certain type of files from a directory
+# Batch remove a certain type of files from a directory
 
 ```bash
 python batch_delete_all_sra_files.py
 ```
 
-### Use Mamba or Conda environment in Slurm Batch sbumit in NU Quest
+# Use Mamba or Conda environment in Slurm Batch sbumit in NU Quest
 
 You have to resource the mamba by yourself
 
@@ -181,24 +181,25 @@ mamba activate mamba666
 minimap2 -d /home/qgn1237/qgn1237/1_my_database/GRCh38_p13/minimap2_index/GRCh38.p13.genome.mmi /projects/b1171/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa -t 6
 ```
 
-### Batch create directories from list
+# Batch create directories from list
 
 ```bash
 python ./batch_create_directory_from_list.py
 ```
 
-### Cancel a job in NU Quest
+# Cancel a job in NU Quest
 
 ```bash
 scancel -u NETID
 ```
-### Kill a job
+
+# Kill a job
 
 ```bash
 scancel 35087 
 ```
 
-### Solve the error when connecting quest using SSH client: client_global_hostkeys_private_confirm: server gave bad signature for RSA key 0
+# Solve the error when connecting quest using SSH client: client_global_hostkeys_private_confirm: server gave bad signature for RSA key 0
 
 This might because the cliend delete your key file, and the server can't recognize you.
 Run the cmd to regenerate the keys:
@@ -207,7 +208,7 @@ Run the cmd to regenerate the keys:
 /usr/bin/ssh-keygen -A
 ```
 
-### Estimate genome coverage from sorted BAM file to exclude files with too low genome coverage
+# Estimate genome coverage from sorted BAM file to exclude files with too low genome coverage
 
 ```estimate_bam_genome_coverage.py```
 
@@ -215,14 +216,13 @@ It will produce a coverage_list, exclude single cells that less than 10% coverag
 
 ```second_coloumn_smaller_than.py```
 
-### Calculate the genome depth (total mapped length/total genome base)
+# Calculate the genome depth (total mapped length/total genome base)
 
 ```
 calculate_genome_depth_fast.py <your BAM file>
 ```
 
-
-### How to remain connect with SSH on MAC
+# How to remain connect with SSH on MAC
 
 ```bash
 sudo vim /etc/ssh/sshd_config
@@ -234,7 +234,7 @@ Then edit the content: #ClientAliveInterval 900 #ClientAliveCountMax 10
 sudo launchctl start com.openssh.sshd
 ```
 
-### Make a alias for your command
+# Make a alias for your command
 
 ```bash
 alias sq='squeue | grep "netid"'
@@ -249,14 +249,14 @@ alias sb='sbatch'
 
 alias lsn='less -SN'
 
-alias vim='nvim'
+alias vim='lvim'
 
 alias ls='lsd'
 ```
 
 Add these lines to ~/.bash.rc then source
 
-### Upload seq data directly from Nanopore to NU Quest server
+# Upload seq data directly from Nanopore to NU Quest server
 
 You can treat Nanopore MinION as a server itself. First, login into MinION with wifi, and get the IP address of MinION. Then, at your on PC terminal, type： ssh -x minit@<IP>. The it will ask you for the password. The password is: minit. Then you will login into MinION system.
 
@@ -270,13 +270,13 @@ rsync -avz /path/to/minion/files qgn1237@quest.northwestern.edu:/home/qgn1237
 # Then it will ask you for the password of northwestern Quest
 ```
 
-### Use bash to loop make new directory in current directory
+# Use bash to loop make new directory in current directory
 
 ```bash
 for dir in */; do cd "$dir"; mkdir 10X_depth ; cd ..; done
 ```
 
-### Generate sbatch cmd list by specifying the input file and the suffix you want, this can sava time and avoid mistake
+# Generate sbatch cmd list by specifying the input file and the suffix you want, this can sava time and avoid mistake
 
 ```bash
 # Edit the cmd = f"samtools view -s 0.384 -b {input_file_abs_path} -@ 8 > {input_file_base_name}.{suffix}" in generate_cmd.py to your desired command
@@ -290,33 +290,33 @@ sbatch cmd_list
 ./pbsv2_cmd.py 22Rv1_10X_sort.svsig.gz var.vcf
 ```
 
-### Add the PATH environment variable 
+# Add the PATH environment variable
 
 ```bash
 echo 'PATH=$PATH:/home/qgn1237/1_script' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### Find the files end with certain suffix in current direcotry
+# Find the files end with certain suffix in current direcotry
 
 ```bash
 find_suffix_in_current_directory.py <suffix>
 ```
 
-### Filter vcf based on quality
+# Filter vcf based on quality
 
 ```bash
 filter_vcf_based_on_quality.py input.vcf 20 > output.vcf
 ```
 
-### Install and import Dracula theme (my favorite theme) into Iterm2, Chrome Vimium, Chrome
+# Install and import Dracula theme (my favorite theme) into Iterm2, Chrome Vimium, Chrome
 
-For Iterm2 go to any folder and run command: 
+For Iterm2 go to any folder and run command:
 
 ```bash
 git clone https://github.com/dracula/iterm.git
 
-cd iterm/  # The go to the profiles, colors, and import the  Dracula.itermcolors, 
+cd iterm/  # Then go to the profiles panel of Iterm2, select your profiles, --> . colors, and import the  Dracula.itermcolors file, 
 
 # Then select Dracula in color presets done!
 ```
@@ -325,17 +325,17 @@ For Vimium,go into the Vimium addon's preferences, right-click the Vimium icon n
 
 For Chrome, install in <https://chrome.google.com/webstore/detail/dracula-chrome-theme/gfapcejdoghpoidkfodoiiffaaibpaem>
 
-### Copy all the file including hidden files
+# Copy all the file including hidden files
 
 cp -r ~/OneDrive\ -\ Northwestern\ University/deep_learning_math_theory/. ./
 
-### Use Python script to fulfill the function of Bash "for $dir in ./; do ..."
+# Use Python script to fulfill the function of Bash "for $dir in ./; do ..."
 
 ```bash
 bash_cmd_to_python.py
 ```
 
-### How to configure the local SSH and key to enable rapid login
+# How to configure the local SSH and key to enable rapid login
 
 first edit the file: ~/.ssh/config
 Add content:
@@ -363,7 +363,7 @@ ssh-copy-id quest
 ssh quest
 ```
 
-### Download from quest to local and upload from local to quest
+# Download from quest to local and upload from local to quest
 
 ```bash
 rsync -azvhP quest:~/R/ ./local
@@ -371,14 +371,18 @@ rsync -azvhP quest:~/R/ ./local
 rsync -azvhP ./Tools-for-Cancer-Genome-Analysis/scripts/plot_VCF_chrom_freq_count.py quest:~/1_script/
 ```
 
-### Install NeoVim from source code
+# Install NeoVim from source code
 
 You need to install new gcc, cmake, and make
 
 ```bash
 git clone https://github.com/neovim/neovim
 
-make CMAKE_INSTALL_PREFIX=/home/qgn1237/2_software/mambaforge/envs/mamba666/
+cd neovim
+
+mamba install -c conda-forge cmake # Install cmake
+
+make CMAKE_INSTALL_PREFIX=/home/qgn1237/2_software/mambaforge/envs/mamba666/ # Avoid root
 
 make install
 
@@ -386,19 +390,35 @@ make install
 alias vim='nvim'
 ```
 
-### Find a file by name 
+# Install NeoVim by brew
+
+```bash
+brew install neovim
+```
+
+# Find a file by name
 
 ```bash
 find ./ -name "my_software_overlapp*"
 ```
 
-### Double loop in bash, this can make you more efficient
+# Double loop in bash, this can make you more efficient
 
 ```bash
 for i in 22Rv1 DU145 LNCaP PC3 VCaP; do cd $i; for j in ./*depth; do rl $j/delly/*_filtered.vcf > $j/SURVIVOR/list_vcf; rl $j/manta/results/variants/tumorSV.vcf >> $j/SURVIVOR/list_vcf; done; cd ..; done
 ```
 
-### Usage of Rust Cargo to install rm-improved, which will give you a trash can for deletion
+# Install Cargo (Rust)
+
+```bash
+curl https://sh.rustup.rs -sSf | sh
+# Type 1 and enter
+fish_add_path /Users/qgn1237/.cargo/bin
+```
+
+You can use cargo now.
+
+# Usage of Rust Cargo to install rm-improved, which will give you a trash can for deletion
 
 ```bash
 cargo install rm-improved
@@ -414,7 +434,7 @@ export GRAVEYARD=/home/qgn1237/qgn1237/trash_can
 rip -u 
 ```
 
-### Error: AttributeError: module 'matplotlib' has no attribute 'use'"
+# Error: AttributeError: module 'matplotlib' has no attribute 'use'"
 
 ```bash
 # Uninstall and install matplotlib again
@@ -422,7 +442,7 @@ pip uninstall matplotlib
 pip install matplotlib
 ```
 
-### Useful Rust command collection, lsd command, dust command in Rust
+# Useful Rust command collection, lsd command, dust command in Rust
 
 The next gen ls command, a more intuitive version of du in rust
 
@@ -432,9 +452,20 @@ cargo install du-dust
 # You can then alias the lsd to ls
 ```
 
-### Allow automatic in VScode
+# Useful Rust command collection, fd-find
 
-### Soft link your file to Onedrive in Windows
+```bash
+cargo install fd-find
+```
+
+You can use it like,
+
+```bash
+fd vcf  # part of the file name
+fd -e vcf # Specific extension
+```
+
+# Soft link your file to Onedrive in Windows
 
 ```dos
 mklink /D "OneDrive path/file_name" "/local/file_name"
@@ -442,7 +473,7 @@ mklink /D "OneDrive path/file_name" "/local/file_name"
 
 Then the file will be automatically updated.
 
-### Install Starship prompt in your linux system or mac local system
+# Install Starship prompt in your linux system or mac local system
 
 Starship is the minimal, blazing-fast, and infinitely customizable prompt for any shell! Let's install in quest first.
 
@@ -463,7 +494,7 @@ starship init fish | source
 # Exit and you're done!
 ```
 
-### Make use of ~/.local/bin
+# Make use of ~/.local/bin
 
 Try to make a bin file if there is not. The /home/qgn1237/.local/bin will by default in your $PATH. So try to link or move the binary file of your different mamba/conda ENV in this directory, so you don't need to shift between ENV now.
 
@@ -472,10 +503,10 @@ For example
 ```bash
 [qgn1237@quser23 ~]$ which vim
 alias vim='nvim'
-	~/.local/bin/nvim
+ ~/.local/bin/nvim
 ```
 
-### Install Fish on MAC and switch from Bash to Fish as default shell
+# Install Fish on MAC and switch from Bash to Fish as default shell
 
 First make sure you have installed Homebrew.
 
@@ -517,7 +548,7 @@ math 2/5
 0.4
 ```
 
-### Install Fish shell on a remote cluster that you can not sudo
+# Install Fish shell on a remote cluster that you can not sudo
 
 I've rarely explore the other possibility besides bash, and I don't think comfort zone is a good sign for me. So I decide to switch to Fish, which seems to be more powerful.
 
@@ -543,7 +574,7 @@ When you type: fish, it shows:
 fish: error while loading shared libraries: libpcre2-32.so.0: cannot open shared object file: No such file or director
 
 This because fish can not find the lib file, and you also don't have the permission
-to /usr/local/lib. The solution is to find the path of libpcre2-32.so.0 
+to /usr/local/lib. The solution is to find the path of libpcre2-32.so.0
 
 ```bash
 ❯ find_suffix_in_current_directory.py libpcre2-32.so.0
@@ -563,7 +594,7 @@ starship init fish | source
 ```
 
 Next step, let's make you to change to Fish automatically while connect to server.
-chsh won't do it without the shell being listed in /etc/shells, and other ways of editing that configuration also require root permissions. 
+chsh won't do it without the shell being listed in /etc/shells, and other ways of editing that configuration also require root permissions.
 
 ```bash
 # Add this to .bashrc
@@ -575,7 +606,7 @@ fi
 Now you're all good, everytime you login into bash, bashrc will lead you to fish
 Then fish will start starship automatically.
 
-### The fish version can not be shown, the git version may be too old
+# The fish version can not be shown, the git version may be too old
 
 ```bash
 # Upgrade your git command first
@@ -601,7 +632,7 @@ fish --version
 # Fish generates the version at build time with the build_tools/git_version_gen.sh script
 ```
 
-### Permantly add alias (functions) to fish
+# Permantly add alias (functions) to fish
 
 ```fish
 alias -s sq='squeue | grep "qgn1237"'
@@ -616,7 +647,7 @@ alias -s sb='sbatch'
 
 alias -s lsn='less -SN'
 
-alias -s vim='nvim'
+alias -s vim='lvim'
 
 alias -s ls='lsd'
 
@@ -630,7 +661,12 @@ vim ~/.config/fish/config.fish
 # Add all the alis to thr fishrc file
 ```
 
-### Add mamba to Fish shell
+# Add mamba to Fish shell, so you can use mamba activate mamba666 instead of mamba init first 
+
+You will get error like:
+
+Run 'mamba init' to be able to run mamba activate/deactivate
+and start a new shell session. Or use conda to activate/deactivate.
 
 Fish will automatically load your .bashrc file.
 But you have to add mamba to fish manually.
@@ -674,8 +710,7 @@ cp ~/.config/fish/config.fish ~/.config/fish/config.fish.bk
 
 The idea is to give mamba the power to do mamba activate like conda activate.
 
-
-### Install Oh-my-fish shell on a remote cluster that you can not sudo
+# Install Oh-my-fish shell on a remote cluster that you can not sudo
 
 Oh My Fish provides core infrastructure to allow you to install packages which extend or modify the look of your shell. It's fast, extensible and easy to use.
 
@@ -689,7 +724,7 @@ fish install --path=~/.local/share/omf --config=~/.config/omf
 # It will succeed this time.
 ```
 
-### Install fish LOGO function by oh-my-fish
+# Install fish LOGO function by oh-my-fish
 
 ```fish
 omf install fish_logo
@@ -707,7 +742,7 @@ end
 <img src="img/fish_logo.png">
 </div
 
-### Install Oh-My-Fish theme
+# Install Oh-My-Fish theme
 
 ```fish
 # All your available theme
@@ -715,26 +750,26 @@ omf theme
 omf install bobthefish
 ```
 
-### Uninstall Oh-My-Fish  
+# Uninstall Oh-My-Fish  
 
 ```fish
 ma # Go to mamba666 env with higher git version
 omf destroy
 ```
 
-### Install Starship presets
+# Install Starship presets
 
 ```fish
 starship preset pastel-powerline > ~/.config/starship.toml
 ```
 
-### Set environmental variable in Fish 
+# Set environmental variable in Fish
 
 ```fish
 set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
 ```
 
-### A more efficient way to produce commandline and submit jobs in quest (fish shell)
+# A more efficient way to produce commandline and submit jobs in quest (fish shell)
 
 This is a useful script from Tingyou Wang.
 
@@ -744,7 +779,7 @@ divide -i cmd_list_332 -n 4
 sub # Write by myself
 ```
 
-### Use Fish shell to do loop
+# Use Fish shell to do loop
 
 The fish shell language is more clean and comfortable.
 
@@ -757,7 +792,7 @@ for dir in (ls -d SRR11563614 SRR11563615 SRR11563616)
 end
 ```
 
-### Install Fisher and install functions 
+# Install Fisher and install functions
 
 A plugin manager for Fish—the friendly interactive shell.
 
@@ -768,7 +803,7 @@ curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
 fisher install laughedelic/fish_logo
 ```
 
-### Setting vscode as the default editor for text files in Mac Finder
+# Setting vscode as the default editor for text files in Mac Finder
 
 ```fish
 brew install duti
@@ -815,21 +850,21 @@ duti -s com.microsoft.VSCode .yml all
 duti -s com.microsoft.VSCode .toml all
 ```
 
-### Save the ~/.config file to save your shell configuration
+# Save the ~/.config file to save your shell configuration
 
 ```bash
 # You can save this whole directory, make your transfer and installation easier
 /home/qgn1237/.config
 ```
 
-### Useful fish command collection - autopair.fish 
+# Useful fish command collection - autopair.fish
 
 ```fish
 # autopair.fish, auto-complete matching pairs in the Fish command line. Type pair () for you.
 fisher install jorgebucaran/autopair.fish
 ```
 
-### Useful fish command collection - z.fish
+# Useful fish command collection - z.fish
 
 ```fish
 z tracks the directories you visit. With a combination of frequency and recency,
@@ -843,7 +878,7 @@ z -t foo: Goes to most recent directory matching foo.
 z -x: Removes the current directory from $Z_DATA.
 ```
 
-### Calculate the allele frequency from the AD and SAC info field in a structural variants vcf file
+# Calculate the allele frequency from the AD and SAC info field in a structural variants vcf file
 
 chr1    10837   svim.INS.4      N       <INS>   8       PASS    SVTYPE=INS;END=10837;SVLEN=79;SUPPORT=7;STD_SPAN=5.8;STD_POS=40.06      GT:DP:AD        0/1:30:23,7
 
@@ -857,15 +892,15 @@ DP4 reports the number of reads covering the position with the reference allele 
 
 Allele frequency here would be 0 (0/26) for reference allele, and 1.0 (26/26) for alternate allele.
 
-### xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun, you can't use your git after upgrading macOS
+# xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun, you can't use your git after upgrading macOS
 
 ```bash
 xcode-select --install
 ```
 
-This will pop a dialogue box, Select "Install", and it will download and install the Command Line Tools package and fix the problem. 
+This will pop a dialogue box, Select "Install", and it will download and install the Command Line Tools package and fix the problem.
 
-### Update Yang lab Library
+# Update Yang lab Library
 
 Edit the library.yaml file first, add the book name and STAR
 
@@ -878,9 +913,9 @@ git commit -n "n"
 git push origin main
 ```
 
-### Configure your NeoVim
+# Configure your NeoVim
 
-Neovim (and many other applications) doesn't touch your ~/.config/ directory per default. You just need to create the nvim directory 
+Neovim (and many other applications) doesn't touch your ~/.config/ directory per default. You just need to create the nvim directory
 
 It's different from Vim, you need to:
 
@@ -892,7 +927,7 @@ nvim ~/.config/nvim/init.vim # Edit it
 # For example, add: set mouse=v
 ```
 
-### Can't Copy to Clipboard from neovim, what's wrong?
+# Can't Copy to Clipboard from neovim, what's wrong?
 
 Becasue nvim sets your vim into visual mode whenever you select something with the mouse. And for some mad reason one is not allowed to copy when in visual mode. You can get around it by holding down shift when selecting text not to go into visual mode allowing you to use the copy menu.
 
@@ -902,7 +937,7 @@ set mouse=v
 
 Done!
 
-### Github push error: fatal: Unable to create '/Users/qgn1237/Library/CloudStorage/OneDrive-NorthwesternUniversity/github_project/Computational-Medicine-and-Bioinformatics-Terminology-Database/.git/index.lock': File exists.
+# Github push error: fatal: Unable to create '/Users/qgn1237/Library/CloudStorage/OneDrive-NorthwesternUniversity/github_project/Computational-Medicine-and-Bioinformatics-Terminology-Database/.git/index.lock': File exists
 
 The error message suggests that there is a lock file present, which typically means that another Git process is running or a previous Git process did not exit cleanly. To resolve the issue, follow these steps:
 
@@ -914,7 +949,7 @@ Remove the lock file manually. In your terminal, navigate to the repository's ro
 rm -f .git/index.lock
 ```
 
-### Extract all the text from a powerpoint file.
+# Extract all the text from a powerpoint file
 
 ```bash
 pip install python-pptx
@@ -924,7 +959,7 @@ pip install python-pptx
 # You can find it in the script directory
 ```
 
-### Filter the structural variants VCF results
+# Filter the structural variants VCF results
 
 1. Filter the SVIM results
 
@@ -971,7 +1006,7 @@ bcftools view -i 'INFO/SUPPORT >= 2 && INFO/IMPRECISE != 1' intput.vcf > output.
 4. Filter the CuteSV results
 
 ```bash
-chrY	56833655	cuteSV.DEL.48873	TCCTATTCCATTCCTC	T	.	PASS	PRECISE;SVTYPE=DEL;SVLEN=-15;END=56833670;CIPOS=-1,1;CILEN=-0,0;RE=3;RNAMES=NULL;STRAND=+-	GT:DR:DV:PL:GQ	./.:.:3:.,.,.:.
+chrY 56833655 cuteSV.DEL.48873 TCCTATTCCATTCCTC T . PASS PRECISE;SVTYPE=DEL;SVLEN=-15;END=56833670;CIPOS=-1,1;CILEN=-0,0;RE=3;RNAMES=NULL;STRAND=+- GT:DR:DV:PL:GQ ./.:.:3:.,.,.:.
 
 bcftools view -i 'FILTER == "PASS" && INFO/PRECISE == 1 && INFO/RE >= 2' input.vcf > output.vcf
 ```
@@ -979,7 +1014,7 @@ bcftools view -i 'FILTER == "PASS" && INFO/PRECISE == 1 && INFO/RE >= 2' input.v
 5. Filter the DeBreak results
 
 ```bash
-chrY	2464326	DB4000	TTCCCTAGCAATCCGGCCAAGGGCCGCTGATGTGCACACACTGAAGACGTTCCCTAAGTGTGTGGCTAAGGGACTGCTACCATATACACACTGAAGATGTTCCCTAAGAATGTGGGTAAGGGACCGCCGCCATGTTCGCACTGAAGACG	N	.	PASS	CHR2=chrY;SVLEN=149;SUPPREAD=4;MAPQ=0;SVMETHOD=DeBreak;PRECISE;SVTYPE=DEL	GT	0/1
+chrY 2464326 DB4000 TTCCCTAGCAATCCGGCCAAGGGCCGCTGATGTGCACACACTGAAGACGTTCCCTAAGTGTGTGGCTAAGGGACTGCTACCATATACACACTGAAGATGTTCCCTAAGAATGTGGGTAAGGGACCGCCGCCATGTTCGCACTGAAGACG N . PASS CHR2=chrY;SVLEN=149;SUPPREAD=4;MAPQ=0;SVMETHOD=DeBreak;PRECISE;SVTYPE=DEL GT 0/1
 
 bcftools view -i 'FILTER == "PASS" && INFO/PRECISE == 1 && INFO/SUPPREAD >= 2' input.vcf > output.vcf
 ```
@@ -987,25 +1022,25 @@ bcftools view -i 'FILTER == "PASS" && INFO/PRECISE == 1 && INFO/SUPPREAD >= 2' i
 6. Filter the SVDSS results
 
 ```bash
-chrX	147512934	DEL_chrX:147512934-147512961_28	TTGCAGTACAATACACATTGTATTACAC	T	.	PASS	VARTYPE=SV;SVTYPE=DEL;SVLEN=-28;END=147512961;WEIGHT=2;COV=4;AS=358;NV=1;CIGAR=33=28D46=	GT	0/1
+chrX 147512934 DEL_chrX:147512934-147512961_28 TTGCAGTACAATACACATTGTATTACAC T . PASS VARTYPE=SV;SVTYPE=DEL;SVLEN=-28;END=147512961;WEIGHT=2;COV=4;AS=358;NV=1;CIGAR=33=28D46= GT 0/1
 
 # You can filter the reported SVs by passing the --min-sv-length and --min-cluster-weight options. These options control the minimum length and minimum number of supporting superstrings for the reported SVs. Higher values for --min-cluster-weight will increase precision at the cost of reducing recall. For a diploid 30x coverage sample, --min-cluster-weight 2 produced the best results in our experiments. For a haploid 30x sample, instead, --min-cluster-weight 4 produced the best results.
 
 bcftools view -i 'FILTER == "PASS" && INFO/NV >= 2' input.vcf > output.vcf
 ```
 
-### Convert BED to VCF coordinate
+# Convert BED to VCF coordinate
 
 If BED start and end = 0  8, VCF start =1, end = 8
 BED is 0-based coordinate system, VCF is 1-based
 
-### Filter a VCF file based on the SVLEN field
+# Filter a VCF file based on the SVLEN field
 
 ```bash
 filter_vcf_based_on_length.py -i input.vcf -o length.vcf -l 50
 ```
 
-### How to Restore the MK1C Device from an Update Error
+# How to Restore the MK1C Device from an Update Error
 
 This guide aims to assist users facing a specific issue with the MinION Mk1C device. Users may experience problems after attempting to update the device's software version, causing the device to blackout, display a blue screen with various icons, or show an "Unknown" installed version.
 
@@ -1033,7 +1068,7 @@ This guide aims to assist users facing a specific issue with the MinION Mk1C dev
 
 <b>Step 3: Connecting to the device</b>
 
-1. Reboot the device. 
+1. Reboot the device.
 2. Connect to the device's hotspot using another device (e.g., a computer). The hotspot should have the same name as the Mk1C device (e.g., MC-1XXXX). The password is: WarmButterflyWings98
 
 <b>Step 4: Accessing the device via SSH</b>
@@ -1055,9 +1090,9 @@ sudo shutdown -r now
 
 This guide is based on a specific issue and might not apply to all problems encountered with the MinION Mk1C device. For different issues, please contact the Nanopore official technical support or check the Nanopore community forums for assistance.
 
-### How to Update the MinION Mk1C Software via SSH
+# How to Update the MinION Mk1C Software via SSH
 
-While the MinION Mk1C software can generally be updated via the user interface, some scenarios require manual software updates. If you prefer to update through the command line or need feedback during updates, this guide is for you. 
+While the MinION Mk1C software can generally be updated via the user interface, some scenarios require manual software updates. If you prefer to update through the command line or need feedback during updates, this guide is for you.
 
 Please always refer to the release notes for any version-specific commands that may be supplied.
 
@@ -1068,8 +1103,8 @@ Please always refer to the release notes for any version-specific commands that 
 
 <b>Steps to Update Only the MinKNOW Software:</b>
 
-1. Connect to the MinION Mk1C using SSH. 
-2. Open a terminal window. 
+1. Connect to the MinION Mk1C using SSH.
+2. Open a terminal window.
 3. Run the following commands one at a time to update the list of available software:
 
 ```
@@ -1077,14 +1112,16 @@ sudo apt clean
 sudo apt update 
 sudo apt install ont-mk1c-release
 ```
-These commands should complete successfully, without any errors or warnings. 
 
-4. If you encounter any error or warning message, ensure that your MinION Mk1C is connected to the Internet. You can diagnose network connection problems by running the following command: 
+These commands should complete successfully, without any errors or warnings.
+
+4. If you encounter any error or warning message, ensure that your MinION Mk1C is connected to the Internet. You can diagnose network connection problems by running the following command:
 
 ```
 sudo /opt/ont/mooneye/bin/ont-mooneye-check-network --verbose --diagnose
 ```
-5. Once the commands have completed successfully without errors, reboot the device using the command: 
+
+5. Once the commands have completed successfully without errors, reboot the device using the command:
 
 ```
 sudo reboot
@@ -1094,7 +1131,7 @@ sudo reboot
 
 If you want to update both the operating system and MinKNOW software at the same time, follow these steps:
 
-1. Connect to the MinION Mk1C using SSH. 
+1. Connect to the MinION Mk1C using SSH.
 2. Open a terminal window.
 3. Run the following commands one at a time:
 
@@ -1102,6 +1139,7 @@ If you want to update both the operating system and MinKNOW software at the same
 export DEBIAN_FRONTEND=noninteractive 
 sudo apt upgrade
 ```
+
 4. Reboot the device using the command:
 
 ```
@@ -1111,3 +1149,94 @@ sudo reboot
 Note: This will update all packages to their latest versions, so it may take longer than the MinKNOW-only update.
 
 Remember to check the 'Current version' under software version number after the updates to ensure that your software has been updated successfully.
+
+# Install LunarVim in Fish Shell
+
+## Prerequisites
+
+Before starting, ensure that you have the following installed:
+
+- Latest version of Neovim (v0.9.0+)
+- Git
+- Make
+- Pip
+- Python
+- NPM
+- Node.js
+- Cargo
+
+## Installation Steps
+
+1. Enter your mamba environment:
+
+   ```bash
+   ma
+   ```
+
+2. Execute the LunarVim installation script using bash:
+
+   ```bash
+   env LV_BRANCH='release-1.3/neovim-0.9' bash -c "bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh)"
+   ```
+
+   During this step, you may encounter an error related to the compilation of `nvim-treesitter[python]`. This occurs when the `cc1plus` compiler is not found.
+
+   if you are neovim with > 10 version,use:
+
+   ```bash
+   bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) 
+   ```
+
+3. To resolve this issue, you can install a C++ compiler within your Mamba environment using the following command:
+
+   ```bash
+   mamba install -c conda-forge cxx-compiler
+   ```
+
+4. Afterwards, set the `CXX` environment variable to point to your environment's `g++`:
+
+   ```bash
+   export CXX=$CONDA_PREFIX/bin/g++
+   ```
+
+```bash
+set -U fish_user_paths $fish_user_paths ~/.local/bin/ .  # Set the environmental variable
+make sure to manually run ':Lazy sync' when starting lvim for the first time.
+```
+
+# Installing Plugins in LunarVim
+
+This guide shows how to install and use the Dracula theme in LunarVim. Similar steps can be followed for other plugins.
+
+## Step 1: Open the LunarVim Configuration File
+
+First, you need to open your LunarVim configuration file. You can do this with the following command:
+
+```bash
+nvim ~/.config/lvim/config.lua
+```
+
+## Step 2: Add the Plugin Information
+
+In the configuration file, locate the `lvim.plugins` section. Here you add the plugin information. For example, to add the Dracula theme, you can use:
+
+```lua
+lvim.plugins = {
+    {
+        "Mofiqul/dracula.nvim",
+    },
+    -- more plugins can go here
+}
+```
+
+## Step 3: Set the Theme
+
+Next, set your chosen theme. For Dracula, you can use:
+
+```lua
+lvim.colorscheme = "dracula"
+```
+
+## Step 4: Save and Exit
+
+Save and exit the file.

@@ -1240,3 +1240,15 @@ lvim.colorscheme = "dracula"
 ## Step 4: Save and Exit
 
 Save and exit the file.
+
+# Install and using Zellij to manage terminal windows
+
+```bash
+cargo install --locked zellij
+
+zellij setup --dump-config > ~/.config/zellij/config.kdl # Create config file
+
+zellij options --theme dracula # change theme
+
+ctrl + O and d to leave the session, zellij a to attach a session, zellij -s to create a new session
+```

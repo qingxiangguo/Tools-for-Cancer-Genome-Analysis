@@ -6,9 +6,6 @@ Rust implementation of NanoFilt+NanoLyse
 
 ## 2. Installation
 
-```
-
-```
 
 ## 3. Usage
 

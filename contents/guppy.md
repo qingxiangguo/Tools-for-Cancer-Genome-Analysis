@@ -9,7 +9,7 @@ Read fast5/pod5 and give you fastq.
 wget https://cdn.oxfordnanoportal.com/software/analysis/ont-guppy_6.5.7_linux64.tar.gz
 
 
-## 3. Usage
+## 3. Usage - first round of simplex basecalling
 
 Select config file according to your flow cell, kit and modified base requirement in data folder:
 
@@ -25,44 +25,27 @@ fish_add_path /home/qgn1237/2_software/ont-guppy/bin
 ```
 
 ```bash
-#!/bin/bash
-#SBATCH --job-name=guppy_basecalling
-#SBATCH --account=b1171
-#SBATCH --partition=b1171
-#SBATCH --gres=gpu:a100:2
-#SBATCH --nodes=1
-#SBATCH --ntasks=32
-#SBATCH --time=48:00:00
-#SBATCH --mem=100G
-
-# --ntasks means the number of CPU cores used
-
-# With modification enabled
-guppy_basecaller --disable_pings --input_path fast5 --recursive  --gpu_runners_per_device 50 --num_callers 32 --save_path out --config dna_r9.4.1_450bps_modbases_dam-dcm-cpg_hac.cfg --device "cuda:0 cuda:1" 
-
-```
-
-- `--gpu_runners_per_device`: Sets the number of tasks run in parallel per GPU.
-- `--num_callers`: Sets the number of parallel basecalling tasks.
-- `--ntasks`: Sets the total number of CPU cores used for the job.
-
-```bash
 #!/bin/bash -l
 #SBATCH --account=b1171
 #SBATCH --partition=b1171
 #SBATCH --gres=gpu:a100:2
 # set the number of nodes
 #SBATCH --nodes=1
-#SBATCH --ntasks=32
+#SBATCH --ntasks=48
 #SBATCH --mem=100G
-#SBATCH --chdir=/home/qgn1237/qgn1237/2_raw_data/20230616_PC3_bulk_genome_ONT/pc3_dna_bulk_1/pc3_bulk/20230612_1911_MC-114785_FAW84522_f68d5359
 # set max wallclock time
-#SBATCH --time=48:00:00
+#SBATCH --time=70:00:00
 
 # run the application
 cd $SLURM_SUBMIT_DIR
 
-/home/qgn1237/2_software/ont-guppy/bin/guppy_basecaller --disable_pings --input_path /projects/b1171/qgn1237/2_raw_data/20230616_PC3_bulk_genome_ONT/pc3_dna_bulk_1/pc3_bulk/20230612_1911_MC-114785_FAW84522_f68d5359/pod5  --recursive  --gpu_runners_per_device 50 --num_callers 32 --save_path /projects/b1171/qgn1237/2_raw_data/20230616_PC3_bulk_genome_ONT/pc3_dna_bulk_1/pc3_bulk/20230612_1911_MC-114785_FAW84522_f68d5359/basecalled_fastq --config /home/qgn1237/2_software/ont-guppy/data/dna_r10.4.1_e8.2_400bps_5khz_modbases_5hmc_5mc_cg_hac_mk1c.cfg --device "cuda:0 cuda:1"
+/home/qgn1237/2_software/ont-guppy/bin/guppy_basecaller --disable_pings --input_path /projects/b1171/qgn1237/2_raw_data/20230616_PC3_bulk_genome_ONT/pc3_dna_bulk_1/pc3_bulk/20230612_1911_MC-114785_FAW84522_f68d5359/pod5  --recursive  --gpu_runners_per_device 50 --num_callers 48 --save_path /home/qgn1237/qgn1237/2_raw_data/20230616_PC3_bulk_genome_ONT/pc3_dna_bulk_1/pc3_bulk/20230612_1911_MC-114785_FAW84522_f68d5359/20230627_2nd_duplex_basecalling/1st_simplex_basecalling --config /home/qgn1237/2_software/ont-guppy/data/dna_r10.4.1_e8.2_400bps_5khz_modbases_5hmc_5mc_cg_fast_mk1c.cfg --device "cuda:0 cuda:1" --do_read_splitting
+```
+
+```
+- `--gpu_runners_per_device`: Sets the number of tasks run in parallel per GPU.
+- `--num_callers`: Sets the number of parallel basecalling tasks.
+- `--ntasks`: Sets the total number of CPU cores used for the job.
 ```
 
 In your case, with `--gpu_runners_per_device=8` and `--num_callers=16` across 2 GPUs, you have balanced the load. Each GPU supports 8 tasks, and you have total 16 tasks running in parallel, (less than) aligning with your CPU cores specified by `--ntasks=24`.
@@ -108,3 +91,10 @@ Merged all FASTQ files inside the "pass" folder of Guppy results with "cat" comm
 ```
 
 My nanopore DNA pipeline is Guppy + PycoQC (analysis the sequencing_summary.txt) + 1st FastQC (QC raw data) + Porechop (remove adaptors) + Nanoflit trimming (get clean reads) + FastQC again (QC the clean data) + mapping with minimap2 + Qualimap BAM file QC.
+
+
+## 3. Usage - duplex basecalling
+
+You need to do simplex calling and enable read splitting first.
+
+Please refer to Duplex tools

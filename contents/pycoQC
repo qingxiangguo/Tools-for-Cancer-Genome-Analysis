@@ -15,5 +15,5 @@ mamba install -c bioconda pycoqc
 ## 3. Usage
 
 ```bash
-pycoQC -f sequencing_summary.txt -o pycoQC_output.html`
+pycoQC -f sequencing_summary.txt -o pycoQC_output.html
 ```

@@ -9,7 +9,9 @@ Read fast5/pod5 and give you fastq.
 wget https://cdn.oxfordnanoportal.com/software/analysis/ont-guppy_6.5.7_linux64.tar.gz
 
 
-## 3. Usage - first round of simplex basecalling
+## 3. Usage 
+
+### First round of simplex basecalling
 
 Select config file according to your flow cell, kit and modified base requirement in data folder:
 
@@ -58,7 +60,7 @@ However, note that not all methylation analysis tools can directly use the methy
 
 If you find error like "guppy_basecaller with gpu: error while loading shared libraries: libcuda.so.1", no worry, because you don't have cuda in your loca, it's on a GPU node.
 
-If runing, it will show something like,
+If running, it will show something like,
 
 ```bash
 ONT Guppy basecalling software version 6.5.7+ca6d6af, minimap2 version 2.24-r1122
@@ -86,15 +88,77 @@ Init time: 4437 ms
 ```
 
 Merged all FASTQ files inside the "pass" folder of Guppy results with "cat" command and obtained single FASTQ.
-```bash
 
-```
-
-My nanopore DNA pipeline is Guppy + PycoQC (analysis the sequencing_summary.txt) + 1st FastQC (QC raw data) + Porechop (remove adaptors) + Nanoflit trimming (get clean reads) + FastQC again (QC the clean data) + mapping with minimap2 + Qualimap BAM file QC.
+My nanopore DNA pipeline is Guppy + PycoQC (analysis the sequencing_summary.txt) + Porechop (remove adaptors) + Nanoflit trimming (get clean reads) + mapping with minimap2 + Qualimap BAM file QC.
 
 
-## 3. Usage - duplex basecalling
+### Duplex basecalling with the help of duplex_tools
 
 You need to do simplex calling and enable read splitting first.
 
-Please refer to Duplex tools
+Please refer to Duplex tools to get the pair_ids_filtered.txt
+
+Then
+
+Start duplex basecalling.
+
+The input is the original .fast5/.pod5 file and the pair_ids_filtered.txt file generated above, as follows
+
+```bash
+#!/bin/bash -l
+#SBATCH --account=b1171
+#SBATCH --partition=b1171
+#SBATCH --gres=gpu:a100:2
+# set the number of nodes
+#SBATCH --nodes=1
+#SBATCH --ntasks=48
+#SBATCH --mem=100G
+#SBATCH --time=80:00:00
+
+# run the application
+cd $SLURM_SUBMIT_DIR
+
+/home/qgn1237/2_software/ont-guppy/bin/guppy_basecaller_duplex --disable_pings --input_path /projects/b1171/qgn1237/2_raw_data/20230616_PC3_bulk_genome_ONT/pc3_dna_bulk_1/pc3_bulk/20230612_1911_MC-114785_FAW84522_f68d5359/pod5 --recursive --gpu_runners_per_device 50 --num_callers 48 --save_path /home/qgn1237/qgn1237/2_raw_data/20230616_PC3_bulk_genome_ONT/pc3_dna_bulk_1/pc3_bulk/20230612_1911_MC-114785_FAW84522_f68d5359/20230627_2nd_duplex_basecalling/2nd_duplex_basecalling/ --config /home/qgn1237/2_software/ont-guppy/data/dna_r10.4.1_e8.2_400bps_5khz_modbases_5hmc_5mc_cg_sup.cfg --device "cuda:0 cuda:1" --duplex_pairing_mode from_pair_list --duplex_pairing_file /projects/b1171/qgn1237/2_raw_data/20230616_PC3_bulk_genome_ONT/pc3_dna_bulk_1/pc3_bulk/20230612_1911_MC-114785_FAW84522_f68d5359/20230627_2nd_duplex_basecalling/duplex_output/pair_ids_filtered.txt --chunks_per_runner 1200
+```
+
+Note that you must specify the --chunks_per_runner 1200, or else there will be a length problem.
+
+This will generate duplex fastq files.
+
+### Combine the results of duplex and simplex fastqs 
+
+### Overview
+
+In nanopore sequencing, duplex sequencing offers an additional layer of accuracy in base calling, owing to the independent sequencing of both DNA strands. However, the data obtained from duplex sequencing is not readily combined with the simplex sequencing data. This guide will walk you through the steps to combine the FASTQ files from both types of sequencing, removing any redundant reads in the process.
+
+### Prerequisites
+
+You'll need:
+
+- Your duplex and simplex FASTQ files
+- [Seqkit](https://github.com/shenwei356/seqkit) installed
+
+### Procedure
+
+1. **Concatenate all Simplex FASTQ files**: Use the `cat` command to combine all the FASTQ files from the simplex sequencing. 
+
+    ```bash
+    cat simplex-guppy/*.fastq.gz > simplex.fastq.gz 
+    ```
+
+2. **Extract all Simplex run names**: The `seqkit` tool can be used to extract all read IDs from the combined FASTQ file.
+
+    ```bash
+    seqkit seq --name simplex.fastq.gz > simplex_ids_txt 
+    ```
+
+3. **Substitute Simplex reads with Duplex reads and combine**: Use the `seqkit grep` command to extract all the reads from the simplex file that are not present in the duplex file, and combine them with all reads from the duplex file.
+
+    ```bash
+    { sed 's/ /\n/' pair_ids_filtered.txt | \
+    seqkit grep -v -f - simplex.fastq.gz ; \
+    zcat duplex-guppy/../fastq_pass/*.fastq.gz ; } \
+    | gzip - > combined.fastq.gz 
+    ```
+
+4. **Output**: You'll end up with a combined FASTQ file (`combined.fastq.gz`) that includes both simplex and duplex reads, with any redundant reads removed.

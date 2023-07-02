@@ -10,5 +10,5 @@ Rust implementation of NanoFilt+NanoLyse
 ## 3. Usage
 
 ```bash
-cat trimmed_reads.fastq | chopper -q 7 -l 500 > clean_reads.fastq
+cat trimmed_reads.fastq | chopper -q 10 -l 500 > clean_reads.fastq
 ```

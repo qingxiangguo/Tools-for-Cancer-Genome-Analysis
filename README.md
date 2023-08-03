@@ -1252,3 +1252,57 @@ zellij options --theme dracula # change theme
 
 ctrl + O and d to leave the session, zellij a to attach a session, zellij -s to create a new session
 ```
+
+# Accelerating Your Command Line Operations using Zellij and SLURM (original by yangyang Li, https://yangyangli.top/)
+
+This tutorial will guide you through the steps to expedite your command line operations on a compute node from a login node, using `zellij` to maintain an interactive `srun` session in a SLURM-managed cluster. This process can greatly improve your command execution speed, especially if your login node is heavily loaded.
+
+## Prerequisites
+
+- Basic understanding of command line interface (CLI)
+- Access to a SLURM-managed cluster
+- `zellij` and `srun` command line tools installed
+
+## Steps
+
+### Step 1: Start a Zellij Session
+
+To begin, open your command line interface and start a new Zellij session by typing:
+
+```bash
+zellij -s q
+```
+
+The `-s q` option gives a name (in this case, "q") to your Zellij session.
+
+### Step 2: Check Your Current Node
+
+You can verify the node you're currently on by executing the `hostname` command:
+
+```bash
+hostname
+```
+
+This command will return the name of the node you're currently logged into. At this point, you should be on the login node.
+
+### Step 3: Start an Interactive Srun Session
+
+Next, you can start an interactive `srun` session with specified resources. This command will move you from the login node to a compute node, enhancing your command execution speed:
+
+```bash
+srun -n 12 -p b1171 --account=b1171 -t 10:00:00 --mem 16g --pty bash
+```
+
+In this example, `-n 12` specifies the number of CPUs, `-p b1171` specifies the partition, `--account=b1171` specifies the account, `-t 10:00:00` specifies the time limit, and `--mem 16g` specifies the amount of memory.
+
+### Step 4: Verify the Compute Node
+
+Once the srun session starts, you can verify that you're on a compute node by running the `hostname` command again.
+
+### Step 5: Exit the Zellij Session
+
+When you're done with your tasks on the compute node, you can detach from the Zellij session without ending the `srun` session by using the shortcut `Ctrl + o`, followed by `d`.
+
+## Conclusion
+
+This tutorial walked you through the process of using Zellij and srun to expedite your command line operations on a compute node. Remember, when you exit Zellij, any tasks running within the `srun` session will continue to run until they're completed or until the time limit is reached. Thus, you can significantly improve your productivity by leveraging the computational power of the compute nodes.

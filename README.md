@@ -1074,6 +1074,10 @@ This guide aims to assist users facing a specific issue with the MinION Mk1C dev
 <b>Step 4: Accessing the device via SSH</b>
 
 1. SSH into the device using the following command: `ssh minit@10.42.0.1`
+Note: If you have connected with other Mk1c deivce before, clean the key by :
+
+`ssh-keygen -R 10.42.0.1` and ssh again.
+
 2. Run the following command to get the device's IP address while connected to Ethernet: `ifconfig`. The IP address is listed for `eth0`.
 
 <b>Step 5: Updating the device</b>

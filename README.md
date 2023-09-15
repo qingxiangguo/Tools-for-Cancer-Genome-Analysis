@@ -51,6 +51,10 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [BCFtools](/contents/bcftools.md)
 
+### [Qualimap](/contents/qualimap.md)
+
+### [BEDtools](/contents/bedtools.md)
+
 ## Indel calling
 
 ### [transindel](/contents/transindel.md)
@@ -86,6 +90,28 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ## Gene fusion analysis - RNA-seq level
 
 ### [Arriba](/contents/arriba.md)
+
+## Nanopore ONT analysis
+
+### [guppy](/contents/guppy.md)
+
+### [Dorado](/contents/Dorado.md)
+
+### [Chopper](/contents/Chopper.md)
+
+### [Porechop](/contents/porechop.md)
+
+### [pod5](/contents/pod5.md)
+
+### [NanoPlot](/contents/nanoplot.md)
+
+### [PycoQC](/contents/pycoQC.md)
+
+### [Duplex tools](/contents/duplex_tools.md)
+
+## General QC software
+
+### [FastQC](/contents/FastQC.md)
 
 # Other small tricks and tips
 

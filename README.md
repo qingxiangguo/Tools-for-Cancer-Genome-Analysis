@@ -293,6 +293,8 @@ Then use the following command to transfer
 ```bash
 rsync -avz /path/to/minion/files qgn1237@quest.northwestern.edu:/home/qgn1237
 
+You can add --append-verify if you want to resume.
+
 # Then it will ask you for the password of northwestern Quest
 ```
 
@@ -676,6 +678,8 @@ alias -s lsn='less -SN'
 alias -s vim='lvim'
 
 alias -s ls='lsd'
+
+alias -s zcp='zellij action close-pane'
 
 # That creates ~/.config/fish/functions/ls.fish which will then be available in any fish session.
 ```
@@ -1281,6 +1285,8 @@ zellij setup --dump-config > ~/.config/zellij/config.kdl # Create config file
 zellij options --theme dracula # change theme
 
 ctrl + O and d to leave the session, zellij a to attach a session, zellij -s to create a new session
+
+zellij action close-pane # Close the current pane.
 ```
 
 # Accelerating Your Command Line Operations using Zellij and SLURM (original by yangyang Li, https://yangyangli.top/)

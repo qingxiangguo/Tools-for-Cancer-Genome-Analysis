@@ -2,7 +2,7 @@
 
 ## 1. About
 
- Manta calls structural variants (SVs) and indels from mapped paired-end sequencing reads.
+https://github.com/dellytools/delly
 
 ## 2. Installation and Usage
 
@@ -12,7 +12,7 @@
 mamba install -c bioconda delly
 ```
 
-### 2.1 run the manta config script
+### 2.1 Usage 1
 
 ```bash
 # The bam file has to be indexed first
@@ -23,3 +23,8 @@ bcftools filter -i 'FILTER="PASS"' /projects/b1171/qgn1237/4_single_cell_SV_chim
 
 Output files: 22Rv1.5X.vcf
 
+### 2.2 Simple usage
+
+```bash
+
+```

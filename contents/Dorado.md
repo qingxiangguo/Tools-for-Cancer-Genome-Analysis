@@ -31,7 +31,7 @@ https://github.com/nanoporetech/pod5-file-format
 # run the application
 cd $SLURM_SUBMIT_DIR
 
-/home/qgn1237/2_software/dorado-0.3.1-linux-x64/bin/dorado basecaller sample.pod5 > simplex_dorado.bam
+/home/qgn1237/2_software/dorado-0.3.1-linux-x64/bin/dorado basecaller /home/qgn1237/2_software/dorado-0.3.4-linux-x64/bin/dna_r10.4.1_e8.2_400bps_sup@v4.2.0 sample.pod5 > simplex_dorado.bam
 ```
 
 Then you'll get a single bam file, now try to get fastq reads from it.
@@ -57,7 +57,7 @@ samtools view duplex_also_simplex_dorado.bam -d dx:0 | samtools fastq > dorado.s
 # run the application
 cd $SLURM_SUBMIT_DIR
 
-/home/qgn1237/2_software/dorado-0.3.1-linux-x64/bin/dorado duplex sample.pod5 > duplex_also_simplex_dorado.bam
+/home/qgn1237/2_software/dorado-0.3.1-linux-x64/bin/dorado duplex /home/qgn1237/2_software/dorado-0.3.4-linux-x64/bin/dna_r10.4.1_e8.2_400bps_sup@v4.2.0 sample.pod5 > duplex_also_simplex_dorado.bam
 ```
 
 Then you'll get a single bam file, now try to separate them into simplex fastq reads and duplex fastq reads.

@@ -80,3 +80,9 @@ samtools view -s 0.156 -b ../22Rv1.bam -@ 8 > 22Rv1_5X.bam
 ```bash
 samtools index in.bam out.bam.bai
 ```
+
+## Samtools merge
+
+```bash
+samtools merge -o PC3_10cells_exp_1_all.bam 1.bam 2.bam 3.bam -@ 6
+```

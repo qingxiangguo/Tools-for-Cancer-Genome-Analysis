@@ -1,4 +1,4 @@
-# The installation and usage of manta
+# The installation and usage of Delly
 
 ## 1. About
 

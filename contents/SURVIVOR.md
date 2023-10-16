@@ -16,7 +16,8 @@ mamba install -c bioconda survivor=1.0.7
 
 ```bash
 # Get the absolute path of VCF files to merge
-readline -f SV*.vcf > list_vcf
+rl ../../pbsv/pbsv.var.vcf
+ ../../cutesv/cutesv.vcf ../../svim/variants.vcf ../../debreak/debreak.vcf ../../svdss/svs_poa.vcf ../../sniffles/sniffles.vcf > list_vcf
 
 SURVIVOR merge list_vcf 200 1 0 0 0 50 merged_filtered.vcf 
 ```
@@ -27,6 +28,7 @@ Minimum number of supporting caller: 1
 Take the type into account (1==yes, else no): 1
 Take the strands of SVs into account (1==yes, else no): 0
 Estimate distance based on the size of SV (1==yes, else no): 0
+Minimum size of SVs to be taken into account.
 
 Output files: merged_filtered.vcf
 

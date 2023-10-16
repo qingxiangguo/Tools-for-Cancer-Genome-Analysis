@@ -33,7 +33,7 @@ make -j4 install
 # The bam file has to be indexed first
 # Step 1, run configManta.py first
 
-configManta.py --tumorBam=/projects/b1171/qgn1237/4_single_cell_SV_chimera/2_test_5_prostate_depth_SV_impact/NGS_data/22Rv1/5X_depth/22Rv1.5X.bam --referenceFasta=/projects/b1171/twp7981/database/genome/hg38.fa --runDir=/home/qgn1237/working/NGS_data/22Rv1/5X_depth/manta
+configManta.py --tumorBam=22Rv1.5X.bam --referenceFasta=/projects/b1171/twp7981/database/genome/hg38.fa --runDir=/home/qgn1237/working/NGS_data/22Rv1/5X_depth/manta
 
 # Successfully created workflow run script
 # Step 2, run runWorkflow.py

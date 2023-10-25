@@ -29,6 +29,8 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [Poetry](/contents/poetry.md)
 
+### [pre-commit](/contents/pre-commit.md)
+
 ## DNA and RNA-seq aligner (splice aware)
 
 ### [Minimap2](/contents/minimap2.md)

@@ -1,53 +1,115 @@
-# The usage of git command
+# Git Basics: A Quickstart Guide
+
+## 1. Setting up a new repository
 
 ```bash
-# If you want to build a new repo
 mkdir Allen_Guo_Rust_Learning_Note
 cd Allen_Guo_Rust_Learning_Note 
 git init
-vim README.md
+```
 
-git clone https://github.com/qingxiangguo/qingxiangguo.git # clone a repo from git to local
+## 2. Cloning an existing repository
 
+```bash
+git clone https://github.com/qingxiangguo/qingxiangguo.git
+```
+
+## 3. Checking the status of your repository
+
+```bash
 git status
-
-git add . # add all to the tree space
-
-git commit -m "update"
-
-git push origin main # The master has all been changed to main now
-
-# The origin is the local place, the main(used to be master) is the main branch on the remote, you can 
-# add and merge and switch between main branch and sub-branch
-
-# If you want to delete something
-
-rm -r ./*
-
-git rm . # update the removal, similar to git add .
 ```
 
-If you init a local repo and want to push your local git repository to a remote repository on Github, you need to follow these steps:
+## 4. Making changes
 
-Create a new repository on Github:
-
-Go to https://github.com and log in to your account.
-Click the "New" button on the top left corner and give your repository a name.
-Click "Create repository" button.
-Copy the remote repository URL:
-
-After creating the repository, you will see a page with the repository details.
-Copy the URL that starts with "https://github.com/username/repositoryname.git"
-Add the remote repository to your local repository:
-
-Open your terminal or command prompt and navigate to your local repository folder.
-Type the following command to add the remote repository:
+Edit your files (e.g., using `vim README.md`), then:
 
 ```bash
-git remote add origin <remote_repository_URL> # Git creates a reference to the remote repository in your local repository. This reference is called a "remote" and it allows you to interact with the remote repository using Git commands.
+git add .  # Add all changes to the staging area
+git commit -m "Describe your changes here"
 ```
+
+## 5. Pushing changes to a remote repository
 
 ```bash
-git pull origin main    # Fetch and merger remote to local
+git push origin main
 ```
 
+## 6. Switching branches
+
+To switch to an existing branch:
+
+```bash
+git checkout branch_name
+```
+
+To create and switch to a new branch based on your current branch:
+
+```bash
+git checkout -b new_branch_name
+```
+
+## 7. Fetching and merging changes from a remote repository
+
+```bash
+git fetch
+git merge origin/main
+```
+
+Alternatively, you can use:
+
+```bash
+git pull origin main
+```
+
+## 8. Viewing commit history
+
+To see the commit history of your current branch:
+
+```bash
+git log
+```
+
+To view the commits that are in `origin/main` but not in your local `main`:
+
+```bash
+git log main..origin/main
+```
+
+To see the commit history of the `main` branch in the `origin` remote:
+
+```bash
+git log origin/main
+```
+
+## 9. Deleting files and committing the removal
+
+```bash
+rm file_to_delete.txt
+git rm file_to_delete.txt
+git commit -m "Remove file_to_delete.txt"
+```
+
+## 10. Linking a local repository to a remote one
+
+If you have initialized a local repository and want to connect it to a new remote repository:
+
+1. Create a new repo on GitHub.
+2. Copy the remote repository URL.
+3. Add the remote repository to your local one:
+
+```bash
+git remote add origin remote_repository_URL
+```
+
+## 11. Pulling changes from a remote branch
+
+```bash
+git pull origin main
+```
+
+## Notes:
+
+- `origin` is the default name given to the remote from which you have cloned your repository. It's essentially a shortcut to the remote repository's URL.
+  
+- `main` is often the default branch name (previously it was `master`). When you see something like `origin/main`, it refers to the `main` branch on the `origin` remote.

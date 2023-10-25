@@ -93,16 +93,6 @@ poetry run script-name
 
 ### 7. Updating Dependencies
 
-Of course, you're right. The specifics around updating and handling the `poetry.lock` file are essential. Let's integrate that into the guide.
-
----
-
-# Poetry: A Comprehensive Guide
-
-...
-
-### 7. Updating Dependencies
-
 To update a specific package and simultaneously refresh both the `poetry.lock` and `pyproject.toml` files:
 
 ```bash

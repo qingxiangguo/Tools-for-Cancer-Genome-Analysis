@@ -24,7 +24,7 @@ git push origin main # The master has all been changed to main now
 
 rm -r ./*
 
-git rm . # update the removal
+git rm . # update the removal, similar to git add .
 ```
 
 If you init a local repo and want to push your local git repository to a remote repository on Github, you need to follow these steps:
@@ -45,7 +45,9 @@ Type the following command to add the remote repository:
 
 ```bash
 git remote add origin <remote_repository_URL> # Git creates a reference to the remote repository in your local repository. This reference is called a "remote" and it allows you to interact with the remote repository using Git commands.
+```
 
-git push origin main
+```bash
+git pull origin main    # Fetch and merger remote to local
 ```
 

@@ -74,7 +74,7 @@ For running duplex basecalling:
 
 cd $SLURM_SUBMIT_DIR
 
-/home/qgn1237/2_software/dorado-0.3.1-linux-x64/bin/dorado duplex /home/qgn1237/2_software/dorado-0.3.4-linux-x64/bin/dna_r10.4.1_e8.2_400bps_sup@v4.2.0 sample.pod5 > duplex_also_simplex_dorado.bam
+/home/qgn1237/2_software/dorado-0.3.1-linux-x64/bin/dorado duplex /home/qgn1237/2_software/dorado-0.3.4-linux-x64/bin/dna_r10.4.1_e8.2_400bps_sup@v4.2.0 sample.pod5 > duplex_also_simplex_dorado.bam -t 48
 ```
 
 After this step, you'll have a BAM file. Separate it into simplex and duplex fastq reads:

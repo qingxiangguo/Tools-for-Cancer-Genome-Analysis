@@ -22,7 +22,6 @@ rl ../../pbsv/pbsv.var.vcf
 SURVIVOR merge list_vcf 200 1 0 0 0 50 merged_filtered.vcf 
 ```
 
-Here the filtering parameters of SURVIVOR are the following:
 Max distance between breakpoints: 500
 Minimum number of supporting caller: 1
 Take the type into account (1==yes, else no): 1

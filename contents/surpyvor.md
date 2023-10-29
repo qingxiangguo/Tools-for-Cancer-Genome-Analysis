@@ -9,5 +9,16 @@ mamba install -c bioconda surpyvor
 
 # Intersect SV vcf
 
-surpyvor highconf --variants 15X_long.vcf 15X_NGS.vcf -d 1000 -o 15X_isec.vcf
+surpyvor highconf --variants 15X_long.vcf 15X_NGS.vcf -d 10 -o isec.vcf
+```
+
+```bash
+# Union
+
+surpyvor highsens --variants 15X_long.vcf 15X_NGS.vcf -d 10 -o union.vcf
+
+# Venn
+
+surpyvor venn --variants 15X_long.vcf 15X_NGS.vcf -d 10  --plotout PLOTOUT --keepmerged -i
+
 ```

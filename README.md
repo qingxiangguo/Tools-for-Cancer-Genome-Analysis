@@ -27,10 +27,6 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [Homebrew](/contents/homebrew.md)
 
-### [Poetry](/contents/poetry.md)
-
-### [pre-commit](/contents/pre-commit.md)
-
 ## DNA and RNA-seq aligner (splice aware)
 
 ### [Minimap2](/contents/minimap2.md)
@@ -71,8 +67,6 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [Manta](/contents/manta.md)
 
-### [SVABA](/contents/SVABA.md)
-
 ## Genome structural variation detection (long read)
 
 ### [SVIM](/contents/SVIM.md)
@@ -82,10 +76,6 @@ In this section, I provide the installation and usage for a wide range of bioinf
 ### [Sniffles2](contents/sniffles2.md)
 
 ### [cuteSV](/contents/cuteSV.md)
-
-### [SVDSS](/contents/SVDSS.md)
-
-### [DeBreak](/contents/DeBreak.md)
 
 ## Genome structural variation VCF manipulation
 
@@ -1413,4 +1403,35 @@ After performing the above steps, test the solution:
 1. In the WSL terminal, try pinging a known website:
    ```
    ping google.com
+   ```
+
+I understand now. You want a simple markdown guide on how to use your existing `precision-recall-diagrams.py` script. Here's a concise guide:
+
+---
+
+# Precision-Recall Diagrams using `precision-recall-diagrams.py`
+
+This guide provides a quick walkthrough on how to visualize the trade-off between precision and recall using the provided Python script.
+
+## How to Use
+
+1. **Prepare Your Data**:
+   
+   The script uses predefined data. If you want to use your own data, modify the `prs` array inside the script:
+   
+   ```python
+   prs = np.array([
+       [precision1, recall1],
+       [precision2, recall2],
+       ...
+   ])
+   labels = ["Label 1", "Label 2", ...]
+   ```
+
+2. **Run the Script**:
+
+   Navigate to the script's directory and execute:
+
+   ```bash
+   python precision-recall-diagrams.py
    ```

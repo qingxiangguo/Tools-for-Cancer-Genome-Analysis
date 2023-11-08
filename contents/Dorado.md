@@ -85,6 +85,11 @@ samtools view duplex_also_simplex_dorado.bam -d dx:0 | samtools fastq > dorado.s
 samtools view duplex_also_simplex_dorado.bam -d dx:1 | samtools fastq > dorado.duplex.fastq
 ```
 
+```bash
+# Or combine all to fastq
+samtools view duplex_also_simplex_dorado.bam | samtools fastq > dorado.simplex.fastq
+```
+
 ---
 
 ## 4. Channel-wise Data Splitting with POD5

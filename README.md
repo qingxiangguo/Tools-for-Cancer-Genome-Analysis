@@ -27,6 +27,10 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [Homebrew](/contents/homebrew.md)
 
+### [Poetry](/contents/poetry.md)
+
+### [Pre-commit](/contents/pre-commit.md)
+
 ## DNA and RNA-seq aligner (splice aware)
 
 ### [Minimap2](/contents/minimap2.md)
@@ -67,6 +71,8 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [Manta](/contents/manta.md)
 
+### [SVABA](/contents/SVABA.md)
+
 ## Genome structural variation detection (long read)
 
 ### [SVIM](/contents/SVIM.md)
@@ -77,11 +83,17 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [cuteSV](/contents/cuteSV.md)
 
-## Genome structural variation VCF manipulation
+### [SVDSS](/contents/SVDSS.md)
+
+### [DeBreak](/contents/DeBreak.md)
+
+## Genome structural variation VCF manipulation and benchmarking
 
 ### [SURVIVOR](/contents/SURVIVOR.md)
 
 ### [surpyvor](/contents/surpyvor.md)
+
+### [Truvari](/contents/truvari.md)
 
 ## Genome structural variation simulation
 

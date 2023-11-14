@@ -1444,7 +1444,7 @@ This guide provides a quick walkthrough on how to visualize the trade-off betwee
    python precision-recall-diagrams.py
    ```
 
-**Understanding Poetry and Pip in Python Package Management**
+# Understanding Poetry and Pip in Python Package Management**
 
 ## Poetry vs. Pip in Python
 
@@ -1474,7 +1474,7 @@ This guide provides a quick walkthrough on how to visualize the trade-off betwee
 ## Summary
 - `poetry install` enhances Python's environment by managing and installing a project's packages and dependencies, updating module paths (`sys.path`), and setting up command line tools. This process ensures that packages and their dependencies are accessible and functional in the specified Python environment.
 
-## Understanding Poetry, Python Environment, and Entry Points
+# Understanding Poetry, Python Environment, and Entry Points
 
 ### Poetry Installation Process
 - **Dependency Resolution**: Reads `pyproject.toml` to determine required packages and versions.

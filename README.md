@@ -1417,10 +1417,6 @@ After performing the above steps, test the solution:
    ping google.com
    ```
 
-I understand now. You want a simple markdown guide on how to use your existing `precision-recall-diagrams.py` script. Here's a concise guide:
-
----
-
 # Precision-Recall Diagrams using `precision-recall-diagrams.py`
 
 This guide provides a quick walkthrough on how to visualize the trade-off between precision and recall using the provided Python script.
@@ -1447,3 +1443,56 @@ This guide provides a quick walkthrough on how to visualize the trade-off betwee
    ```bash
    python precision-recall-diagrams.py
    ```
+
+**Understanding Poetry and Pip in Python Package Management**
+
+## Poetry vs. Pip in Python
+
+**Pip Install**
+- **Tool**: Standard package installer for Python.
+- **Use Case**: Used by end-users for installing Python packages from PyPI or other sources.
+- **Focus**: Manages the installation of individual packages without handling project-wide dependencies.
+
+**Poetry Install**
+- **Tool**: Modern Python dependency management and packaging tool.
+- **Use Case**: Suited for developers managing dependencies of entire projects.
+- **Functionality**: Installs all dependencies based on `pyproject.toml` and may create virtual environments for isolation.
+- **Advantages**: Manages project dependencies, ensuring consistent development environments.
+
+## Command Line Tools Installation
+- Both `pip` and `poetry` install command line tools of packages to `Scripts` (Windows) or `bin` (Unix-like systems) in the Python environment.
+- These directories are typically included in the system's PATH, allowing command line recognition and execution of these tools.
+
+## Entry Points
+- **Mechanism**: Allows packages to specify one or more command line script entry points.
+- **Implementation**: Scripts created during package installation, placed in executable directories.
+- **Configuration**:
+  - `setup.py` for pip: `entry_points={'console_scripts': ['mycommand = mypackage.mymodule:main_func']}`
+  - `pyproject.toml` for poetry: `[tool.poetry.scripts] mycommand = 'mypackage.mymodule:main_func'`
+- **Function**: These scripts are lightweight wrappers calling functions or classes in the package.
+
+## Summary
+- `poetry install` enhances Python's environment by managing and installing a project's packages and dependencies, updating module paths (`sys.path`), and setting up command line tools. This process ensures that packages and their dependencies are accessible and functional in the specified Python environment.
+
+## Understanding Poetry, Python Environment, and Entry Points
+
+### Poetry Installation Process
+- **Dependency Resolution**: Reads `pyproject.toml` to determine required packages and versions.
+- **Virtual Environment**: Installs packages in the active or a new virtual environment.
+- **Package Installation**: Downloads and installs packages from PyPI or other sources into the Python environment.
+- **Module Path Update**: Adds installed packages' paths to Python's `sys.path`.
+- **Entry Point Setup**: Creates scripts for command line tools as defined in `pyproject.toml`.
+- **Dependency Locking**: Updates `poetry.lock` to ensure consistent versions across environments.
+
+### Python Environment
+- **Python Path (`sys.path`)**: A list where Python looks for modules to import.
+- **Site-packages Directory**: Common location for installed packages (e.g., `/Users/qgn1237/mambaforge/envs/test_octopusv/lib/python3.9/site-packages`).
+
+### Entry Points and Package Discovery
+- **Executable Scripts**: Located in `bin` or `Scripts` directory of the Python environment.
+- **Example Script Path**: `/Users/qgn1237/mambaforge/envs/test_octopusv/bin/octopusv`.
+- **Import Logic in Scripts**: Can successfully import modules (e.g., `from octopusv.cli.cli import app`) due to their presence in the `site-packages` directory.
+
+### Locating Installed Packages
+- **`octopusv` Package**: Typically found in the `site-packages` directory.
+- **Metadata Directory (`octopusv-0.1.0.dist-info`)**: Contains metadata like `direct_url.json`, `entry_points.txt`, `INSTALLER`, `METADATA`, and `RECORD`.

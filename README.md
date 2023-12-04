@@ -1496,3 +1496,277 @@ This guide provides a quick walkthrough on how to visualize the trade-off betwee
 ### Locating Installed Packages
 - **`octopusv` Package**: Typically found in the `site-packages` directory.
 - **Metadata Directory (`octopusv-0.1.0.dist-info`)**: Contains metadata like `direct_url.json`, `entry_points.txt`, `INSTALLER`, `METADATA`, and `RECORD`.
+
+# Automated Software Testing with Nox, Pytest, and GitHub Actions
+
+This tutorial explains how to automate your software testing process using Nox, Pytest, and GitHub Actions.
+
+## Step 1: Configure Nox
+
+Create a `noxfile.py` with sessions for different Python versions:
+
+```python
+import nox
+
+@nox.session(python="3.9")
+def tests_39(session):
+    session.run("poetry", "install", external=True)
+    session.run("pytest", "--cov", "--cov-report=html")
+
+@nox.session(python="3.10")
+def tests_310(session):
+    session.run("poetry", "install", external=True)
+    session.run("pytest", "--cov", "--cov-report=html")
+```
+
+## Step 2: Write Pytest Test Cases
+
+Create a `tests` folder with your test cases. Here's an example test script:
+
+```python
+import subprocess
+import filecmp
+import pytest
+import os
+
+# The test dir
+TEST_DATA_DIR = "tests/data/VCF_for_testing_correct"
+OUTPUT_DIR = "tests/output"
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+
+def run_octopusv(input_file, output_file):
+    """
+    Run octopusv.
+    """
+    cmd = f"octopusv correct {input_file} {output_file}"
+    subprocess.run(cmd, shell=True, check=True)
+
+
+def test_mate_bnd_independent():
+    input_vcf = os.path.join(TEST_DATA_DIR, "test_mate_bnd_independent.vcf")
+    output_vcf = os.path.join(OUTPUT_DIR, "output_mate_bnd_independent.vcf")
+    expected_output_vcf = os.path.join(TEST_DATA_DIR, "example_mate_bnd_independent.vcf")
+
+    run_octopusv(input_vcf, output_vcf)
+
+    # Compare output and expected file
+    assert filecmp.cmp(output_vcf, expected_output_vcf)
+
+```
+
+## Step 3: Setup GitHub Actions
+
+Create a workflow file in `.github/workflows/tests.yml`. This file defines the CI pipeline.
+
+```yaml
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.py"
+      - "**/Dockerfile"
+      - ".github/workflows/*.yml"
+      - poetry.lock
+      - pyproject.toml
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "**.py"
+      - "**/Dockerfile"
+      - ".github/workflows/*.yml"
+      - poetry.lock
+      - pyproject.toml
+
+jobs:
+  tests:
+    name: ${{ matrix.session }} ${{ matrix.python }} / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { python: "3.10", os: "ubuntu-latest", session: "pre-commit" }
+          - { python: "3.10", os: "ubuntu-latest", session: "safety" }
+          - { python: "3.10", os: "ubuntu-latest", session: "mypy" }
+          - { python: "3.9", os: "ubuntu-latest", session: "mypy" }
+          - { python: "3.10", os: "ubuntu-latest", session: "tests" }
+          - { python: "3.9", os: "ubuntu-latest", session: "tests" }
+          - { python: "3.10", os: "macos-latest", session: "tests" }
+          - { python: "3.9", os: "macos-latest", session: "tests" }
+          - { python: "3.10", os: "ubuntu-latest", session: "docs-build" }
+
+    env:
+      NOXSESSION: ${{ matrix.session }}
+      FORCE_COLOR: "1"
+      PRE_COMMIT_COLOR: "always"
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Cache pip packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python }}-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python }}-
+            ${{ runner.os }}-pip-
+
+      - name: Cache Poetry virtual environment
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: ${{ runner.os }}-poetry-${{ matrix.python }}-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-${{ matrix.python }}-
+            ${{ runner.os }}-poetry-
+
+      - name: Set up Python ${{ matrix.python }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Upgrade pip
+        run: |
+          pip install --constraint=.github/workflows/constraints.txt pip
+          pip --version
+
+      - name: Upgrade pip in virtual environments
+        shell: python
+        run: |
+          import os
+          import pip
+
+          with open(os.environ["GITHUB_ENV"], mode="a") as io:
+              print(f"VIRTUALENV_PIP={pip.__version__}", file=io)
+
+      - name: Install Dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -q --no-install-recommends --no-install-suggests libhts-dev  libssl-dev
+
+      - name: Cache macOS dependencies
+        if: matrix.os == 'macos-latest'
+        uses: actions/cache@v3
+        with:
+          path: ~/brew-cache
+          key: macos-brew-${{ hashFiles('**/Dockerfile') }}
+          restore-keys: |
+            macos-brew-
+
+      - name: Configure Homebrew
+        if: matrix.os == 'macos-latest'
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install Dependencies
+        if: matrix.os == 'macos-latest'
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: 1
+          HOMEBREW_NO_INSTALL_CLEANUP: 1 # Do not run brew cleanup automatically.
+          HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1 # Do not automatically update packages.
+
+        run: |
+          brew install htslib
+          brew install openssl@3
+          ln -sf  $(brew --prefix openssl)/include/openssl /usr/local/include/openssl
+          ln -sf  $(brew --prefix openssl)/lib/*a /usr/local/lib/
+          ln -sf  $(brew --prefix openssl)/lib/*dylib /usr/local/lib/
+
+      - name: Install Poetry
+        run: |
+          pipx install --pip-args=--constraint=.github/workflows/constraints.txt poetry
+          poetry --version
+
+      - name: debug
+        if: matrix.os == 'macos-latest'
+        run: |
+          which python
+
+      - name: Install Nox
+        run: |
+          pipx install --pip-args=--constraint=.github/workflows/constraints.txt nox
+          pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry
+          nox --version
+
+      - name: Compute pre-commit cache key
+        if: matrix.session == 'pre-commit'
+        id: pre-commit-cache
+        shell: python
+        run: |
+          import hashlib
+          import sys
+
+          python = "py{}.{}".format(*sys.version_info[:2])
+          payload = sys.version.encode() + sys.executable.encode()
+          digest = hashlib.sha256(payload).hexdigest()
+          result = "${{ runner.os }}-{}-{}-pre-commit".format(python, digest[:8])
+
+          print("::set-output name=result::{}".format(result))
+
+      - name: Restore pre-commit cache
+        uses: actions/cache@v3
+        if: matrix.session == 'pre-commit'
+        with:
+          path: ~/.cache/pre-commit
+          key: ${{ steps.pre-commit-cache.outputs.result }}-${{ hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: |
+            ${{ steps.pre-commit-cache.outputs.result }}-
+
+      - name: Run Nox for Python 3.9 tests session
+        if: matrix.session == 'tests' && matrix.python == '3.9'
+        run: nox --session tests_39 --force-color
+
+      - name: Run Nox for Python 3.10 tests session
+        if: matrix.session == 'tests' && matrix.python == '3.10'
+        run: nox --session tests_310 --force-color
+
+      - name: Upload coverage data
+        if: always() && matrix.session == 'tests'
+        uses: "actions/upload-artifact@v3"
+        with:
+          name: coverage-data-${{ matrix.python }}-${{ matrix.os }}
+          path: "htmlcov/index.html"
+
+      - name: Upload documentation
+        if: matrix.session == 'docs-build'
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs
+          path: docs/_build
+```
+
+## How It Works
+
+1. **Triggering GitHub Actions**: 
+   - Defined in `.github/workflows/tests.yml`.
+   - Triggered on push or pull request to the main branch.
+   - Monitors changes in Python files, Dockerfiles, workflow files, and dependency lock files.
+
+2. **Running Nox Sessions via GitHub Actions**:
+   - GitHub Actions uses the `nox` command, as specified in `noxfile.py`.
+   - Runs different Python versions (3.9, 3.10) using separate Nox sessions (`tests_39`, `tests_310`).
+
+3. **Nox Session Execution**:
+   - Installs dependencies via `poetry`.
+   - Executes Pytest with coverage options: `session.run("pytest", "--cov", "--cov-report=html")`.
+
+4. **Pytest Testing Process**:
+   - Located in the `/tests` directory.
+   - Test scripts like `test_correct_end_to_end.py` are run.
+   - Tests compare the output of `octopusv` commands with expected results using `filecmp.cmp`.
+
+5. **Coverage Report Generation and Upload**:
+   - Pytest generates an HTML coverage report.
+   - GitHub Actions uploads this report as an artifact for review.
+
+This setup forms a comprehensive CI/CD pipeline, ensuring that each code change is automatically tested for reliability and coverage.

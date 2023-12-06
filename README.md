@@ -1503,6 +1503,10 @@ This guide provides a quick walkthrough on how to visualize the trade-off betwee
 
 This tutorial explains how to automate your software testing process using Nox, Pytest, and GitHub Actions.
 
+<div align=center>
+<img src="img/action1.png">
+</div>
+
 ## Step 1: Configure Nox
 
 Create a `noxfile.py` with sessions for different Python versions:

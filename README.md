@@ -99,7 +99,7 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ## Genome structural variation simulation
 
-### [VISOR](/Tools-for-Cancer-Genome-Analysis/contents/VISOR.md)
+### [VISOR](/contents/VISOR.md)
 
 ## Gene fusion analysis - RNA-seq level
 

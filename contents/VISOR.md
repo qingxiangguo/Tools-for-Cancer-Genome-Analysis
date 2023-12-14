@@ -95,9 +95,9 @@ The weird part that is #reciprocal translocations are placed by default on a hap
 So if you want to simulate SVs on both haplotypes, you need to do run randomregion.r two times:
 
 ```bash
-Rscript randomregion.r -d /projects/b1171/qgn1237/6_SV_VCF_merger/VISOR_simulation/chrom.dim.tsv -i 1 -n 18000 -l 10000 -v 'deletion,insertion,tandem duplication,inverted tandem duplication,translocation copy-paste,translocation cut-paste,reciprocal translocation,inversion' -r '35:35:5:5:5:5:5:5' | sortBed > HACk.random.bed
+Rscript randomregion.r -d /projects/b1171/qgn1237/6_SV_VCF_merger/VISOR_simulation/chrom.dim.tsv -i 1 -n 18000 -l 10000 -v 'deletion,insertion,tandem duplication,inverted tandem duplication,translocation copy-paste,translocation cut-paste,reciprocal translocation,inversion' -r '35:35:5:5:5:5:5:5' | sortBed > HACk.random.h1.bed
 
-Rscript randomregion.r -d /projects/b1171/qgn1237/6_SV_VCF_merger/VISOR_simulation/chrom.dim.tsv -i 2 -n 18000 -l 10000 -v 'deletion,insertion,tandem duplication,inverted tandem duplication,translocation copy-paste,translocation cut-paste,reciprocal translocation,inversion' -r '35:35:5:5:5:5:5:5' | sortBed > HACk.random.bed
+Rscript randomregion.r -d /projects/b1171/qgn1237/6_SV_VCF_merger/VISOR_simulation/chrom.dim.tsv -i 2 -n 18000 -l 10000 -v 'deletion,insertion,tandem duplication,inverted tandem duplication,translocation copy-paste,translocation cut-paste,reciprocal translocation,inversion' -r '35:35:5:5:5:5:5:5' | sortBed > HACk.random.h2.bed
 
 # However, in the h1 file, all the Svs will be on h1, only reciprocal translocations is on h2
 # But in h2 file, all the SVs will be on h2, only reciprocal translocations is on hc3806b6_0
@@ -199,3 +199,43 @@ VISOR LASeR -g ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa -s simula
 # The result is: r.fq  sim.srt.bam  sim.srt.bam.bai
 ```
 
+# Generating Specific VAF SVs with VISOR
+
+## Introduction
+
+This tutorial guides you through using VISOR to simulate Structural Variants (SVs) with a specific Variant Allele Frequency (VAF) in a human diploid genome.
+
+## Steps
+
+1. **Create Variant BED File for a Single Haplotype**:
+   Generate a BED file with SVs for one haplotype using the `randomregion.r` script. Ensure the SVs are the same for both haplotypes to simulate a 1/1 genotype.
+
+   ```bash
+   Rscript randomregion.r -d chrom.dim.tsv -i 1 -n 18000 -l 10000 -v 'deletion,insertion,...' -r '35:35:5:...' | sortBed > HACk.random.h1.bed
+   cp HACk.random.h1.bed HACk.random.h2.bed
+   ```
+
+2. **Generate FASTA Haplotypes**:
+   Run VISOR HAck to create FASTA haplotypes:
+
+   ```bash
+   VISOR HAck -b HACk.random.h1.sorted.bed HACk.random.h2.bed -g genome.fa -o simulated_genome
+   ```
+
+3. **Prepare BED for Sequencing Simulation**:
+   Create a BED file for SHORtS/LASeR with the desired purity (e.g., 80% for 80% VAF):
+
+   ```bash
+   awk '{print $1, "1", $2, "100.0", "80.0"}' maxdims.tsv > shorts.laser.simple.bed
+   ```
+
+4. **Run VISOR LASeR for Sequencing Simulation**:
+   Simulate sequencing reads using LASeR:
+
+   ```bash
+   VISOR LASeR -g genome.fa -s simulated_genome -b shorts.laser.simple.bed -o ont_fastq --threads 12 --coverage 10 --fastq --read_type nanopore
+   ```
+
+## Conclusion
+
+By following these steps, you can simulate SVs with a specific VAF in a human diploid genome using VISOR, providing a valuable tool for genetic research and analysis.

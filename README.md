@@ -1776,3 +1776,61 @@ jobs:
    - GitHub Actions uploads this report as an artifact for review.
 
 This setup forms a comprehensive CI/CD pipeline, ensuring that each code change is automatically tested for reliability and coverage.
+
+Absolutely, your understanding is correct. Here's a simple Markdown tutorial in English to guide you through the process of working with Overleaf and GitHub without direct integration:
+
+# Working with Overleaf and GitHub
+
+This guide will help you maintain a LaTeX project on Overleaf and synchronize it with a GitHub repository.
+
+## Initial Setup
+
+- **Create a repository on GitHub** for your LaTeX project.
+- **Clone the repository to your local machine** using `git clone <repository-url>`.
+- **Create your LaTeX project on Overleaf** and begin your writing.
+
+## Regular Workflow
+
+### Editing on Overleaf
+
+1. **Edit your document on Overleaf** as usual.
+2. **Download the project** from Overleaf by clicking on `Menu` and selecting `Source` under `Download`.
+
+### Synchronizing with GitHub
+
+3. **Extract the downloaded ZIP file** to your local repository folder.
+4. Open your terminal or command prompt and **navigate to your repository folder**.
+5. Run the following commands to update your GitHub repository:
+   ```sh
+   git status                  # Check the changed files
+   git add .                   # Add all changes to git
+   git commit -m "Description of the changes" # Commit changes
+   git push                    # Push changes to GitHub
+   ```
+
+### Continuing Work
+
+6. Before you start a new session, **pull the latest version from GitHub**:
+   ```sh
+   git pull                    # Update your local repository
+   ```
+7. **Upload the updated files to Overleaf**:
+   - Go to your Overleaf project.
+   - Click on `Menu` and under `Upload` select `ZIP` to upload your local repository files.
+
+### Collaboration
+
+- Inform your collaborators to **pull from GitHub** before they start editing.
+- After they have made changes, they should also **push their updates to GitHub**.
+- Always **communicate with your team** when you push or pull changes to avoid conflicts.
+
+## Best Practices
+
+- **Commit frequently** with clear, descriptive messages.
+- **Pull from GitHub** before you start working to get the latest version.
+- **Push to GitHub** after each significant change or at the end of your working session.
+- Use `.gitignore` to exclude files that don't need to be version controlled (e.g., `.aux`, `.log` files).
+
+By following these steps, you can ensure that your LaTeX project is well-maintained and up-to-date across both Overleaf and GitHub.
+
+Remember to replace `<repository-url>` with the actual URL of your GitHub repository. This guide assumes a basic knowledge of git commands and the functionality of Overleaf. If you or your collaborators are not familiar with git, you may need a more detailed tutorial on git usage.

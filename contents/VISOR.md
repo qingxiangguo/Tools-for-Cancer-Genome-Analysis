@@ -52,6 +52,7 @@ Add a line in randomregion.r, it will install in your local library, to solve th
 .libPaths("~/R/library")
 
 # Install the packages
+# You have to comment the line in .bashrc to change from fish to bash shell to use the module function.
 
 Rscript randomregion.r -h1
 
@@ -211,29 +212,30 @@ This tutorial guides you through using VISOR to simulate Structural Variants (SV
    Generate a BED file with SVs for one haplotype using the `randomregion.r` script. Ensure the SVs are the same for both haplotypes to simulate a 1/1 genotype.
 
    ```bash
-   Rscript randomregion.r -d chrom.dim.tsv -i 1 -n 18000 -l 10000 -v 'deletion,insertion,...' -r '35:35:5:...' | sortBed > HACk.random.h1.bed
+   Rscript randomregion.r -d /projects/b1171/qgn1237/6_SV_VCF_merger/VISOR_simulation/chrom.dim.tsv -n 18000 -l 10000 -v 'deletion,insertion,tandem duplication,reciprocal translocation,inversion' -r '40:40:10:5:5' | sortBed > HACk.random.h1.bed
    cp HACk.random.h1.bed HACk.random.h2.bed
    ```
 
 2. **Generate FASTA Haplotypes**:
-   Run VISOR HAck to create FASTA haplotypes:
+   Run VISOR HAck to create two FASTA haplotypes with all 1/1 genotype SVs:
 
    ```bash
-   VISOR HAck -b HACk.random.h1.sorted.bed HACk.random.h2.bed -g genome.fa -o simulated_genome
+   VISOR HAck -b ../../SV_bed_for_all/HACk.random.h1.bed ../../SV_bed_for_all/HACk.random.h2.bed -g ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa -o simulated_genome
    ```
 
 3. **Prepare BED for Sequencing Simulation**:
    Create a BED file for SHORtS/LASeR with the desired purity (e.g., 80% for 80% VAF):
 
    ```bash
-   awk '{print $1, "1", $2, "100.0", "80.0"}' maxdims.tsv > shorts.laser.simple.bed
+   VISOR_LASeR_BED_generator.py simulated_genome/h1.fa.fai simulated_genome/h2.fa.fai ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa.fai
+   awk 'OFS=FS="\t"''{print $1, "1", $2, "100.0", "100.0"}' maxdims.tsv > 100VAF.laser.simple.bed
    ```
 
 4. **Run VISOR LASeR for Sequencing Simulation**:
    Simulate sequencing reads using LASeR:
 
    ```bash
-   VISOR LASeR -g genome.fa -s simulated_genome -b shorts.laser.simple.bed -o ont_fastq --threads 12 --coverage 10 --fastq --read_type nanopore
+   VISOR LASeR -g genome.fa -s simulated_genome -b 100VAF.laser.simple.bed -o ont_fastq --threads 12 --coverage 10 --fastq --read_type nanopore
    ```
 
 ## Conclusion

@@ -1834,3 +1834,9 @@ This guide will help you maintain a LaTeX project on Overleaf and synchronize it
 By following these steps, you can ensure that your LaTeX project is well-maintained and up-to-date across both Overleaf and GitHub.
 
 Remember to replace `<repository-url>` with the actual URL of your GitHub repository. This guide assumes a basic knowledge of git commands and the functionality of Overleaf. If you or your collaborators are not familiar with git, you may need a more detailed tutorial on git usage.
+
+# How to make sure the two files are the same
+
+```bash
+cmp --silent sim.srt.bam visor.ba || echo "files are different"
+```

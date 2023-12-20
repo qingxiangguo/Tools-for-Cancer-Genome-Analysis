@@ -176,16 +176,15 @@ mamba install -c bioconda samtools openssl=3.0
 mamba config --set channel_priority flexible
 
 #!/bin/bash -l
-#SBATCH --account=b1042
-#SBATCH --partition=genomics
+#SBATCH --account=b1171
+#SBATCH --partition=b1171
 # set the number of nodes
 #SBATCH --nodes=1
-#SBATCH --ntasks=12
+#SBATCH --ntasks=24
 ##SBATCH --exclusive
-#SBATCH --mem=70G
-#SBATCH --chdir=/home/qgn1237/qgn1237/6_SV_VCF_merger/VISOR_simulation
+#SBATCH --mem=100G
 # set max wallclock time
-#SBATCH --time=4:00:00
+#SBATCH --time=334:00:00
 # mail alert at start, end and abortion of execution
 #SBATCH --mail-type=ALL
 
@@ -195,7 +194,7 @@ cd $SLURM_SUBMIT_DIR
 source ~/.bashrc
 mamba activate visorenv
 
-VISOR LASeR -g ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa -s simulated_genome -b shorts.laser.simple.bed -o ont_fastq --threads 12 --coverage 10 --fastq --read_type nanopore
+VISOR LASeR -g ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa -s ../../SV_bed_for_all/simulated_genome -b ../../SV_bed_for_all/100VAF.laser.simple.bed -o pacbio_fastq --threads 24 --coverage 5 --fastq --read_type pacbio
 
 # The result is: r.fq  sim.srt.bam  sim.srt.bam.bai
 ```

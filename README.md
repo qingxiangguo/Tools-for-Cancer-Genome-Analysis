@@ -1840,3 +1840,24 @@ Remember to replace `<repository-url>` with the actual URL of your GitHub reposi
 ```bash
 cmp --silent sim.srt.bam visor.ba || echo "files are different"
 ```
+
+# Understanding the NODES(A/I/O/T) Column in `sinfo --summarize`, check nodes availability in SLURM
+
+The `NODES(A/I/O/T)` column in the output of the `sinfo --summarize` command provides a quick summary of the state of the nodes in each partition of a Slurm-managed cluster. Here's what each component of this column represents:
+
+- **A (Active nodes)**: The number of nodes that are currently running jobs. These nodes are fully occupied and are executing tasks.
+  
+- **I (Idle nodes)**: The number of nodes that are idle and available to accept new jobs. These nodes are ready to be utilized but are not currently in use.
+
+- **O (Offline nodes)**: The number of nodes that are offline or otherwise unavailable. These nodes might be down for maintenance or temporarily out of service.
+
+- **T (Total nodes)**: The total number of nodes in the partition. This is the sum of active, idle, and offline nodes.
+
+### Example Interpretation
+
+If the `NODES(A/I/O/T)` column shows `25/0/3/28`, it means:
+
+- **25** nodes are currently active and running jobs.
+- **0** nodes are idle and available for new jobs.
+- **3** nodes are offline or unavailable.
+- **28** nodes in total are part of this partition.

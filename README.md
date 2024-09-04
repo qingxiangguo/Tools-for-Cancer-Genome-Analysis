@@ -1156,8 +1156,11 @@ Please always refer to the release notes for any version-specific commands that 
 3. Run the following commands one at a time to update the list of available software:
 
 ```
-sudo apt clean 
-sudo apt update 
+sudo apt autoclean
+sudo apt clean
+sudo apt autoremove
+sudo apt-key adv --fetch-keys https://cdn.oxfordnanoportal.com/apt/ont-repo.pub
+sudo apt update
 sudo apt install ont-mk1c-release
 ```
 
@@ -1166,7 +1169,9 @@ These commands should complete successfully, without any errors or warnings.
 4. If you encounter any error or warning message, ensure that your MinION Mk1C is connected to the Internet. You can diagnose network connection problems by running the following command:
 
 ```
-sudo /opt/ont/mooneye/bin/ont-mooneye-check-network --verbose --diagnose
+sudo apt --fix-broken install
+sudo apt update
+sudo apt install ont-mk1c-release
 ```
 
 5. Once the commands have completed successfully without errors, reboot the device using the command:

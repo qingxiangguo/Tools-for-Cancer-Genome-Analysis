@@ -1,5 +1,4 @@
 
-```markdown
 # Using featureCounts for Transcriptome Quality Assessment
 
 ## 1. About
@@ -61,4 +60,3 @@ featureCounts -a reference.gtf -o transcriptome_counts.txt sample.bam
    - Compares distribution skew.
 
 
-```

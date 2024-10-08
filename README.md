@@ -61,6 +61,10 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [BEDtools](/contents/bedtools.md)
 
+### [RSeQC](/contents/RSeQC.md)
+
+### [featureCounts](/contents/featureCounts.md)
+
 ## Indel calling
 
 ### [transindel](/contents/transindel.md)

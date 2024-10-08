@@ -1,4 +1,3 @@
-
 # Using featureCounts for Transcriptome Quality Assessment
 
 ## 1. About

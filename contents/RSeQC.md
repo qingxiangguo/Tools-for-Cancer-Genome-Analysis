@@ -1,5 +1,4 @@
 
-```markdown
 # The Installation and Usage of RSeQC
 
 ## 1. About
@@ -73,13 +72,3 @@ Before running RSeQC modules, ensure you have:
     read_NVC.py -i sample_sorted.bam -o read_NVC_output
     ```
 
-### 2.4 Output Interpretation
-
-Each module generates specific output files. Consult the RSeQC documentation for detailed interpretation of each module's output.
-
-## 3. Additional Resources
-
-- [RSeQC Official Documentation](http://rseqc.sourceforge.net/)
-- [GitHub Repository](https://github.com/MonashBioinformaticsPlatform/RSeQC)
-
-```

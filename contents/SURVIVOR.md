@@ -58,3 +58,14 @@ venn.diagram(list(PBSV = which(t[,1]==1), SVIM = which(t[,2]==1)) , fill = c("or
 #exit R 
 quit()
 ```
+
+### 2.3 Benchmarking against ground truth
+
+```bash
+SURVIVOR merge list_vcf 500 1 0 0 0 0 merged_filtered.vcf
+
+grep -v '^#' merged_filtered.vcf | grep 'SUPP_VEC=11' | wc -l > TP
+grep -v '^#' merged_filtered.vcf | grep 'SUPP_VEC=01' | wc -l > FP
+grep -v '^#' merged_filtered.vcf | grep 'SUPP_VEC=10' | wc -l > FN
+
+```

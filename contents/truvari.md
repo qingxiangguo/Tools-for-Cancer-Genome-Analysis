@@ -1,5 +1,12 @@
 # Truvari Tutorial
 
+## Install
+
+```
+mamba create -n truvari python=3.7
+python3 -m pip install truvari
+```
+
 ## Introduction
 
 Truvari is a command-line toolkit for structural variant (SV) comparison. It's used for benchmarking SVs against a known reference, merging SV calls, and annotating differences.
@@ -25,6 +32,8 @@ To benchmark SVs, use the `truvari bench` command:
 
 ```bash
 # Running Truvari benchmarking
+truvari bench -b sorted_svim_example.vcf.gz  -c sorted_pbsv.vcf.gz -o truvari_output/ --reference GRCh38.p13.genome.fa
+
 truvari bench -b base.vcf.gz -c comp.vcf.gz -o output_directory
 ```
 

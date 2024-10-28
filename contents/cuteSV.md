@@ -26,13 +26,13 @@ The -s parameter should changed based on Depth
 For PacBio CCS(HIFI) data:
 
 ```bash
-cuteSV --threads 16 --genotype -l 50 -L 5000000 -r 1000 -q 20 -s 3 --max_cluster_bias_INS 1000 --diff_ratio_merging_INS 0.9 --max_cluster_bias_DEL 1000 --diff_ratio_merging_DEL 0.5 sorted.bam ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa cutesv.vcf ./
+cuteSV --threads 16 --genotype --report_readid -l 50 -L 5000000 -r 1000 -q 20 -s 3 --max_cluster_bias_INS 1000 --diff_ratio_merging_INS 0.9 --max_cluster_bias_DEL 1000 --diff_ratio_merging_DEL 0.5 sorted.bam ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa cutesv.vcf ./
 ```
 
 For ONT data:
 
 ```bash
-cuteSV --threads 16 --genotype -l 50 -L 5000000 -r 1000 -q 20 -s 3 --max_cluster_bias_INS 100 --diff_ratio_merging_INS 0.3 --max_cluster_bias_DEL 100 --diff_ratio_merging_DEL 0.3 ../minimap2/PC3_ONT_bulk_all.bam  ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa cutesv.vcf ./
+cuteSV --threads 16 --genotype --report_readid -l 50 -L 5000000 -r 1000 -q 20 -s 3 --max_cluster_bias_INS 100 --diff_ratio_merging_INS 0.3 --max_cluster_bias_DEL 100 --diff_ratio_merging_DEL 0.3 ../minimap2/PC3_ONT_bulk_all.bam  ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa cutesv.vcf ./
 ```
 
 * min_sv_length is a minimum length threshold a call must have, which is set to 30 nucleotides by default.  

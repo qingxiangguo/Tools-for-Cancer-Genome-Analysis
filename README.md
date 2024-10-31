@@ -127,6 +127,8 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [Duplex tools](/contents/duplex_tools.md)
 
+### [Cutadapt](/contents/cutadapt.md) 
+
 ## General QC software
 
 ### [FastQC](/contents/FastQC.md)

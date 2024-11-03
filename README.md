@@ -11,7 +11,7 @@ Northwestern University, Feinberg School of Medicine
 
 ## Introduction
 
-In this section, I provide the installation and usage for a wide range of bioinformatics tools, especially for cancer genomics. This repo will be kept updating. Feedback or experience is warmly welcomed.
+A collection of installation and usage guides, focusing on cancer genomics tools. Written by someone who survived one too many 'comprehensive' manuals and lived to tell a simpler tale.
 
 ## Tools
 

@@ -119,6 +119,8 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [Porechop](/contents/porechop.md)
 
+### [Porechop_ABI](/contents/porechop_ABI.md)
+
 ### [pod5](/contents/pod5.md)
 
 ### [NanoPlot](/contents/nanoplot.md)
@@ -129,7 +131,9 @@ In this section, I provide the installation and usage for a wide range of bioinf
 
 ### [Cutadapt](/contents/cutadapt.md) 
 
-## General QC software
+## Dealing with FastQ/FASTA
+
+### [Seqkit](/contents/Seqkit.md)
 
 ### [FastQC](/contents/FastQC.md)
 

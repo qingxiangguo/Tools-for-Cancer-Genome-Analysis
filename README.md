@@ -65,6 +65,10 @@ A collection of installation and usage guides, focusing on cancer genomics tools
 
 ### [featureCounts](/contents/featureCounts.md)
 
+### [Stringtie](/contents/stringtie.md)
+
+### [SQANTI3](/contents/SQANTI3.md)
+
 ## Indel calling
 
 ### [transindel](/contents/transindel.md)

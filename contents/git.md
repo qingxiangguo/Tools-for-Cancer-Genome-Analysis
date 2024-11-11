@@ -190,3 +190,10 @@ With the conflicts resolved and the merge complete, you can now successfully pus
 ```bash
 git push origin main
 ```
+
+## Give up all the local Changes and roll back to remote version
+```bash
+git checkout main
+git fetch origin
+git reset --hard origin/main
+```

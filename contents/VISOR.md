@@ -151,6 +151,13 @@ Next you need to create a BED file containing the max length of each chromo betw
 If you want to simulate sequencing data generated from the entire reference genome (not just a particular chromosome), you need to first create a BED file describing the region you want to simulate. Since structural variants, such as insertions and deletions, may cause changes in the length of the chromosome, we need to consider all possible lengths. The maximum value is taken to ensure that the sequencing data we simulate will cover all possible regions and that a region of variation will not be missed due to improper length selection.
 
 ```bash
+# To convert a VCF to Visor BED file
+python vcf2visor_bed_input.py -i nstd106.GRCh38.variant_true_call.vcf -o visor_bed --homozygous_ratio 0.3
+# Then compare the output results with original VCF file
+python compare_vcf_bed.py
+```
+
+```bash
 # To make this BED file, run:
 VISOR_LASeR_BED_generator.py simulated_genome/h1.fa.fai simulated_genome/h2.fa.fai ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa.fai
 

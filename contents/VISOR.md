@@ -155,6 +155,23 @@ If you want to simulate sequencing data generated from the entire reference geno
 python vcf2visor_bed_input.py -i nstd106.GRCh38.variant_true_call.vcf -o visor_bed --homozygous_ratio 0.3
 # Then compare the output results with original VCF file
 python compare_vcf_bed.py
+# you will get  visor_bed_haplotype1.bed and  visor_bed_haplotype2.bed
+# If the chromosome format of input VCF is different from Genome fasta, you will have problem
+# Then you need to change them manually
+
+cut -f1 visor_bed_haplotype1.bed | sort | uniq > bed_chroms_all.txt
+cut -f1 visor_bed_haplotype2.bed | sort | uniq >> bed_chroms_all.txt
+grep "translocation" visor_bed_haplotype1.bed | cut -f5 | sed 's/h[12]:chr//; s/:.*//' >> bed_chroms_all.txt
+grep "translocation" visor_bed_haplotype2.bed | cut -f5 | sed 's/h[12]:chr//; s/:.*//' >> bed_chroms_all.txt
+
+
+sort genome_chroms.txt > genome_chroms_sorted.txt
+sort bed_chroms_all.txt > bed_chroms_sorted.txt
+
+comm -23 bed_chroms_sorted.txt genome_chroms_sorted.txt > diff_chroms.txt
+
+# Delete those bad names
+awk 'NR==FNR{a[$1]=1;next} {found=0; for(chr in a) if(index($0,chr)>0){found=1;break}; if(!found)print}' diff_chroms.txt visor_bed_haplotype2.bed > visor_bed_haplotype2.clean.bed
 ```
 
 ```bash

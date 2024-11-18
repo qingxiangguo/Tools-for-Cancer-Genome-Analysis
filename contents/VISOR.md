@@ -264,3 +264,144 @@ This tutorial guides you through using VISOR to simulate Structural Variants (SV
 ## Conclusion
 
 By following these steps, you can simulate SVs with a specific VAF in a human diploid genome using VISOR, providing a valuable tool for genetic research and analysis.
+
+
+# Resuming an Interrupted VISOR LASeR Run
+
+If your VISOR LASeR simulation was interrupted, you can manually resume it by identifying unfinished regions and continuing the simulation for those specific regions. Below are the steps and commands to help you achieve this.
+
+## Steps to Resume Simulation
+
+### 1. Identify Unfinished Regions
+
+#### 1.1 Calculate Region Lengths
+
+Extract information from your original BED file (`100VAF.laser.simple.bed`) and calculate the length of each region:
+
+```bash
+awk '{len=$3-$2; print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"len}' 100VAF.laser.simple.bed > regions_with_length.txt
+```
+
+This will create `regions_with_length.txt` with the following columns:
+
+- Chromosome (`$1`)
+- Start position (`$2`)
+- End position (`$3`)
+- Capture bias (`$4`)
+- Purity (`$5`)
+- Region length (`$6`)
+
+#### 1.2 Compute Total Aligned Bases per Region
+
+For each region, calculate the total number of bases aligned in your existing BAM file (`sim.srt.bam`):
+
+```bash
+> coverage_per_region.txt  # Create or clear the file
+awk '{print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6}' regions_with_length.txt | while read chr start end cap_bias purity length; do
+    echo "Processing $chr:$start-$end"
+    total_bases=$(samtools view sim.srt.bam "$chr:$start-$end" | awk '{sum += length($10)} END {print sum}')
+    total_bases=${total_bases:-0}  # Default to 0 if variable is empty
+    echo -e "$chr\t$start\t$end\t$cap_bias\t$purity\t$length\t$total_bases" >> coverage_per_region.txt
+done
+```
+
+This will generate `coverage_per_region.txt` with:
+
+- Columns from `regions_with_length.txt`
+- Total bases aligned (`$7`)
+
+#### 1.3 Calculate Average Coverage per Region
+
+Compute the average coverage for each region:
+
+```bash
+awk '{coverage=$7/$6; print $0"\t"coverage}' coverage_per_region.txt > coverage_with_coverage.txt
+```
+
+Now, `coverage_with_coverage.txt` includes:
+
+- All previous columns
+- Calculated coverage (`$8`)
+
+#### 1.4 Generate BED File of Unfinished Regions
+
+Identify regions where the coverage is less than the desired threshold (e.g., 30x):
+
+```bash
+desired_coverage=30
+awk -v dc=$desired_coverage '{if ($8 < dc*0.95) print $1"\t"$2"\t"$3"\t"$4"\t"$5}' coverage_with_coverage.txt > remaining_regions.bed
+```
+
+The `remaining_regions.bed` file will contain regions needing further simulation, formatted correctly for VISOR LASeR.
+
+### 2. Resume VISOR LASeR Simulation
+
+Run VISOR LASeR using the new BED file and specify a new output directory:
+
+```bash
+VISOR LASeR \
+  -g ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa \
+  -s ../../Simulation_data/downloaded_SV_data_and_simulated_genome/visor_simulated_genome/ \
+  -b remaining_regions.bed \
+  -o pacbio_fastq_remaining \
+  --threads 24 \
+  --coverage 30 \
+  --fastq \
+  --read_type pacbio
+```
+
+### 3. Merge Simulation Results
+
+#### 3.1 Merge FASTQ Files
+
+Combine the original and newly generated FASTQ files:
+
+```bash
+cat pacbio_fastq/*.fq pacbio_fastq_remaining/*.fq > combined_reads.fq
+```
+
+If your FASTQ files are compressed (`.fq.gz`), use:
+
+```bash
+zcat pacbio_fastq/*.fq.gz pacbio_fastq_remaining/*.fq.gz | gzip > combined_reads.fq.gz
+```
+
+#### 3.2 Merge BAM Files
+
+Ensure both BAM files are sorted and indexed before merging:
+
+```bash
+samtools merge -@ 24 combined_sim.srt.bam sim.srt.bam pacbio_fastq_remaining/sim.srt.bam
+samtools index combined_sim.srt.bam
+```
+
+### 4. Verify Final Coverage
+
+#### 4.1 Recalculate Coverage on Merged BAM
+
+Repeat the coverage calculation steps on the merged BAM file:
+
+```bash
+> combined_coverage_per_region.txt  # Create or clear the file
+awk '{len=$3-$2; print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"len}' 100VAF.laser.simple.bed > combined_regions_with_length.txt
+
+awk '{print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6}' combined_regions_with_length.txt | while read chr start end cap_bias purity length; do
+    echo "Processing $chr:$start-$end"
+    total_bases=$(samtools view combined_sim.srt.bam "$chr:$start-$end" | awk '{sum += length($10)} END {print sum}')
+    total_bases=${total_bases:-0}
+    echo -e "$chr\t$start\t$end\t$cap_bias\t$purity\t$length\t$total_bases" >> combined_coverage_per_region.txt
+done
+
+awk '{coverage=$7/$6; print $0"\t"coverage}' combined_coverage_per_region.txt > combined_coverage_with_coverage.txt
+```
+
+#### 4.2 Identify Any Remaining Low-Coverage Regions
+
+Check for regions still below the desired coverage:
+
+```bash
+desired_coverage=30
+awk -v dc=$desired_coverage '{if ($8 < dc*0.95) print $1"\t"$2"\t"$3"\t"coverage}' combined_coverage_with_coverage.txt
+```
+
+If no regions are listed, all regions have achieved the desired coverage.

@@ -51,3 +51,9 @@ pbsv call --ccs -j 6 ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa /ho
 ### 2.4 Output files
 
 SRR11951439_sort.var.vcf
+
+
+```bash
+# Shortcut!
+./PBSV_steps_generator.py --bam ../minimap2/visor_ONT.bam --tandem-repeats ~/qgn1237/1_my_database/GRCh38_p13/tandem_repeats/human_GRCh38_no_alt_analysis_set.trf.bed --reference ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa
+```

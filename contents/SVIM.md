@@ -33,7 +33,7 @@ Since the output SVIM is unfiltered, we have to filter them manually
 This is very very important since SVIM ouput almost everything.
 
 ```bash
-for dir in *depth/; do cd "$dir"; cd svim; filter_vcf_based_on_quality.py variants.vcf 2 > filtered_variant.vcf; cd ../..; done
+for dir in *depth/; do cd "$dir"; cd svim; filter_vcf_based_on_quality.py variants.vcf 10 > filtered_variant.vcf; cd ../..; done
 ```
 
 Or you can do it with BCFtools
@@ -41,7 +41,7 @@ Or you can do it with BCFtools
 ```bash
 bcftools view -i 'QUAL >= 10' variants.vcf'.
 # or you can do
-filter_vcf_based_on_quality.py variants.vcf 2 > filtered_variant.vcf
+filter_vcf_based_on_quality.py variants.vcf 10 > filtered_variant.vcf
 ```
 
 For high-coverage datasets (>40x), we would recommend a threshold of 10-15. For low-coverage datasets, the threshold should be lower (>3-5). For 30 I choose 8.
@@ -56,4 +56,9 @@ for dir in *depth/; do cd "$dir"; cd svim; filter_vcf_based_on_quality.py varian
 # for 15x, the value is 4
 # for 10x, the value is 3
 # for 5x, the value is 2
+```
+
+```bash
+./SVIM_steps_generator.py --bam input.bam --reference ref.fa
+./SVIM_steps_generator.py --bam input.bam --reference ref.fa --quality 8
 ```

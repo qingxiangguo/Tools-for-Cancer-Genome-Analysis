@@ -25,3 +25,22 @@ Specify tandem repeat annotations (for improved call accuracy), reference (for D
 ```bash
 sniffles --input /projects/b1171/qgn1237/5_impact_of_depth_sv_detection/2_cell_line_SV/SKBR3_CLR/5X_depth/SKBR3_CLR_5X.bam --vcf sniffles.vcf --tandem-repeats /projects/b1171/qgn1237/1_my_database/GRCh38_p13/sniffles2_compatible_tandem_repeat/human_GRCh38_no_alt_analysis_set.trf.bed --reference /projects/b1171/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa --minsupport auto --minsvlen 50
 ```
+
+```bash
+# shortcut
+# Default
+./Sniffles2_steps_generator.py \
+    --bam input.bam \
+    --reference ref.fa \
+    --tandem-repeats repeats.bed
+
+# User-specified
+./Sniffles2_steps_generator.py \
+    --bam input.bam \
+    --reference ref.fa \
+    --tandem-repeats repeats.bed \
+    --threads 8 \
+    --mem 60G \
+    --time 08:00:00 \
+    --output custom_output.vcf
+```

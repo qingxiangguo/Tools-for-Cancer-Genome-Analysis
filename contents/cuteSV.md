@@ -40,3 +40,18 @@ cuteSV --threads 16 --genotype --report_readid -l 50 -L 5000000 -r 1000 -q 20 -s
 * min_read_length is a minimum threshold for read lengths. This is used to reject the shortest mapping sequences and is by default defined as 1000 nucleotides.  
 * read_support is a minimum threshold for the number of required supporting reads. The default value requires that three of more reads cover an SV.  
 * min_read_mapping_quality was defined in the configuration form at the top of the analysis section (a value of 20 by default) and is a minimum threshold used to reject reads with lower quality mapping scores.  
+
+```bash
+# short cut
+# For ONT data
+./CuteSV_steps_generator.py \
+    --bam input.bam \
+    --reference ref.fa \
+    --data-type ont
+
+# For PacBio data
+./CuteSV_steps_generator.py \
+    --bam input.bam \
+    --reference ref.fa \
+    --data-type pacbio
+```

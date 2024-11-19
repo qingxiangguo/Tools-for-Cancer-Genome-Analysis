@@ -35,3 +35,26 @@ minimap2 -ax map-ont --MD -t 8 -Y -R '@RG\tID:XXX\tPL:ont\tLB:library\tSM:XXX' /
 ```
 minimap2 -ax splice -k14 --MD -t 8 -Y -R '@RG\tID:PC310cells\tPL:ont\tLB:library\tSM:PC310cells' /home/qgn1237/qgn1237/1_my_database/GRCh38_p13/minimap2_index/GRCh38.p13.genome.mmi ../dorado.fastq | samtools sort -@ 8 -m 2G -O BAM -o VCaP_PCLC_input.bam && samtools index VCaP_PCLC_input.bam  VCaP_PCLC_input.bam.bai
 ```
+
+```bash
+# PacBio data
+./MINIMAP2_steps_generator.py \
+    --fastq input.fastq \
+    --reference ref.fa \
+    --sample-name HG002 \
+    --data-type pacbio
+
+# ONT DNA data
+./MINIMAP2_steps_generator.py \
+    --fastq input.fastq \
+    --reference ref.fa \
+    --sample-name HG002 \
+    --data-type ont
+
+# RNA splicing data
+./MINIMAP2_steps_generator.py \
+    --fastq input.fastq \
+    --reference ref.fa \
+    --sample-name PC310cells \
+    --data-type rna
+```

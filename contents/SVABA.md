@@ -123,9 +123,17 @@ svaba -t tumor.bam -n normal.bam -k 22 -G ref.fa -a test_id -p 4
 ### 2.1 Assume that you've already index and sort the BAM file first, you also have a BWM indexed genome
 
 ```bash
+bwa index -a bwtsw /projects/b1171/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa
+
 svaba run -t in.bam -p 8 -a your_tag -G /projects/b1171/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa
 ```
 
 ### 2.2 Output files
 
 SRR11951439_sort.var.vcf
+
+```bash
+python SVABA_steps_generator.py --bam input.bam --reference reference.fa --tag my_analysis
+
+python SVABA_steps_generator.py --bam input.bam --reference reference.fa --tag my_analysis --threads 16 --mem 100G --time 24:00:00
+```

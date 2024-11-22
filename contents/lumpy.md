@@ -28,3 +28,9 @@ source ~/.bashrc
 mamba activate lumpy_env
 lumpyexpress -B /projects/b1171/qgn1237/5_impact_of_depth_sv_detection/1_reads_mapping/bwa-mem2/SKBR3_NGS.bam -o SKBR3_NGS.vcf
 ```
+
+```bash
+python LUMPY_steps_generator.py --bam input.bam
+
+python LUMPY_steps_generator.py --bam input.bam --output custom_output.vcf
+```

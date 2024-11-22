@@ -41,3 +41,18 @@ configManta.py --tumorBam=22Rv1.5X.bam --referenceFasta=/projects/b1171/twp7981/
 ```
 
 Output files: tumorSV.vcf
+
+
+```bash
+python MANTA_steps_generator.py \
+    --bam sample.bam \
+    --reference reference.fa \
+    --work-dir /path/to/manta/output
+```
+
+```bash
+It's really important to make sure the input bam file is non-redundant.
+
+samtools rmdup -S HG002_NGS.bam  removed.bam
+samtools index removed.bam
+```

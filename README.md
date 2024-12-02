@@ -141,6 +141,8 @@ A collection of installation and usage guides, focusing on cancer genomics tools
 
 ### [FastQC](/contents/FastQC.md)
 
+### [BBMap](/contents/bbmap.md)
+
 # Other small tricks and tips
 
 # Find and load R in Northwestern quest  
@@ -1880,3 +1882,66 @@ If the `NODES(A/I/O/T)` column shows `25/0/3/28`, it means:
 - **0** nodes are idle and available for new jobs.
 - **3** nodes are offline or unavailable.
 - **28** nodes in total are part of this partition.
+
+# VCF Contig and Chromosome Name Corrector Tutorial
+
+When working with VCF files from different sources, chromosome naming inconsistencies can cause issues with tools like bcftools. This Python script helps standardize VCF files by correcting chromosome names and adding proper contig headers based on a reference genome.
+
+The script handles several common issues:
+- Missing contig headers in VCF files
+- Inconsistent chromosome naming (e.g., "1" vs "chr1")
+- Non-standard scaffold names
+- Missing chromosome length information
+
+Key features:
+- Reads chromosome names and lengths from reference FASTA
+- Creates mapping for different chromosome naming conventions
+- Adds or updates contig information in VCF headers
+- Filters out variants on chromosomes not present in reference
+- Maintains VCF format compatibility
+
+Usage example:
+```bash
+python VCF_contig_CHROM_correcter.py input.vcf output.vcf reference.fasta
+```
+
+Common workflow:
+```bash
+# 1. Fix chromosome names and add contig headers
+python VCF_contig_CHROM_correcter.py input.vcf corrected.vcf GRCh38.fa
+
+# 2. Sort the corrected VCF
+bcftools sort corrected.vcf -o sorted.vcf
+
+# 3. Normalize variants (optional)
+bcftools norm -f reference.fa sorted.vcf -o normalized.vcf
+
+# 4. Check the results
+bcftools stats normalized.vcf > stats.txt
+```
+
+Tips for usage:
+- Always backup your original VCF files before processing
+- Verify chromosome names in your reference FASTA first
+- Check the output VCF header to ensure contig lines are added correctly
+- Use bcftools stats to validate the output file
+
+Common chromosome naming variations handled:
+- Numerical (1, 2, 3...)
+- Chr-prefixed (chr1, chr2, chr3...)
+- Sex chromosomes (X/chrX, Y/chrY)
+- Mitochondrial (M/MT/chrM)
+- Alternative contigs and scaffolds
+
+The script creates a comprehensive mapping between different chromosome naming conventions and ensures that only variants on chromosomes present in your reference genome are retained. This standardization is particularly important when:
+- Merging VCFs from different sources
+- Running variant callers or analysis tools
+- Comparing variants across datasets
+- Preparing files for submission to databases
+
+Error handling:
+- Invalid VCF format lines are skipped
+- Chromosomes not in reference are excluded
+- Original headers are preserved (except contig lines)
+
+Remember to check your reference genome's chromosome naming convention and adjust the script's mapping if needed for special cases in your data.

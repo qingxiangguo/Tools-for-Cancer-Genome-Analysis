@@ -105,6 +105,8 @@ A collection of installation and usage guides, focusing on cancer genomics tools
 
 ### [Truvari](/contents/truvari.md)
 
+### [svanalyzer](/contents/svanalyzer.md)
+
 ## Genome structural variation simulation
 
 ### [VISOR](/contents/VISOR.md)
@@ -521,6 +523,18 @@ You can use it like,
 ```bash
 fd vcf  # part of the file name
 fd -e vcf # Specific extension
+```
+
+# Useful Rust command collection, exa, to check files by tree
+
+```bash
+cargo install fd-find
+```
+
+You can use it like,
+
+```bash
+exa -T
 ```
 
 # Soft link your file to Onedrive in Windows

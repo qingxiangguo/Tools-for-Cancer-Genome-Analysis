@@ -1959,3 +1959,59 @@ Error handling:
 - Original headers are preserved (except contig lines)
 
 Remember to check your reference genome's chromosome naming convention and adjust the script's mapping if needed for special cases in your data.
+
+# ONT Direct RNA004 Pipeline Generator Documentation
+
+This Python script ([ONT_Direct_RNA004_steps_generator.py](/scripts/ONT_Direct_RNA004_steps_generator.py) generates a SLURM job for analyzing Oxford Nanopore Direct RNA004 sequencing data. The pipeline includes basecalled BAM file conversion, quality filtering, genome alignment, and quality control analysis.
+
+Basic usage:
+```bash
+python ONT_Direct_RNA004_steps_generator.py \
+    --bam /path/to/calls.bam \
+    --reference /path/to/genome.mmi \
+    --sample_name sample1
+```
+
+All available arguments:
+```bash
+--bam           : Input BAM file from Dorado basecalling (required)
+--reference     : Reference genome minimap2 index path (required)
+--min_quality   : Minimum read quality score (default: 8)
+--min_length    : Minimum read length in bp (default: 500)
+--threads       : Number of threads (default: 8)
+--mem           : Memory allocation (default: 70G)
+--time          : Wall time limit (default: 48:00:00)
+--sample_name   : Sample name for output files (default: sample)
+```
+
+Example with all parameters:
+```bash
+python ONT_Direct_RNA004_steps_generator.py \
+    --bam /projects/data/calls.bam \
+    --reference /database/GRCh38.mmi \
+    --min_quality 10 \
+    --min_length 500 \
+    --threads 8 \
+    --mem 70G \
+    --time 48:00:00 \
+    --sample_name PC310cells
+```
+
+The script will generate a SLURM job script named `run_ont_rna_[sample_name].slurm` that performs:
+- BAM to FASTQ conversion using samtools
+- Read filtering with chopper
+- Genome alignment using minimap2
+- BAM file sorting and indexing
+- Quality control with NanoPlot and Qualimap
+
+To submit the generated SLURM job:
+```bash
+sbatch run_ont_rna_PC310cells.slurm
+```
+
+Output files will include:
+- clean_reads.fastq: Filtered reads
+- [sample_name]_direct_RNA.bam: Aligned reads
+- [sample_name]_direct_RNA.bam.bai: BAM index
+- nanoplot_qc_results/: NanoPlot quality reports
+- qualimap/: Qualimap quality reports

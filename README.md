@@ -1962,7 +1962,7 @@ Remember to check your reference genome's chromosome naming convention and adjus
 
 # ONT Direct RNA004 Pipeline Generator Documentation
 
-This Python script ([ONT_Direct_RNA004_steps_generator.py](/scripts/ONT_Direct_RNA004_steps_generator.py) generates a SLURM job for analyzing Oxford Nanopore Direct RNA004 sequencing data. The pipeline includes basecalled BAM file conversion, quality filtering, genome alignment, and quality control analysis.
+This Python script [ONT_Direct_RNA004_steps_generator.py](/scripts/ONT_Direct_RNA004_steps_generator.py) generates a SLURM job for analyzing Oxford Nanopore Direct RNA004 sequencing data. The pipeline includes basecalled BAM file conversion, quality filtering, genome alignment, and quality control analysis.
 
 Basic usage:
 ```bash
@@ -2015,3 +2015,38 @@ Output files will include:
 - [sample_name]_direct_RNA.bam.bai: BAM index
 - nanoplot_qc_results/: NanoPlot quality reports
 - qualimap/: Qualimap quality reports
+
+# Quick guide for VCF file sort, zip, and indexing
+
+## Installation
+No additional installation is needed if you have standard bioinformatics tools:
+- awk (built-in with Linux/Unix)
+- bgzip
+- tabix
+
+## Usage
+./[VCF_sort_bgzip_tabix.py](/scripts/VCF_sort_bgzip_tabix.py) -i input.vcf
+
+## Input
+- A standard VCF file (uncompressed)
+
+## Output
+The script will generate three files using the input file's prefix:
+1. `{prefix}_sorted.vcf` - Sorted VCF file
+2. `{prefix}_sorted.vcf.gz` - Compressed VCF file
+3. `{prefix}_sorted.vcf.gz.tbi` - Tabix index file
+
+## What it does
+The script performs three sequential operations:
+1. Sorts the VCF file while preserving headers
+2. Compresses the sorted file using bgzip
+3. Creates an index using tabix
+
+## Example
+```bash
+./VCF_sort_bgzip_tabix.py -i na12878_truth.vcf
+```
+This will create:
+- na12878_truth_sorted.vcf
+- na12878_truth_sorted.vcf.gz
+- na12878_truth_sorted.vcf.gz.tbi

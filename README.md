@@ -2050,3 +2050,34 @@ This will create:
 - na12878_truth_sorted.vcf
 - na12878_truth_sorted.vcf.gz
 - na12878_truth_sorted.vcf.gz.tbi
+
+# VCF Savior tool guide
+
+[VCF_savior.py](/scripts/VCF_savior.py) is a comprehensive tool designed to fix common issues in VCF files and make them compatible with truvari for benchmarking structural variants. The tool automatically detects and fixes various problems including header definitions, genotype fields, and chromosome naming conventions.
+
+Basic usage:
+```bash
+python VCF_savior.py -i input.vcf -o output.vcf
+```
+
+For standardizing chromosome names according to reference genome version:
+```bash
+python VCF_savior.py -i input.vcf -o output.vcf -g 38  # for GRCh38 (chr1, chrX format)
+python VCF_savior.py -i input.vcf -o output.vcf -g 37  # for GRCh37 (1, X format)
+```
+
+The tool performs the following automatic fixes:
+- Adds missing INFO and FORMAT definitions in the header
+- Standardizes chromosome names for regular chromosomes (1-22, X, Y, M)
+- Fixes genotype (GT) fields and ensures GT is the first FORMAT field
+- Sets all FILTER fields to PASS
+- Fixes SVLEN values based on SVTYPE and END positions
+- Sorts and indexes the output VCF file
+
+Output files:
+- Fixed VCF file (.vcf)
+- Sorted VCF file (_sorted.vcf)
+- Compressed VCF file (_sorted.vcf.gz)
+- Index file (_sorted.vcf.gz.tbi)
+
+The tool is designed to be robust and tolerant of various VCF format issues, making it particularly useful when preparing VCF files for truvari benchmarking.

@@ -2081,3 +2081,35 @@ Output files:
 - Index file (_sorted.vcf.gz.tbi)
 
 The tool is designed to be robust and tolerant of various VCF format issues, making it particularly useful when preparing VCF files for truvari benchmarking.
+
+# Promethion SSH Connection Guide
+
+This guide provides instructions for establishing an SSH connection to your Oxford Nanopore Promethion sequencing device.
+
+## Prerequisites
+- The Promethion device is powered on and connected to your network
+- You know either the IP address or Device ID of your Promethion
+- You have SSH client software installed on your computer
+
+## Connection Steps
+
+1. **Enable Remote Connection on the Promethion**
+   - On the Promethion touchscreen, navigate to **Host Settings > System**
+   - Find the **Remote Connection** toggle switch and enable it
+
+2. **Connect via SSH**
+   - Open a terminal and use one of the following commands:
+     ```bash
+     ssh prom@192.168.1.xxx  # Using IP Address
+     ```
+     or
+     ```bash
+     ssh prom@P2-######      # Using Device ID (preferred)
+     ```
+   - Replace `P2-######` with your actual Device ID
+
+3. **Enter Password**
+   - When prompted for a password, enter:
+     ```
+     prom
+     ```

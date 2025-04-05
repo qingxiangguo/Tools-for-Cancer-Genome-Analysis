@@ -1,152 +1,99 @@
-# Dorado Basecalling Guide
+```markdown
+# Dorado Basecalling Cheat Sheet (v0.9.1)
 
-This guide offers a comprehensive overview of how to set up and run Dorado for ONT sequencing data, specifically focusing on the basecalling step.
+> If you've ever felt like the command line was gaslighting you — you're not alone.  
+> This guide skips the surprises and gives you working examples for WGS, cDNA, and direct-RNA.
 
-## Table of Contents
-1. About Dorado
-2. Installation
-3. Usage
-   - Simplex Basecalling
-   - Duplex Basecalling
-4. Channel-wise Data Splitting with POD5
-5. Running Dorado with SLURM
-6. (Optional) Merging BAM Files
+This guide shows how to use [Dorado](https://github.com/nanoporetech/dorado) to basecall Oxford Nanopore data with optional **modification calling**, using real tested commands.
 
 ---
 
-## 1. About Dorado
+## 🧬 1. Whole-Genome Sequencing (WGS) with DNA Modifications
 
-(Detailed introduction about Dorado, its advantages, applications, etc.)
+Call **5mC/5hmC in all sequence contexts** and **6mA** using pre-downloaded models.
+
+```bash
+/home/qgn1237/2_software/dorado-0.9.1-linux-x64/bin/dorado basecaller \
+  /home/qgn1237/2_software/dorado-0.9.1-linux-x64/bin/dna_r10.4.1_e8.2_400bps_hac@v5.0.0 \
+  --modified-bases-models \
+  /home/qgn1237/2_software/dorado-0.9.1-linux-x64/bin/dna_r10.4.1_e8.2_400bps_hac@v5.0.0_5mC_5hmC@v3,\
+/home/qgn1237/2_software/dorado-0.9.1-linux-x64/bin/dna_r10.4.1_e8.2_400bps_hac@v5.0.0_6mA@v3 \
+  --emit-moves \
+  --device cuda:all \
+  ../merged.pod5 \
+  > WGS_mod_calls.bam
+```
+
+✅ Detects **cytosine (C)** methylation across genome (5mC/5hmC)  
+✅ Detects **adenine (A)** methylation (6mA)  
+✅ Compatible with downstream DMR, modkit, or IGV visualization.
 
 ---
 
-## 2. Installation
+## 🔬 2. direct-cDNA Basecalling with poly(A) Tail Estimation
+
+Use `--estimate-poly-a` to measure poly(A) tail lengths from cDNA reads.
 
 ```bash
- wget https://cdn.oxfordnanoportal.com/software/analysis/dorado-0.3.1-linux-x64.tar.gz
- tar zxf dorado-0.3.1-linux-x64.tar.gz
+/home/qgn1237/2_software/dorado-0.9.1-linux-x64/bin/dorado basecaller \
+  /home/qgn1237/2_software/dorado-0.9.1-linux-x64/bin/dna_r10.4.1_e8.2_400bps_hac@v5.0.0 \
+  ../merged.pod5 \
+  --estimate-poly-a \
+  --device cuda:all \
+  > cDNA_calls.bam
 ```
 
-**Note:** For optimal performance, Dorado requires POD5 file input. Convert your `.fast5` files before basecalling. [POD5 File Format](https://github.com/nanoporetech/pod5-file-format)
+✅ Adds `pt:i` tag to each read for estimated poly(A) tail length  
+✅ Recommended for PCS/PCB kits in full-length transcript profiling
 
 ---
 
-## 3. Usage
+## 🧫 3. direct-RNA Basecalling with RNA Modifications
 
-### Simplex Basecalling
-
-For running simplex basecalling in Dorado:
+Example: Call **m6A (in DRACH motifs)** and **m5C** from direct-RNA data.
 
 ```bash
-#!/bin/bash -l
-#SBATCH --account=b1171
-#SBATCH --partition=b1171
-#SBATCH --gres=gpu:a100:2
-#SBATCH --nodes=1
-#SBATCH --ntasks=48
-#SBATCH --mem=100G
-#SBATCH --time=70:00:00
-
-cd $SLURM_SUBMIT_DIR
-
-/home/qgn1237/2_software/dorado-0.3.1-linux-x64/bin/dorado basecaller /home/qgn1237/2_software/dorado-0.3.4-linux-x64/bin/dna_r10.4.1_e8.2_400bps_sup@v4.2.0 sample.pod5 > simplex_dorado.bam
+/home/qgn1237/2_software/dorado-0.9.1-linux-x64/bin/dorado basecaller \
+  /home/qgn1237/2_software/dorado-0.9.1-linux-x64/bin/rna004_130bps_sup@v5.1.0/ \
+  ../merged.pod5 \
+  --modified-bases m5C m6A_DRACH \
+  --emit-moves \
+  --device cuda:all \
+  > RNA_mod_calls.bam
 ```
 
-After obtaining the BAM file, extract fastq reads:
-
-```bash
-samtools view duplex_also_simplex_dorado.bam -d dx:0 | samtools fastq > dorado.simplex.fastq
-```
-
-### Duplex Basecalling
-
-For running duplex basecalling:
-
-```bash
-#!/bin/bash -l
-#SBATCH --account=b1171
-#SBATCH --partition=b1171
-#SBATCH --gres=gpu:a100:2
-#SBATCH --nodes=1
-#SBATCH --ntasks=48
-#SBATCH --mem=100G
-#SBATCH --time=70:00:00
-
-cd $SLURM_SUBMIT_DIR
-
-/home/qgn1237/2_software/dorado-0.3.1-linux-x64/bin/dorado duplex /home/qgn1237/2_software/dorado-0.3.4-linux-x64/bin/dna_r10.4.1_e8.2_400bps_sup@v4.2.0 sample.pod5 > duplex_also_simplex_dorado.bam -t 48
-```
-
-After this step, you'll have a BAM file. Separate it into simplex and duplex fastq reads:
-
-```bash
-samtools view duplex_also_simplex_dorado.bam -d dx:0 | samtools fastq > dorado.simplex.fastq
-
-samtools view duplex_also_simplex_dorado.bam -d dx:1 | samtools fastq > dorado.duplex.fastq
-```
-
-```bash
-# Or combine all to fastq
-samtools view duplex_also_simplex_dorado.bam | samtools fastq > dorado.simplex.fastq
-```
+✅ Supports SQK-RNA004 direct-RNA kits  
+✅ Output contains `MM` / `ML` tags for modification probability  
+✅ Compatible with modkit and nanocompore downstream tools
 
 ---
 
-## 4. Channel-wise Data Splitting with POD5
+## 🛠️ Useful Tips
 
-Firstly, generate the `summary.tsv`:
-
-```bash
-pod5 view <path_to_your_pod5_file> --include "read_id, channel" --output summary.tsv
-```
-
-Then, split the data based on channels:
+**Convert BAM to FASTQ**:
 
 ```bash
-pod5 subset <path_to_your_pod5_file> --summary summary.tsv --columns channel --output <output_directory_path>
+samtools fastq calls.bam > output.fastq
 ```
+
+**View modification tags**:
+
+```bash
+samtools view calls.bam | head -n 5
+```
+
+**Extract reads by modification type (e.g., 6mA only)**:
+
+Use [`modkit`](https://github.com/nanoporetech/modkit) or convert to BED with `modbam2bed`.
 
 ---
 
-## 5. Running Dorado with SLURM
+## ✅ Best Practices Summary
 
-Create a new SLURM script:
-
-```bash
-#!/bin/bash -l
-#SBATCH --account=b1171
-#SBATCH --partition=b1171
-#SBATCH --gres=gpu:a100:2
-#SBATCH --nodes=1
-#SBATCH --ntasks=48
-#SBATCH --mem=100G
-#SBATCH --time=70:00:00
-
-cd $SLURM_SUBMIT_DIR
-
-for file in <path_to_split_pod5_files>/*.pod5; do
-    /home/qgn1237/2_software/dorado-0.3.4-linux-x64/bin/dorado duplex <model_file_path> $file > "${file%.pod5}_dorado.bam"
-done
-```
-
-Save the script and submit:
-
-```bash
-sbatch <name_of_script.sh>
-```
-
----
-
-## 6. (Optional) Merging BAM Files
-
-Merge all BAM files using `samtools`:
-
-```bash
-samtools merge merged.bam <path_to_individual_bam_files>/*_dorado.bam
-```
-
----
-
-**End of Guide**
-
-Ensure all software dependencies are installed and paths are correctly specified before running the commands. Always validate the results with the appropriate tools or visualization methods.
+| Task | Recommended Dorado options |
+|------|-----------------------------|
+| WGS + DNA modifications | `--modified-bases-models` + downloaded models |
+| cDNA + polyA tail length | `--estimate-poly-a` |
+| direct-RNA + base mods | `--modified-bases m6A_DRACH m5C` |
+| All basecalling | Always add `--emit-moves` for downstream support |
+| GPU usage | `--device cuda:all` for multi-GPU, or `cuda:0` to specify |

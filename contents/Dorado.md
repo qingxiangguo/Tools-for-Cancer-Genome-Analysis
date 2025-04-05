@@ -1,4 +1,3 @@
-```markdown
 # Dorado Basecalling Cheat Sheet (v0.9.1)
 
 > If you've ever felt like the command line was gaslighting you — you're not alone.  
@@ -22,7 +21,6 @@ Call **5mC/5hmC in all sequence contexts** and **6mA** using pre-downloaded mode
   --device cuda:all \
   ../merged.pod5 \
   > WGS_mod_calls.bam
-```
 
 ✅ Detects **cytosine (C)** methylation across genome (5mC/5hmC)  
 ✅ Detects **adenine (A)** methylation (6mA)  

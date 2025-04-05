@@ -21,12 +21,11 @@ Call **5mC/5hmC in all sequence contexts** and **6mA** using pre-downloaded mode
   --device cuda:all \
   ../merged.pod5 \
   > WGS_mod_calls.bam
+  ```
 
 ✅ Detects **cytosine (C)** methylation across genome (5mC/5hmC)  
 ✅ Detects **adenine (A)** methylation (6mA)  
 ✅ Compatible with downstream DMR, modkit, or IGV visualization.
-
----
 
 ## 🔬 2. direct-cDNA Basecalling with poly(A) Tail Estimation
 
@@ -41,10 +40,9 @@ Use `--estimate-poly-a` to measure poly(A) tail lengths from cDNA reads.
   > cDNA_calls.bam
 ```
 
+
 ✅ Adds `pt:i` tag to each read for estimated poly(A) tail length  
 ✅ Recommended for PCS/PCB kits in full-length transcript profiling
-
----
 
 ## 🧫 3. direct-RNA Basecalling with RNA Modifications
 

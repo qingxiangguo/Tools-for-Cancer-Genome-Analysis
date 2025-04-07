@@ -40,11 +40,20 @@ Use `--estimate-poly-a` to measure poly(A) tail lengths from cDNA reads.
   > cDNA_calls.bam
 ```
 
-
 ✅ Adds `pt:i` tag to each read for estimated poly(A) tail length  
 ✅ Recommended for PCS/PCB kits in full-length transcript profiling
 
-## 🧫 3. direct-RNA Basecalling with RNA Modifications
+## 🧫 3. direct-cDNA Basecalling with RNA Modifications
+
+```bash
+/gpfs/home/qgn1237/2_software/dorado-0.9.1-linux-x64/bin/dorado basecaller \
+  /home/qgn1237/2_software/dorado-0.9.1-linux-x64/bin/dna_r10.4.1_e8.2_400bps_hac@v5.0.0 ../pod5/ \
+  --estimate-poly-a \
+  --device cuda:all \
+  > out.bam 
+```
+
+## 🧫 4. direct-RNA Basecalling with RNA Modifications
 
 Example: Call **m6A (in DRACH motifs)** and **m5C** from direct-RNA data.
 

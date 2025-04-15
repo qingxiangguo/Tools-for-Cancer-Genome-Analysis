@@ -71,6 +71,19 @@ Example: Call **m6A (in DRACH motifs)** and **m5C** from direct-RNA data.
 ✅ Output contains `MM` / `ML` tags for modification probability  
 ✅ Compatible with modkit and nanocompore downstream tools
 
+## 5. Dorado aligner, better than minimap2 aloneo
+
+```bash
+mamba activate mamba666
+
+/gpfs/home/qgn1237/2_software/dorado-0.9.1-linux-x64/bin/dorado aligner \
+  ~/qgn1237/1_my_database/GRCh38_p13/GRCh38.p13.genome.fa \
+  ./PCa_50904_WGS_calls_5mCG.bam \
+  | samtools sort -@ 16 -o ./50904_WGS_meth_aligned.bam
+
+samtools index -@ 16 ./50904_WGS_meth_aligned.bam
+```
+
 ---
 
 ## 🛠️ Useful Tips

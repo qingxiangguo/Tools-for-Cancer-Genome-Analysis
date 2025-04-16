@@ -33,6 +33,8 @@ A collection of installation and usage guides, focusing on cancer genomics tools
 
 ### [nox](/contents/nox.md)
 
+### [Singularity](/contents/singularity.md)
+
 ## DNA and RNA-seq aligner (splice aware)
 
 ### [Minimap2](/contents/minimap2.md)
@@ -97,7 +99,7 @@ A collection of installation and usage guides, focusing on cancer genomics tools
 
 ### [DeBreak](/contents/DeBreak.md)
 
-## Genome structural variation VCF manipulation and benchmarking
+## Genome structural variation VCF manipulation and downstream analysis
 
 ### [SURVIVOR](/contents/SURVIVOR.md)
 
@@ -107,6 +109,8 @@ A collection of installation and usage guides, focusing on cancer genomics tools
 
 ### [svanalyzer](/contents/svanalyzer.md)
 
+### [AnnotSV](/contents/AnnotSV.md)
+
 ## Genome structural variation simulation
 
 ### [VISOR](/contents/VISOR.md)
@@ -114,6 +118,8 @@ A collection of installation and usage guides, focusing on cancer genomics tools
 ## Gene fusion analysis - RNA-seq level
 
 ### [Arriba](/contents/arriba.md)
+
+### [ctat_lr_fusion](/contents/CTAT_LR_Fusion.md)
 
 ## Nanopore ONT analysis
 
@@ -144,6 +150,10 @@ A collection of installation and usage guides, focusing on cancer genomics tools
 ### [FastQC](/contents/FastQC.md)
 
 ### [BBMap](/contents/bbmap.md)
+
+## modification analysis
+
+### [Modkit](/contents/modkit.md)
 
 # Other small tricks and tips
 

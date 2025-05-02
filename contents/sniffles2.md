@@ -35,12 +35,5 @@ sniffles --input /projects/b1171/qgn1237/5_impact_of_depth_sv_detection/2_cell_l
     --tandem-repeats repeats.bed
 
 # User-specified
-./Sniffles2_steps_generator.py \
-    --bam input.bam \
-    --reference ref.fa \
-    --tandem-repeats repeats.bed \
-    --threads 8 \
-    --mem 60G \
-    --time 08:00:00 \
-    --output custom_output.vcf
+Sniffles2_steps_generator.py --bam input.bam --reference ref.fa --tandem-repeats repeats.bed --threads 8 --mem 60G --time 08:00:00 --output custom_output.vcf
 ```

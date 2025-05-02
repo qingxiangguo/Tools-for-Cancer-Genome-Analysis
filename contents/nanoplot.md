@@ -14,5 +14,5 @@ mamba install -c bioconda nanoplot
 ```bash
 NanoPlot --fastq file.fastq --format pdf -t 16
 
-NanoPlot --bam file.bam --format pdf -t 16
+NanoPlot -t 16 --fastq file.fastq -o nanoplot_results
 ```
